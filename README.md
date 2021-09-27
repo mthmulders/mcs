@@ -1,2 +1,1 @@
-# mcs
-Maven Central Search
+# Maven Central Search
