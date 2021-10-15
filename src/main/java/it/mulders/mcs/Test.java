@@ -5,7 +5,7 @@ import picocli.CommandLine.Parameters;
 
 import java.util.concurrent.Callable;
 
-@Command(name = "test")
+@Command(name = "test", usageHelpAutoWidth = true)
 public class Test implements Callable<Integer> {
     @Parameters(
             arity = "1",
