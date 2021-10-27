@@ -18,7 +18,7 @@ jobs:
     - name: Set up JDK 16
       uses: actions/setup-java@v2
       with:
-        java-version: '16'
+        java-version: '17'
         distribution: 'adopt'
         cache: maven
     - name: Build with Maven
@@ -31,8 +31,8 @@ jobs:
       - name: Set up GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: '21.1.0'
-          java: 'java16'
+          graalvm: '21.3.0'
+          java: 'java17'
           arch: 'amd64'
       - name: Build with Maven
         run: mvn -B package --file pom.xml -P native
