@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public interface Result<T> {
+public sealed interface Result<T> permits Result.Success, Result.Failure {
     record Success<T>(T value) implements Result<T> {
         @Override
         public <U> Result<U> map(final Function<T, U> mapping) {
