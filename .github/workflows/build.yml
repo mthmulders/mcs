@@ -22,7 +22,7 @@ jobs:
         distribution: 'adopt'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B verify --file pom.xml
 
   build-native:
     runs-on: ubuntu-latest
@@ -35,4 +35,4 @@ jobs:
           java: 'java17'
           arch: 'amd64'
       - name: Build with Maven
-        run: mvn -B package --file pom.xml -P native
+        run: mvn -B verify --file pom.xml -P native
