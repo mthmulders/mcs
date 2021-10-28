@@ -1,0 +1,76 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 1,
+    "params": {
+      "q": "plexus-utils",
+      "core": "",
+      "defType": "dismax",
+      "indent": "off",
+      "qf": "text^20 g^5 a^10",
+      "spellcheck": "true",
+      "fl": "id,g,a,latestVersion,p,ec,repositoryId,text,timestamp,versionCount",
+      "start": "0",
+      "sort": "score desc,timestamp desc,g asc,a asc",
+      "spellcheck.count": "5",
+      "rows": "20",
+      "wt": "json",
+      "version": "2.2"
+    }
+  },
+  "response": {
+    "numFound": 2,
+    "start": 0,
+    "docs": [
+      {
+        "id": "org.codehaus.plexus:plexus-utils",
+        "g": "org.codehaus.plexus",
+        "a": "plexus-utils",
+        "latestVersion": "3.4.1",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1630022910000,
+        "versionCount": 73,
+        "text": [
+          "org.codehaus.plexus",
+          "plexus-utils",
+          "-sources.jar",
+          "-javadoc.jar",
+          ".jar",
+          "-source-release.zip",
+          ".pom"
+        ],
+        "ec": [
+          "-sources.jar",
+          "-javadoc.jar",
+          ".jar",
+          "-source-release.zip",
+          ".pom"
+        ]
+      },
+      {
+        "id": "plexus:plexus-utils",
+        "g": "plexus",
+        "a": "plexus-utils",
+        "latestVersion": "1.0.3",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1131487245000,
+        "versionCount": 8,
+        "text": [
+          "plexus",
+          "plexus-utils",
+          ".jar",
+          ".pom"
+        ],
+        "ec": [
+          ".jar",
+          ".pom"
+        ]
+      }
+    ]
+  },
+  "spellcheck": {
+    "suggestions": []
+  }
+}
