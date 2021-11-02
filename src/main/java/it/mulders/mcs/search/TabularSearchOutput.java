@@ -5,6 +5,7 @@ import picocli.CommandLine.Help;
 import picocli.CommandLine.Help.Ansi;
 import picocli.CommandLine.Help.Column.Overflow;
 
+import java.io.PrintStream;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -19,15 +20,9 @@ public class TabularSearchOutput {
     private static final int MAX_LINE_LENGTH = 120;
     private static final int SPACING = 3;
 
-    private final SearchResponse.Response response;
-
-    public TabularSearchOutput(final SearchResponse.Response response) {
-        this.response = response;
-    }
-
-    public void print() {
+    public void print(final SearchResponse.Response response, final PrintStream stream) {
         var message = String.format("Found @|bold %d|@ results%n", response.numFound());
-        System.out.println(CommandLine.Help.Ansi.AUTO.string(message));
+        stream.println(CommandLine.Help.Ansi.AUTO.string(message));
 
         var colorScheme = Help.defaultColorScheme(Ansi.AUTO);
 
@@ -42,7 +37,7 @@ public class TabularSearchOutput {
         table.addRowValues("===========", "============");
         Arrays.stream(response.docs()).forEach(doc -> printRow(table, doc));
 
-        System.out.println(table);
+        stream.println(table);
     }
 
     private String gav(final SearchResponse.Response.Doc doc) {
