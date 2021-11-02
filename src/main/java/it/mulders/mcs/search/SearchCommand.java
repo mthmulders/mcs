@@ -1,7 +1,6 @@
 package it.mulders.mcs.search;
 
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Help;
 import picocli.CommandLine.Parameters;
 
 import java.util.concurrent.Callable;
@@ -22,12 +21,15 @@ public class SearchCommand implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        System.out.printf("Searching for %s%n", query);
-        searchClient.wildcardSearch(query).ifPresent(response -> {
-            var message = String.format("Found @|bold %d|@ results%n", response.response().numFound());
-            System.out.println(Help.Ansi.AUTO.string(message));
-        });
+        System.out.printf("Searching for %s...%n", query);
+        searchClient.wildcardSearch(query)
+                .map(SearchResponse::response)
+                .ifPresent(this::printResponse);
 
         return 0;
+    }
+
+    private void printResponse(final SearchResponse.Response response) {
+        new TabularSearchOutput(response).print();
     }
 }
