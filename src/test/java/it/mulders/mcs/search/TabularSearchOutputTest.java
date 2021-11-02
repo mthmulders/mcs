@@ -61,6 +61,7 @@ class TabularSearchOutputTest implements WithAssertions {
 
         // Assert
         var table = buffer.toString();
-        assertThat(table).contains("27 Aug 2021 at 02:08 (CEST)");
+        assertThat(table).contains("27 Aug 2021 at");
+        assertThat(table).contains(":08 (");
     }
 }
