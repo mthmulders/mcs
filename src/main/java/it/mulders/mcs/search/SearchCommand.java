@@ -18,6 +18,8 @@ public class SearchCommand implements Callable<Integer> {
     private String query;
 
     private final SearchClient searchClient = new SearchClient();
+    private final PomXmlOutput pomXmlOutput = new PomXmlOutput();
+    private final TabularSearchOutput tabularSearchOutput = new TabularSearchOutput();
 
     @Override
     public Integer call() {
@@ -48,10 +50,10 @@ public class SearchCommand implements Callable<Integer> {
     }
 
     private void printSingularSearchResponse(final SearchResponse.Response response) {
-        new PomXmlOutput(response).print();
+        pomXmlOutput.print(response, System.out);
     }
 
     private void printWildcardSearchResponse(final SearchResponse.Response response) {
-        new TabularSearchOutput(response).print();
+        tabularSearchOutput.print(response, System.out);
     }
 }

@@ -1,21 +1,16 @@
 package it.mulders.mcs.search;
 
+import java.io.PrintStream;
+
 public class PomXmlOutput {
-
-    private final SearchResponse.Response response;
-
-    public PomXmlOutput(final SearchResponse.Response response) {
+    public void print(final SearchResponse.Response response, final PrintStream stream) {
         if (response.numFound() != 1) {
             throw new IllegalArgumentException("Search response with more than one result not expected here");
         }
-        this.response = response;
-    }
 
-    public void print() {
         var doc = response.docs()[0];
-        System.out.println();
-        System.out.println();
-        System.out.printf(
+        stream.println();
+        stream.printf(
                 """
                     <dependency>
                         <groupId>%s</groupId>
@@ -27,7 +22,6 @@ public class PomXmlOutput {
                 doc.a(),
                 doc.v()
         );
-        System.out.println();
-        System.out.println();
+        stream.println();
     }
 }
