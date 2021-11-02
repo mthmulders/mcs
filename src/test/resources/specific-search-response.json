@@ -1,0 +1,52 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 0,
+    "params": {
+      "q": "g:org.codehaus.plexus AND a:plexus-utils AND v:3.4.1",
+      "core": "",
+      "indent": "off",
+      "fl": "id,g,a,v,p,ec,timestamp,tags",
+      "start": "0",
+      "sort": "score desc,timestamp desc,g asc,a asc,v desc",
+      "rows": "20",
+      "wt": "json",
+      "version": "2.2"
+    }
+  },
+  "response": {
+    "numFound": 1,
+    "start": 0,
+    "docs": [
+      {
+        "id": "org.codehaus.plexus:plexus-utils:3.4.1",
+        "g": "org.codehaus.plexus",
+        "a": "plexus-utils",
+        "v": "3.4.1",
+        "p": "jar",
+        "timestamp": 1630022910000,
+        "ec": [
+          "-javadoc.jar",
+          "-sources.jar",
+          ".jar",
+          ".pom",
+          "-source-release.zip"
+        ],
+        "tags": [
+          "classes",
+          "files",
+          "with",
+          "more",
+          "utility",
+          "command",
+          "ease",
+          "various",
+          "strings",
+          "lines",
+          "collection",
+          "working"
+        ]
+      }
+    ]
+  }
+}

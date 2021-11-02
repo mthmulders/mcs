@@ -22,14 +22,36 @@ public class SearchCommand implements Callable<Integer> {
     @Override
     public Integer call() {
         System.out.printf("Searching for %s...%n", query);
-        searchClient.wildcardSearch(query)
-                .map(SearchResponse::response)
-                .ifPresent(this::printResponse);
+
+        if (query.contains(":")) {
+            var parts = query.split(":");
+            if (parts.length < 2) {
+                System.err.println("Searching a particular artifact requires at least groupId:artifactId");
+                System.err.println("and optionally :version");
+                System.exit(1);
+            }
+
+            var groupId = parts[0];
+            var artifactId = parts[1];
+            var version = parts.length == 3 ? parts[2] : null;
+
+            searchClient.singularSearch(groupId, artifactId, version)
+                    .map(SearchResponse::response)
+                    .ifPresent(this::printSingularSearchResponse);
+        } else {
+            searchClient.wildcardSearch(query)
+                    .map(SearchResponse::response)
+                    .ifPresent(this::printWildcardSearchResponse);
+        }
 
         return 0;
     }
 
-    private void printResponse(final SearchResponse.Response response) {
+    private void printSingularSearchResponse(final SearchResponse.Response response) {
+        new PomXmlOutput(response).print();
+    }
+
+    private void printWildcardSearchResponse(final SearchResponse.Response response) {
         new TabularSearchOutput(response).print();
     }
 }

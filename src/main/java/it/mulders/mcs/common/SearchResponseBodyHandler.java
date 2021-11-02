@@ -64,6 +64,7 @@ public class SearchResponseBodyHandler implements HttpResponse.BodyHandler<Suppl
                 (String) input.get("id"),
                 (String) input.get("g"),
                 (String) input.get("a"),
+                (String) input.get("v"),
                 (String) input.get("latestVersion"),
                 (String) input.get("p"),
                 (long) input.get("timestamp")
