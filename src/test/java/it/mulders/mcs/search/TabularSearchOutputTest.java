@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class TabularSearchOutputTest implements WithAssertions {
@@ -61,7 +64,8 @@ class TabularSearchOutputTest implements WithAssertions {
 
         // Assert
         var table = buffer.toString();
-        assertThat(table).contains("27 Aug 2021 at");
-        assertThat(table).contains(":08 (");
+        var lastUpdated = DateTimeFormatter.ofPattern("dd MMM yyyy 'at' HH:mm (zzz)")
+                .format(Instant.ofEpochMilli(1630022910000L).atZone(ZoneId.systemDefault()));
+        assertThat(table).contains(lastUpdated);
     }
 }
