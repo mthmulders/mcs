@@ -5,7 +5,7 @@ import picocli.CommandLine;
 
 @CommandLine.Command(
         name = "mcs",
-        subcommands = { Test.class, SearchCommand.class },
+        subcommands = { SearchCommand.class },
         usageHelpAutoWidth = true
 )
 public class App {
