@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class TabularSearchOutput {
+public class TabularOutputPrinter implements OutputPrinter {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(
             "dd MMM yyyy 'at' HH:mm (zzz)"
     );

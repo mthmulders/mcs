@@ -18,8 +18,9 @@ public class SearchCommand implements Callable<Integer> {
     private String query;
 
     private final SearchClient searchClient = new SearchClient();
-    private final PomXmlOutput pomXmlOutput = new PomXmlOutput();
-    private final TabularSearchOutput tabularSearchOutput = new TabularSearchOutput();
+    private final OutputPrinter noOutput = new NoOutputPrinter();
+    private final OutputPrinter pomXmlOutput = new PomXmlOutput();
+    private final OutputPrinter tabularSearchOutput = new TabularOutputPrinter();
 
     @Override
     public Integer call() {
@@ -35,25 +36,32 @@ public class SearchCommand implements Callable<Integer> {
 
             var groupId = parts[0];
             var artifactId = parts[1];
-            var version = parts.length == 3 ? parts[2] : null;
+            var hasVersion = parts.length == 3;
+            if (hasVersion) {
+                var version = parts[2];
 
-            searchClient.singularSearch(groupId, artifactId, version)
-                    .map(SearchResponse::response)
-                    .ifPresent(this::printSingularSearchResponse);
+                searchClient.singularSearch(groupId, artifactId, version)
+                        .map(SearchResponse::response)
+                        .ifPresent(this::printResponse);
+            } else {
+                searchClient.singularSearch(groupId, artifactId)
+                        .map(SearchResponse::response)
+                        .ifPresent(this::printResponse);
+            }
         } else {
             searchClient.wildcardSearch(query)
                     .map(SearchResponse::response)
-                    .ifPresent(this::printWildcardSearchResponse);
+                    .ifPresent(this::printResponse);
         }
 
         return 0;
     }
 
-    private void printSingularSearchResponse(final SearchResponse.Response response) {
-        pomXmlOutput.print(response, System.out);
-    }
-
-    private void printWildcardSearchResponse(final SearchResponse.Response response) {
-        tabularSearchOutput.print(response, System.out);
+    private void printResponse(final SearchResponse.Response response) {
+        switch (response.numFound()) {
+            case 0 -> noOutput.print(response, System.out);
+            case 1 -> pomXmlOutput.print(response, System.out);
+            case 2 -> tabularSearchOutput.print(response, System.out);
+        }
     }
 }
