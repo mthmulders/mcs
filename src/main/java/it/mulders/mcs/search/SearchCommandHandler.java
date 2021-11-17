@@ -2,9 +2,7 @@ package it.mulders.mcs.search;
 
 public class SearchCommandHandler {
     private final SearchClient searchClient = new SearchClient();
-    private final OutputPrinter noOutput = new NoOutputPrinter();
-    private final OutputPrinter pomXmlOutput = new PomXmlOutput();
-    private final OutputPrinter tabularSearchOutput = new TabularOutputPrinter();
+    private final DelegatingOutputPrinter outputPrinter = new DelegatingOutputPrinter();
 
     public void search(final String query) {
         System.out.printf("Searching for %s...%n", query);
@@ -40,10 +38,6 @@ public class SearchCommandHandler {
     }
 
     private void printResponse(final SearchResponse.Response response) {
-        switch (response.numFound()) {
-            case 0 -> noOutput.print(response, System.out);
-            case 1 -> pomXmlOutput.print(response, System.out);
-            default -> tabularSearchOutput.print(response, System.out);
-        }
+        outputPrinter.print(response, System.out);
     }
 }
