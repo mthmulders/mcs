@@ -12,8 +12,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class TabularSearchOutputTest implements WithAssertions {
-    private final TabularSearchOutput output = new TabularSearchOutput();
+class TabularOutputPrinterTest implements WithAssertions {
+    private final TabularOutputPrinter output = new TabularOutputPrinter();
 
     @Test
     void should_print_gav() {
