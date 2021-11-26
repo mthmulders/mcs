@@ -69,6 +69,30 @@
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.8.2</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.pitest</groupId>
+                    <artifactId>pitest-maven</artifactId>
+                    <version>1.7.3</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.pitest</groupId>
+                            <artifactId>pitest-junit5-plugin</artifactId>
+                            <version>0.14</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>io.github.wmaarts</groupId>
+                            <artifactId>pitest-mutation-testing-elements-plugin</artifactId>
+                            <version>0.4.0</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <outputFormats>
+                            <format>HTML2</format>
+                        </outputFormats>
+                        <testPlugin>junit5</testPlugin>
+                        <timestampedReports>false</timestampedReports>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -186,6 +210,11 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

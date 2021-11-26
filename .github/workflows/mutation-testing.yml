@@ -1,0 +1,23 @@
+name: Mutation testing
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  mutationtesting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2.4.0
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: maven
+      - name: Run Pitest
+        run: mvn test-compile org.pitest:pitest-maven:mutationCoverage
