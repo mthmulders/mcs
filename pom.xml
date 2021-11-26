@@ -19,6 +19,13 @@
         <wiremock.version>2.31.0</wiremock.version>
     </properties>
 
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
+
     <build>
         <pluginManagement>
             <plugins>
