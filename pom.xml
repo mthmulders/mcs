@@ -14,7 +14,7 @@
 
         <assert-j.version>3.21.0</assert-j.version>
         <jackson-jr.version>2.13.0</jackson-jr.version>
-        <junit-jupiter.version>5.8.1</junit-jupiter.version>
+        <junit-jupiter.version>5.8.2</junit-jupiter.version>
         <picocli.version>4.6.2</picocli.version>
         <wiremock.version>2.31.0</wiremock.version>
     </properties>
