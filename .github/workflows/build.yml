@@ -25,14 +25,31 @@ jobs:
       run: mvn -B verify --file pom.xml
 
   build-native:
-    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ github.ref == 'refs/heads/main' }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+      fail-fast: true
+
+    runs-on: ${{ matrix.os }}
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up GraalVM
-        uses: DeLaGuardo/setup-graalvm@5.0
+      - name: Checkout code
+        uses: actions/checkout@v2.4.0
         with:
-          graalvm: '21.3.0'
-          java: 'java17'
-          arch: 'amd64'
+          fetch-depth: 0
+
+      - name: Setup GraalVM
+        uses: ayltai/setup-graalvm@v1
+        with:
+          java-version: 17
+          graalvm-version: 21.3.0
+          native-image: true
+
+      # Supports Windows. Does nothing on Linux and macOS.
+      - name: Enable Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1.10.0
+
       - name: Build with Maven
         run: mvn -B verify --file pom.xml -P native
