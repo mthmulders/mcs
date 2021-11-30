@@ -6,7 +6,17 @@
     <artifactId>mcs</artifactId>
     <version>0.1-SNAPSHOT</version>
 
+    <description>Use Maven Central Repository Search from your command line!</description>
+    <inceptionYear>2021</inceptionYear>
     <name>Maven Central Search</name>
+    <url>https://github.com/mthmulders/mcs</url>
+
+    <developers>
+        <developer>
+            <id>mthmulders</id>
+            <name>Maarten Mulders</name>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
