@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    if: startsWith(github.event.head_commit.message, '🏁 Releasing version') != true && startsWith(github.event.head_commit.message, '⬆️  Next version') != true
     runs-on: ubuntu-latest
 
     steps:
@@ -28,34 +29,4 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     - name: Build with Maven
-      run: mvn -B verify --file pom.xml
-
-  build-native:
-    needs: build
-    if: ${{ github.ref == 'refs/heads/main' }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-      fail-fast: true
-
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2.4.0
-        with:
-          fetch-depth: 0
-
-      - name: Setup GraalVM
-        uses: ayltai/setup-graalvm@v1
-        with:
-          java-version: 17
-          graalvm-version: 21.3.0
-          native-image: true
-
-      # Supports Windows. Does nothing on Linux and macOS.
-      - name: Enable Developer Command Prompt
-        uses: ilammy/msvc-dev-cmd@v1.10.0
-
-      - name: Build with Maven
-        run: mvn -B verify --file pom.xml -P native
+      run: mvn -B verify

@@ -1,0 +1,31 @@
+project:
+  name: mcs
+  description: Maven Central Search
+  longDescription: Use Maven Central Repository Search from your command line!
+  website: https://github.com/mthmulders/mcs
+  authors:
+    - Maarten Mulders
+  license: MIT
+  extraProperties:
+    inceptionYear: 2021
+
+release:
+  github:
+    enabled: true
+    owner: mthmulders
+    name: mcs
+    username: mthmulders
+    update: true
+    changelog:
+      links: true
+
+distributions:
+  mcs:
+    type: NATIVE_IMAGE
+    artifacts:
+      - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-linux-x86_64.tar.gz
+        platform: linux-x86_64
+      - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-windows-x86_64.zip
+        platform: windows-x86_64
+      - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-osx-x86_64.zip
+        platform: osx-x86_64
