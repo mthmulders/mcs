@@ -180,9 +180,10 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: 'Release with JReleaser'
+        run: mvn -B -Prelease -DartifactsDir=artifacts jreleaser:full-release
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B -Prelease -DartifactsDir=artifacts jreleaser:full-release
+          JRELEASER_HOMEBREW_GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: 'Set next version'
         env:
