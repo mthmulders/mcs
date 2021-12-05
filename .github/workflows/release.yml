@@ -63,11 +63,10 @@ jobs:
             HEAD
             *_VERSION
 
-
   # Build native executable per runner
   build:
     needs: [ version ]
-    name: Build with GraalVM on ${{ matrix.os }}
+    name: build-${{ matrix.os }}
     strategy:
       fail-fast: true
       matrix:
@@ -128,7 +127,6 @@ jobs:
           path: |
             target/distributions/*.zip
             target/distributions/*.tar.gz
-
 
   # Collect all executables and release
   release:
