@@ -8,10 +8,18 @@ import java.util.concurrent.Callable;
 @CommandLine.Command(
         name = "mcs",
         subcommands = { Cli.SearchCommand.class },
-        usageHelpAutoWidth = true
+        usageHelpAutoWidth = true,
+        versionProvider = ClasspathVersionProvider.class
 )
 public class Cli {
     private final SearchCommandHandler searchCommandHandler;
+
+    @CommandLine.Option(
+            names = { "-V", "--version" },
+            description = "Show version number",
+            versionHelp = true
+    )
+    private boolean showVersion;
 
     public Cli(final SearchCommandHandler searchCommandHandler) {
         this.searchCommandHandler = searchCommandHandler;
