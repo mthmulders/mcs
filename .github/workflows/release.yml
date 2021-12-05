@@ -44,7 +44,7 @@ jobs:
           then
             NEXT_VERSION=$COMPUTED_NEXT_VERSION
           fi
-          ./mvnw -B versions:set versions:commit -DnewVersion=$RELEASE_VERSION
+          mvn -B versions:set versions:commit -DnewVersion=$RELEASE_VERSION
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Action"
           git commit -a -m "🏁 Releasing version $RELEASE_VERSION"
