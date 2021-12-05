@@ -20,6 +20,10 @@ release:
       formatted: ALWAYS
       preset: 'conventional-commits'
       links: true
+    hide:
+      contributors:
+        - 'Maarten Mulders'
+        - '[bot]'
 
 distributions:
   mcs:
