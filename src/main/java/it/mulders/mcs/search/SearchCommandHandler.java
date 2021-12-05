@@ -1,8 +1,18 @@
 package it.mulders.mcs.search;
 
 public class SearchCommandHandler {
-    private final SearchClient searchClient = new SearchClient();
-    private final DelegatingOutputPrinter outputPrinter = new DelegatingOutputPrinter();
+    private final SearchClient searchClient;
+    private final OutputPrinter outputPrinter;
+
+    public SearchCommandHandler() {
+        this(new DelegatingOutputPrinter(), new SearchClient());
+    }
+
+    // Visible for testing
+    SearchCommandHandler(final OutputPrinter outputPrinter, final SearchClient searchClient) {
+        this.searchClient = searchClient;
+        this.outputPrinter = outputPrinter;
+    }
 
     public void search(final String query) {
         System.out.printf("Searching for %s...%n", query);
@@ -22,7 +32,7 @@ public class SearchCommandHandler {
 
     private void performCoordinateSearch(final String query) {
         var parts = query.split(":");
-        if (parts.length < 2) {
+        if (parts.length < 2 || parts.length > 3) {
             var msg = """
                         Searching a particular artifact requires at least groupId:artifactId and optionally :version
                         """;
