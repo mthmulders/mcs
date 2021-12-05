@@ -33,4 +33,5 @@ distributions:
 
 packagers:
   brew:
+    active: RELEASE
     multiPlatform: true
