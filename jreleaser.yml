@@ -17,6 +17,7 @@ release:
     username: mthmulders
     update: true
     changelog:
+      formatted: ALWAYS
       preset: 'conventional-commits'
       links: true
 
