@@ -12,17 +12,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2.4.0
+    - name: Check out repository
+      uses: actions/checkout@v2.4.0
       with:
         # Disabling shallow clone is recommended for improving relevancy of reporting
         fetch-depth: 0
     - name: Set up JDK
       uses: actions/setup-java@v2.4.0
       with:
-        java-version: '17'
+        java-version: 17
         distribution: 'adopt'
         cache: maven
-    - name: 'Cache Maven packages'
+    - name: Cache Maven packages
       uses: actions/cache@v2.1.7
       with:
         path: ~/.m2

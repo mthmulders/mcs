@@ -18,7 +18,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2.4.0
+      - name: Check out repository
+        uses: actions/checkout@v2.4.0
 
       - name: Set up Java
         uses: actions/setup-java@v2.4.0
@@ -26,14 +27,14 @@ jobs:
           java-version: 17
           distribution: 'adopt'
 
-      - name: 'Cache Maven packages'
+      - name: Cache Maven packages
         uses: actions/cache@v2.1.7
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: 'Set release version'
+      - name: Set release version
         id: version
         run: |
           RELEASE_VERSION=${{ github.event.inputs.version }}
@@ -54,7 +55,7 @@ jobs:
           echo $PLAIN_VERSION > PLAIN_VERSION
           echo $NEXT_VERSION > NEXT_VERSION
 
-      - name: 'Upload version files'
+      - name: Upload version files
         uses: actions/upload-artifact@v2.2.4
         with:
           name: artifacts
@@ -62,10 +63,11 @@ jobs:
             HEAD
             *_VERSION
 
+
   # Build native executable per runner
   build:
     needs: [ version ]
-    name: 'Build with Graal on ${{ matrix.os }}'
+    name: Build with GraalVM on ${{ matrix.os }}
     strategy:
       fail-fast: true
       matrix:
@@ -81,23 +83,23 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: 'Download all build artifacts'
+      - name: Download all build artifacts
         uses: actions/download-artifact@v2.0.10
 
-      - name: 'Read HEAD ref'
+      - name: Read HEAD ref
         id: head
         uses: juliangruber/read-file-action@v1.1.4
         with:
           path: artifacts/HEAD
 
-      - name: 'Check out repository'
+      - name: Check out repository
         uses: actions/checkout@v2.4.0
         with:
           ref: ${{ steps.head.outputs.content }}
 
       # This action supports Windows; it does nothing on Linux and macOS.
-      - name: 'Add Developer Command Prompt for Microsoft Visual C++ '
-        uses: ilammy/msvc-dev-cmd@v1
+      - name: Add Developer Command Prompt for Microsoft Visual C++
+        uses: ilammy/msvc-dev-cmd@v1.10.0
 
       - name: Setup GraalVM
         uses: ayltai/setup-graalvm@v1
@@ -106,26 +108,27 @@ jobs:
           graalvm-version: 21.3.0
           native-image: true
 
-      - name: 'Cache Maven packages'
+      - name: Cache Maven packages
         uses: actions/cache@v2.1.7
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: 'Build Native Image'
+      - name: Build Native Image
         run: mvn -B -Pnative package
 
-      - name: 'Create distribution'
+      - name: Create distribution
         run: mvn -B -Pdist package -DskipTests
 
-      - name: 'Upload build artifact'
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v2.2.4
         with:
           name: artifacts
           path: |
             target/distributions/*.zip
             target/distributions/*.tar.gz
+
 
   # Collect all executables and release
   release:
@@ -134,16 +137,16 @@ jobs:
 
     steps:
       # must read HEAD before checkout
-      - name: 'Download all build artifacts'
+      - name: Download all build artifacts
         uses: actions/download-artifact@v2.0.10
 
-      - name: 'Read HEAD ref'
+      - name: Read HEAD ref
         id: head
         uses: juliangruber/read-file-action@v1
         with:
           path: artifacts/HEAD
 
-      - name: 'Read versions'
+      - name: Read versions
         id: version
         run: |
           RELEASE_VERSION=`cat artifacts/RELEASE_VERSION`
@@ -155,37 +158,37 @@ jobs:
           echo "::set-output name=RELEASE_VERSION::$RELEASE_VERSION"
           echo "::set-output name=PLAIN_VERSION::$PLAIN_VERSION"
           echo "::set-output name=NEXT_VERSION::$NEXT_VERSION"
-      - name: 'Check out repository'
+
+      - name: Check out repository
         uses: actions/checkout@v2.4.0
         with:
           ref: ${{ steps.head.outputs.content }}
           fetch-depth: 0
 
-      # checkout will clobber downloaded artifacts
-      # we have to download them again
-      - name: 'Download all build artifacts'
-        uses: actions/download-artifact@v2
+      # checkout will clobber downloaded artifacts; we have to download them again
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v2.0.10
 
       - name: Set up Java
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v2.4.0
         with:
           java-version: 17
           distribution: 'adopt'
 
-      - name: 'Cache Maven packages'
+      - name: Cache Maven packages
         uses: actions/cache@v2.1.7
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: 'Release with JReleaser'
+      - name: Release with JReleaser
         run: mvn -B -Prelease -DartifactsDir=artifacts jreleaser:full-release
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JRELEASER_HOMEBREW_GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
-      - name: 'Set next version'
+      - name: Set next version
         env:
           NEXT_VERSION: ${{ steps.version.outputs.NEXT_VERSION }}
         run: |
