@@ -30,3 +30,7 @@ distributions:
         platform: windows-x86_64
       - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-osx-x86_64.zip
         platform: osx-x86_64
+
+packagers:
+  brew:
+    multiPlatform: true
