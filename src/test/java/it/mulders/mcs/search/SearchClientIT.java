@@ -32,7 +32,7 @@ class SearchClientIT implements WithAssertions {
 
     @Nested
     @DisplayName("Wildcard search")
-    class WildcardSearch {
+    class WildcardSearchTest {
         @Test
         void should_parse_response(final WireMockRuntimeInfo wmRuntimeInfo) {
             // Arrange
@@ -51,6 +51,50 @@ class SearchClientIT implements WithAssertions {
                     .map(SearchResponse.Response.Doc::id)
                     .toArray(String[]::new);
             assertThat(ids).containsOnly("plexus:plexus-utils", "org.codehaus.plexus:plexus-utils");
+        }
+    }
+
+    @DisplayName("Singular search")
+    @Nested
+    class SingularSearchTest {
+        @Test
+        void should_parse_response_groupId_artifactId(final WireMockRuntimeInfo wmRuntimeInfo) {
+            // Arrange
+            stubFor(get(urlPathMatching("/solrsearch/select*"))
+                    .willReturn(ok(getResourceAsString("/group-artifact-search.json"))));
+
+            // Act
+            var result = new SearchClient(wmRuntimeInfo.getHttpBaseUrl())
+                    .singularSearch("org.codehaus.plexus", "plexus-utils");
+
+            // Assert
+            assertThat(result.value()).isNotNull();
+            assertThat(result.value().response().numFound()).isEqualTo(1);
+
+            var ids = Arrays.stream(result.value().response().docs())
+                    .map(SearchResponse.Response.Doc::id)
+                    .toArray(String[]::new);
+            assertThat(ids).containsOnly("org.codehaus.plexus:plexus-utils");
+        }
+
+        @Test
+        void should_parse_response_groupId_artifactId_version(final WireMockRuntimeInfo wmRuntimeInfo) {
+            // Arrange
+            stubFor(get(urlPathMatching("/solrsearch/select*"))
+                    .willReturn(ok(getResourceAsString("/group-artifact-version-search.json"))));
+
+            // Act
+            var result = new SearchClient(wmRuntimeInfo.getHttpBaseUrl())
+                    .singularSearch("org.codehaus.plexus", "plexus-utils", "3.4.1");
+
+            // Assert
+            assertThat(result.value()).isNotNull();
+            assertThat(result.value().response().numFound()).isEqualTo(1);
+
+            var ids = Arrays.stream(result.value().response().docs())
+                    .map(SearchResponse.Response.Doc::id)
+                    .toArray(String[]::new);
+            assertThat(ids).containsOnly("org.codehaus.plexus:plexus-utils:3.4.1");
         }
     }
 }
