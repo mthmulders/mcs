@@ -2,6 +2,7 @@ package it.mulders.mcs.search;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
+import it.mulders.mcs.common.Result;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -11,6 +12,9 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ConnectException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
@@ -95,6 +99,20 @@ class SearchClientIT implements WithAssertions {
                     .map(SearchResponse.Response.Doc::id)
                     .toArray(String[]::new);
             assertThat(ids).containsOnly("org.codehaus.plexus:plexus-utils:3.4.1");
+        }
+    }
+
+    @DisplayName("Error handling")
+    @Nested
+    class ErrorHandlingTest {
+        @Test
+        void should_gracefully_return_failures(final WireMockRuntimeInfo wmRuntimeInfo) throws MalformedURLException {
+            // Very unlikely there's an HTTP server running there...
+            var result = new SearchClient("http://localhost:21")
+                    .wildcardSearch("plexus-utils");
+
+            assertThat(result).isInstanceOf(Result.Failure.class);
+            assertThat(result.cause()).isInstanceOf(ConnectException.class);
         }
     }
 }
