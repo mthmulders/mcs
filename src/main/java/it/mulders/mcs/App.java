@@ -7,9 +7,13 @@ import picocli.CommandLine;
 
 public class App {
     public static void main(final String... args) {
+        System.exit(doMain(args));
+    }
+
+    // Visible for testing
+    static int doMain(final String... args) {
         var cli = new Cli(new SearchCommandHandler());
         var program = new CommandLine(cli, new CommandClassFactory(cli));
-        var result = program.execute(args);
-        System.exit(result);
+        return program.execute(args);
     }
 }
