@@ -306,6 +306,7 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <agentResourceDirectory>${project.basedir}/src/main/graalvm-native</agentResourceDirectory>
                             <imageName>${project.artifactId}-${project.version}</imageName>
                         </configuration>
                     </plugin>
