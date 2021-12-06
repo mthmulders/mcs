@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    if: startsWith(github.event.head_commit.message, '🏁 Releasing version') != true && startsWith(github.event.head_commit.message, '⬆️  Next version') != true
+    if: contains(github.event.head_commit.message, 'Releasing version') != true && contains(github.event.head_commit.message, 'Prepare next version') != true
     runs-on: ubuntu-latest
 
     steps:

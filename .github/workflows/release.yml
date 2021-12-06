@@ -48,7 +48,7 @@ jobs:
           mvn -B versions:set versions:commit -DnewVersion=$RELEASE_VERSION
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Action"
-          git commit -a -m "🏁 Releasing version $RELEASE_VERSION"
+          git commit -a -m "chore: Releasing version $RELEASE_VERSION"
           git push origin HEAD:main
           git rev-parse HEAD > HEAD
           echo $RELEASE_VERSION > RELEASE_VERSION
@@ -193,5 +193,5 @@ jobs:
           mvn -B versions:set versions:commit -DnewVersion=$NEXT_VERSION
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Action"
-          git commit -a -m "⬆️  Next version $NEXT_VERSION"
+          git commit -a -m "chore: Prepare next version: $NEXT_VERSION"
           git push origin HEAD:main
