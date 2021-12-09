@@ -42,7 +42,7 @@ distributions:
       snap:
         active: RELEASE
         name: maven-central-search
-        owner: maarten-mulders
+        owner: mthmulders
       remoteBuild: true
     artifacts:
       - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-linux-x86_64.tar.gz
