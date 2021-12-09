@@ -34,6 +34,16 @@ distributions:
       multiPlatform: true
       tap:
         active: release
+    snap:
+      active: RELEASE
+      base: core
+      localPlugs:
+        - network
+      snap:
+        active: RELEASE
+        name: maven-central-search
+        owner: maarten-mulders
+      remoteBuild: true
     artifacts:
       - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-linux-x86_64.tar.gz
         platform: linux-x86_64
