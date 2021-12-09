@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>it.mulders</groupId>
     <artifactId>mcs</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.1.6</version>
 
     <description>Use Maven Central Repository Search from your command line!</description>
     <inceptionYear>2021</inceptionYear>
