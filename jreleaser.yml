@@ -41,7 +41,7 @@ distributions:
         - network
       snap:
         active: RELEASE
-        name: maven-central-search
+        name: mcs-snap
         owner: mthmulders
       remoteBuild: true
     artifacts:
