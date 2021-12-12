@@ -35,9 +35,9 @@ distributions:
       tap:
         active: release
     chocolatey:
-      active: ALWAYS
+      active: RELEASE
       bucket:
-        active: ALWAYS
+        active: RELEASE
       remoteBuild: true
     snap:
       active: RELEASE
