@@ -34,6 +34,11 @@ distributions:
       multiPlatform: true
       tap:
         active: release
+    chocolatey:
+      active: ALWAYS
+      bucket:
+        active: ALWAYS
+      remoteBuild: true
     snap:
       active: RELEASE
       base: core

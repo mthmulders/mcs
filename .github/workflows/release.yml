@@ -186,6 +186,7 @@ jobs:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JRELEASER_HOMEBREW_GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           JRELEASER_SNAP_GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          JRELEASER_CHOCOLATEY_GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Set next version
         env:
