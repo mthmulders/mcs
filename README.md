@@ -28,10 +28,10 @@ This tool supports two modes of searching:
 ## Installation
 You can install mcs using the package manager of your choice:
 
-| Package manager | Platform | Installation                        | Remarks                                                                                      |
-| --- | --- |-------------------------------------|----------------------------------------------------------------------------------------------|
-| **Homebrew** | 🍎 | `brew install mthmulders/tap/mcs`   |                                                                                              |
-| **Snap** | 🐧 | `snap install maven-central-search` | There is no global alias (yet), <br /> so you have to run <br /> `maven-central-search.mcs`  |
+| Package manager | Platform   | Installation                        | Remarks                                                                                     |
+|-----------------|------------|-------------------------------------|---------------------------------------------------------------------------------------------|
+| **Homebrew**    | 🍎         | `brew install mthmulders/tap/mcs`   |                                                                                             |
+| **Snap**        | 🐧         | `snap install maven-central-search` | There is no global alias (yet), <br /> so you have to run <br /> `maven-central-search.mcs` |
 
 ## Ideas for future development
 * [ ] Proper support for multiple classifiers at a particular coordinate.
