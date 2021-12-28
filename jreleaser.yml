@@ -54,6 +54,8 @@ distributions:
     artifacts:
       - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-linux-x86_64.zip
         platform: linux-x86_64
+      - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-linux-x86_64.tar.gz
+        platform: linux-x86_64
       - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-windows-x86_64.zip
         platform: windows-x86_64
       - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-osx-x86_64.zip
