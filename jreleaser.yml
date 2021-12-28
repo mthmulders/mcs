@@ -39,6 +39,8 @@ distributions:
       bucket:
         active: RELEASE
       remoteBuild: true
+    sdkman:
+      active: RELEASE
     snap:
       active: RELEASE
       base: core
