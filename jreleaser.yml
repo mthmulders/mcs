@@ -52,7 +52,7 @@ distributions:
         owner: mthmulders
       remoteBuild: true
     artifacts:
-      - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-linux-x86_64.tar.gz
+      - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-linux-x86_64.zip
         platform: linux-x86_64
       - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-windows-x86_64.zip
         platform: windows-x86_64
