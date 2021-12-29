@@ -8,6 +8,9 @@ project:
   license: MIT
   extraProperties:
     inceptionYear: 2021
+  tags:
+    - 'maven'
+    - 'development'
 
 release:
   github:
