@@ -50,6 +50,7 @@ distributions:
         active: RELEASE
         name: mcs-snap
         owner: mthmulders
+      packageName: maven-central-search
       remoteBuild: true
     artifacts:
       - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-linux-x86_64.zip
