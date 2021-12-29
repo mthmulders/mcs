@@ -21,6 +21,14 @@ public class Cli {
     )
     private boolean showVersion;
 
+    @CommandLine.Option(
+            names = { "-h", "--help" },
+            description = "Display this help message and exits",
+            scope = CommandLine.ScopeType.INHERIT,
+            usageHelp = true
+    )
+    boolean usageHelpRequested;
+
     public Cli(final SearchCommandHandler searchCommandHandler) {
         this.searchCommandHandler = searchCommandHandler;
     }
@@ -29,7 +37,11 @@ public class Cli {
         return new SearchCommand();
     }
 
-    @CommandLine.Command(name = "search", usageHelpAutoWidth = true)
+    @CommandLine.Command(
+            name = "search",
+            description = "Search artifacts in Maven Central",
+            usageHelpAutoWidth = true
+    )
     public class SearchCommand implements Callable<Integer> {
         @CommandLine.Parameters(
                 arity = "1",
