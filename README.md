@@ -34,6 +34,11 @@ You can install mcs using the package manager of your choice:
 | **Snap**        | 🐧       | `snap install maven-central-search` | There is no global alias (yet), <br /> so you have to run <br /> `maven-central-search.mcs` |
 | **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                   |                                                                                             |
 
+⚠️
+The macOS and Linux binaries only work on x86_64 CPU's.
+If you have a Mac with Apple Silicon, you can use mcs through Rosetta.
+⚠️
+
 ## Ideas for future development
 * [ ] Proper support for multiple classifiers at a particular coordinate.
 * [ ] Immediately copy the pom.xml snippet to the clipboard.
