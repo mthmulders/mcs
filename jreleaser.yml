@@ -51,7 +51,7 @@ distributions:
         - network
       architectures:
         - buildOn: [amd64]
-          runOn: [am64]
+          runOn: [amd64]
       snap:
         active: RELEASE
         name: mcs-snap
