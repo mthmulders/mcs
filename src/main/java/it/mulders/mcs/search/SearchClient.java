@@ -64,6 +64,20 @@ public class SearchClient {
         return performSearch(query);
     }
 
+    /**
+     * Perform a "class" search - that is, a search where the user specifies
+     * the <code>fullClass</code> name, including the package, and receives
+     * the artifacts that contain it.
+     * Fetches at most 20 items.
+     *
+     * @param fullClass the full class name
+     * @return Either a {@link SearchResponse} instance or a {@link Throwable}.
+     */
+    public Result<SearchResponse> classSearch(String fullClass) {
+        var query = String.format("fc:%s", fullClass);
+        return performSearch(query);
+    }
+
     private Result<SearchResponse> performSearch(final String query) {
         var uri = String.format("%s/solrsearch/select?q=%s&start=0&rows=20", hostname, URLEncoder.encode(query, StandardCharsets.UTF_8));
 

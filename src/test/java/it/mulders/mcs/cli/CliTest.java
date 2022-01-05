@@ -27,4 +27,15 @@ class CliTest implements WithAssertions {
             verify(searchCommandHandler).search("test");
         }
     }
+
+    @Nested
+    class ClassSearchCommand {
+        @Test
+        void delegate_to_handler() {
+            var program = new CommandLine(cli, new CommandClassFactory(cli));
+            program.execute("class-search", "test");
+
+            verify(searchCommandHandler).classSearch("test");
+        }
+    }
 }

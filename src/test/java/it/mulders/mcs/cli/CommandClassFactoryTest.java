@@ -16,6 +16,11 @@ class CommandClassFactoryTest implements WithAssertions {
     }
 
     @Test
+    void can_construct_class_search_command_instance() throws Exception {
+        assertThat(factory.create(Cli.ClassSearchCommand.class)).isNotNull();
+    }
+
+    @Test
     void can_construct_arbitrary_other_class() throws Exception {
         assertThat(factory.create(Dummy.class)).isNotNull();
     }

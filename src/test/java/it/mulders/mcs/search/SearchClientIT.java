@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.ok;
@@ -102,11 +103,38 @@ class SearchClientIT implements WithAssertions {
         }
     }
 
+    @DisplayName("Full Class")
+    @Nested
+    class FullClassSearchTest {
+
+        @Test
+        void should_return_list_of_artifacts(final WireMockRuntimeInfo wmRuntimeInfo) {
+            // Arrange
+            stubFor(get(urlPathMatching("/solrsearch/select*"))
+                    .willReturn(ok(getResourceAsString("/full-class-search.json"))));
+
+            // Act
+            var  result = new SearchClient(wmRuntimeInfo.getHttpBaseUrl())
+                    .classSearch("org.junit.jupiter.api.DisplayNameGenerator");
+
+            // Assert
+            assertThat(result.value()).isNotNull();
+            assertThat(result.value().response().numFound()).isEqualTo(175);
+
+            var ids = Arrays.stream(result.value().response().docs())
+                    .map(doc -> String.format("%s:%s", doc.g(), doc.a()))
+                    .collect(Collectors.toSet())
+                    .toArray(String[]::new);
+            assertThat(ids.length).isEqualTo(1);
+            assertThat(ids).containsOnly("org.junit.jupiter:junit-jupiter-api");
+        }
+    }
+
     @DisplayName("Error handling")
     @Nested
     class ErrorHandlingTest {
         @Test
-        void should_gracefully_return_failures(final WireMockRuntimeInfo wmRuntimeInfo) throws MalformedURLException {
+        void should_gracefully_return_failures(final WireMockRuntimeInfo wmRuntimeInfo) {
             // Very unlikely there's an HTTP server running there...
             var result = new SearchClient("http://localhost:21")
                     .wildcardSearch("plexus-utils");
@@ -114,5 +142,6 @@ class SearchClientIT implements WithAssertions {
             assertThat(result).isInstanceOf(Result.Failure.class);
             assertThat(result.cause()).isInstanceOf(ConnectException.class);
         }
+
     }
 }

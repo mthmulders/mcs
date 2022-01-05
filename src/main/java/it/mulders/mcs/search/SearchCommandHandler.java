@@ -24,6 +24,11 @@ public class SearchCommandHandler {
         }
     }
 
+    public void classSearch(final String query) {
+        System.out.printf("Search with class %s...%n", query);
+        performFullClassSearch(query);
+    }
+
     private void performWildcardSearch(final String query) {
         searchClient.wildcardSearch(query)
                 .map(SearchResponse::response)
@@ -53,6 +58,12 @@ public class SearchCommandHandler {
                     .map(SearchResponse::response)
                     .ifPresent(this::printResponse);
         }
+    }
+
+    private void performFullClassSearch(final String query) {
+        searchClient.classSearch(query)
+                .map(SearchResponse::response)
+                .ifPresent(this::printResponse);
     }
 
     private void printResponse(final SearchResponse.Response response) {

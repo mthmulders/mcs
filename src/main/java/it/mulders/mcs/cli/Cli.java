@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 
 @CommandLine.Command(
         name = "mcs",
-        subcommands = { Cli.SearchCommand.class },
+        subcommands = { Cli.SearchCommand.class, Cli.ClassSearchCommand.class },
         usageHelpAutoWidth = true,
         versionProvider = ClasspathVersionProvider.class
 )
@@ -29,6 +29,10 @@ public class Cli {
         return new SearchCommand();
     }
 
+    public ClassSearchCommand createClassSearchCommand() {
+        return new ClassSearchCommand();
+    }
+
     @CommandLine.Command(name = "search", usageHelpAutoWidth = true)
     public class SearchCommand implements Callable<Integer> {
         @CommandLine.Parameters(
@@ -45,10 +49,26 @@ public class Cli {
         }
 
         @Override
-        public Integer call() throws Exception {
+        public Integer call() {
             searchCommandHandler.search(this.query);
             return 0;
         }
     }
 
+    @CommandLine.Command(name = "class-search", usageHelpAutoWidth = true)
+    public class ClassSearchCommand implements Callable<Integer> {
+        @CommandLine.Parameters(
+                arity = "1",
+                description = {
+                        "Search package by full class name"
+                }
+        )
+        private String query;
+
+        @Override
+        public Integer call() {
+            searchCommandHandler.classSearch(this.query);
+            return 0;
+        }
+    }
 }

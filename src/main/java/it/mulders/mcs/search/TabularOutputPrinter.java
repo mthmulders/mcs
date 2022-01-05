@@ -41,7 +41,12 @@ public class TabularOutputPrinter implements OutputPrinter {
     }
 
     private String gav(final SearchResponse.Response.Doc doc) {
-        return String.format("%s:%s", doc.id(), doc.latestVersion());
+        var latestVersion = doc.latestVersion();
+        if (latestVersion == null) {
+            return String.format("%s", doc.id());
+        } else {
+            return String.format("%s:%s", doc.id(), doc.latestVersion());
+        }
     }
 
     private void printRow(final Help.TextTable table, final SearchResponse.Response.Doc doc) {
