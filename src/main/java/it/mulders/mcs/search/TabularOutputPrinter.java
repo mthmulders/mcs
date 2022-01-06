@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static it.mulders.mcs.search.Constants.MAX_SEARCH_RESULTS;
+
 public class TabularOutputPrinter implements OutputPrinter {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(
             "dd MMM yyyy 'at' HH:mm (zzz)"
@@ -20,9 +22,17 @@ public class TabularOutputPrinter implements OutputPrinter {
     private static final int MAX_LINE_LENGTH = 120;
     private static final int SPACING = 3;
 
+    private String header(final SearchResponse.Response response) {
+        var numFound = response.numFound();
+        var additionalMessage = numFound > MAX_SEARCH_RESULTS
+                ? String.format(" (showing first %d)", MAX_SEARCH_RESULTS)
+                : "";
+        return String.format("Found @|bold %d|@ results%s%n",
+                response.numFound(), additionalMessage);
+    }
+
     public void print(final SearchResponse.Response response, final PrintStream stream) {
-        var message = String.format("Found @|bold %d|@ results%n", response.numFound());
-        stream.println(CommandLine.Help.Ansi.AUTO.string(message));
+        stream.println(CommandLine.Help.Ansi.AUTO.string(header(response)));
 
         var colorScheme = Help.defaultColorScheme(Ansi.AUTO);
 

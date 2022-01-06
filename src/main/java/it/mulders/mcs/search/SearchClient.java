@@ -10,6 +10,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.nio.charset.StandardCharsets;
 
+import static it.mulders.mcs.search.Constants.MAX_SEARCH_RESULTS;
+
 public class SearchClient {
     private final String hostname;
     private final HttpClient client = HttpClient.newHttpClient();
@@ -65,7 +67,8 @@ public class SearchClient {
     }
 
     private Result<SearchResponse> performSearch(final String query) {
-        var uri = String.format("%s/solrsearch/select?q=%s&start=0&rows=20", hostname, URLEncoder.encode(query, StandardCharsets.UTF_8));
+        var uri = String.format("%s/solrsearch/select?q=%s&start=0&rows=%d",
+                hostname, URLEncoder.encode(query, StandardCharsets.UTF_8), MAX_SEARCH_RESULTS);
 
         var request = HttpRequest.newBuilder()
                 .uri(URI.create(uri))
