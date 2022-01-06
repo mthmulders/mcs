@@ -15,6 +15,7 @@ public class CommandClassFactory implements CommandLine.IFactory {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <K> K create(Class<K> cls) throws Exception {
         if (cls == Cli.SearchCommand.class) {
             return (K) cli.createSearchCommand();

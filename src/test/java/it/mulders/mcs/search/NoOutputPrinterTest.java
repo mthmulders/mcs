@@ -1,6 +1,5 @@
 package it.mulders.mcs.search;
 
-import org.apache.commons.io.output.NullOutputStream;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Test;
 
