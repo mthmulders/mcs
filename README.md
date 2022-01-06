@@ -28,11 +28,12 @@ This tool supports two modes of searching:
 ## Installation
 You can install mcs using the package manager of your choice:
 
-| Package manager | Platform | Installation                        | Remarks                                                                                     |
-|-----------------|----------|-------------------------------------|---------------------------------------------------------------------------------------------|
-| **Homebrew**    | 🍎 🐧     | `brew install mthmulders/tap/mcs`   |                                                                                             |
-| **Snap**        | 🐧       | `snap install maven-central-search` | There is no global alias (yet), <br /> so you have to run <br /> `maven-central-search.mcs` |
-| **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                   |                                                                                             |
+| Package manager | Platform | Installation                         | Remarks                                                                                     |
+|-----------------|----------|--------------------------------------|---------------------------------------------------------------------------------------------|
+| **Homebrew**    | 🍎 🐧    | `brew install mthmulders/tap/mcs`    |                                                                                             |
+| **Snap**        | 🐧       | `snap install maven-central-search`  | There is no global alias (yet), <br /> so you have to run <br /> `maven-central-search.mcs` |
+| **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                    |                                                                                             |
+| **Chocolatey**  | 🪟       | `choco install mcs --version=0.1.18` |                                                                                              |
 
 ⚠️
 The macOS and Linux binaries only work on x86_64 CPU's.
