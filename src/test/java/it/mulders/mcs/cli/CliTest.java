@@ -18,7 +18,7 @@ class CliTest implements WithAssertions {
     private final Cli cli = new Cli(searchCommandHandler);
 
     @Nested
-    class SearchCommand {
+    class SearchCommandTest {
         @Test
         void delegates_to_handler() {
             var program = new CommandLine(cli, new CommandClassFactory(cli));
