@@ -44,5 +44,5 @@ If you have a Mac with Apple Silicon, you can use mcs through Rosetta.
 * [ ] Proper support for multiple classifiers at a particular coordinate.
 * [ ] Immediately copy the pom.xml snippet to the clipboard.
 * [ ] Show the coordinates in a different form (Ivy, Gradle, SBT).
-* [ ] Show a list of all versions for a given coordinate (using `--list-all`? or using a new command `list`?)
+
 
