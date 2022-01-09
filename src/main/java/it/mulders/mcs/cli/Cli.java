@@ -55,7 +55,8 @@ public class Cli {
 
         @CommandLine.Option(
                 names = { "-l", "--last" },
-                description = "Show <n> last versions"
+                description = "Show <count> last versions",
+                paramLabel = "<count>"
         )
         private Integer lastVersions;
 
