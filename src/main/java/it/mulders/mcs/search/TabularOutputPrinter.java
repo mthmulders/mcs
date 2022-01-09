@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static it.mulders.mcs.search.Constants.MAX_SEARCH_RESULTS;
+import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
 
 public class TabularOutputPrinter implements OutputPrinter {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(
@@ -24,8 +24,8 @@ public class TabularOutputPrinter implements OutputPrinter {
 
     private String header(final SearchResponse.Response response) {
         var numFound = response.numFound();
-        var additionalMessage = numFound > MAX_SEARCH_RESULTS
-                ? String.format(" (showing first %d)", MAX_SEARCH_RESULTS)
+        var additionalMessage = numFound > DEFAULT_MAX_SEARCH_RESULTS
+                ? String.format(" (showing first %d)", DEFAULT_MAX_SEARCH_RESULTS)
                 : "";
         return String.format("Found @|bold %d|@ results%s%n",
                 response.numFound(), additionalMessage);

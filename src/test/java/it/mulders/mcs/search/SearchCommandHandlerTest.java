@@ -33,18 +33,14 @@ class SearchCommandHandlerTest implements WithAssertions {
     );
     private final SearchClient searchClient = new SearchClient() {
         @Override
-        public Result<SearchResponse> wildcardSearch(String query) {
-            return new Result.Success<>(new SearchResponse(null, wildcardResponse));
-        }
-
-        @Override
-        public Result<SearchResponse> singularSearch(String groupId, String artifactId) {
-            return new Result.Success<>(new SearchResponse(null, twoPartCoordinateResponse));
-        }
-
-        @Override
-        public Result<SearchResponse> singularSearch(String groupId, String artifactId, String version) {
-            return new Result.Success<>(new SearchResponse(null, threePartCoordinateResponse));
+        public Result<SearchResponse> search(final SearchQuery query) {
+            if (query instanceof WildcardSearchQuery) {
+                return new Result.Success<>(new SearchResponse(null, wildcardResponse));
+            } else if (query instanceof CoordinateQuery cq && cq.version() == null) {
+                return new Result.Success<>(new SearchResponse(null, twoPartCoordinateResponse));
+            } else {
+                return new Result.Success<>(new SearchResponse(null, threePartCoordinateResponse));
+            }
         }
     };
 

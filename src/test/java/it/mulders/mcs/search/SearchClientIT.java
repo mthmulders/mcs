@@ -45,7 +45,7 @@ class SearchClientIT implements WithAssertions {
 
             // Act
             var result = new SearchClient(wmRuntimeInfo.getHttpBaseUrl())
-                    .wildcardSearch("plexus-utils");
+                    .search(new WildcardSearchQuery("plexus-utils"));
 
             // Assert
             assertThat(result.value()).isNotNull();
@@ -69,7 +69,7 @@ class SearchClientIT implements WithAssertions {
 
             // Act
             var result = new SearchClient(wmRuntimeInfo.getHttpBaseUrl())
-                    .singularSearch("org.codehaus.plexus", "plexus-utils");
+                    .search(new CoordinateQuery("org.codehaus.plexus", "plexus-utils"));
 
             // Assert
             assertThat(result.value()).isNotNull();
@@ -89,7 +89,7 @@ class SearchClientIT implements WithAssertions {
 
             // Act
             var result = new SearchClient(wmRuntimeInfo.getHttpBaseUrl())
-                    .singularSearch("org.codehaus.plexus", "plexus-utils", "3.4.1");
+                    .search(new CoordinateQuery("org.codehaus.plexus", "plexus-utils", "3.4.1"));
 
             // Assert
             assertThat(result.value()).isNotNull();
@@ -109,7 +109,7 @@ class SearchClientIT implements WithAssertions {
         void should_gracefully_return_failures(final WireMockRuntimeInfo wmRuntimeInfo) throws MalformedURLException {
             // Very unlikely there's an HTTP server running there...
             var result = new SearchClient("http://localhost:21")
-                    .wildcardSearch("plexus-utils");
+                    .search(new WildcardSearchQuery("plexus-utils"));
 
             assertThat(result).isInstanceOf(Result.Failure.class);
             assertThat(result.cause()).isInstanceOf(ConnectException.class);

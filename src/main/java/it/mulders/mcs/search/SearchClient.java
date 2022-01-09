@@ -5,12 +5,8 @@ import it.mulders.mcs.common.SearchResponseBodyHandler;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.nio.charset.StandardCharsets;
-
-import static it.mulders.mcs.search.Constants.MAX_SEARCH_RESULTS;
 
 public class SearchClient {
     private final String hostname;
@@ -25,50 +21,8 @@ public class SearchClient {
         this.hostname = hostname;
     }
 
-    /**
-     * Perform a "wildcard" search - that is, a search where the user does not specify
-     * if the value they're looking for is a <code>groupId</code> or an <code>artifactId</code>.
-     * Fetches at most 20 items.
-     *
-     * @param query The value to search for.
-     * @return Either a {@link SearchResponse} instance or a {@link Throwable}.
-     */
-    public Result<SearchResponse> wildcardSearch(final String query) {
-        return performSearch(query);
-    }
-
-    /**
-     * Perform a "specific" search - that is, a search where the user specifies
-     * the <code>groupId</code> and <code>artifactId</code>, separated by <code>:</code>.
-     * Fetches at most 20 items.
-     *
-     * @param groupId The groupId to search for.
-     * @param artifactId The artifactId to search for.
-     * @return Either a {@link SearchResponse} instance or a {@link Throwable}.
-     */
-    public Result<SearchResponse> singularSearch(final String groupId, final String artifactId) {
-        var query = String.format("g:%s AND a:%s", groupId, artifactId);
-        return performSearch(query);
-    }
-
-    /**
-     * Perform a "specific" search - that is, a search where the user specifies
-     * the <code>groupId</code>, <code>artifactId</code> and  <code>version</code>, separated by <code>:</code>.
-     * Fetches at most 20 items.
-     *
-     * @param groupId The groupId to search for.
-     * @param artifactId The artifactId to search for.
-     * @param version The version to search for.
-     * @return Either a {@link SearchResponse} instance or a {@link Throwable}.
-     */
-    public Result<SearchResponse> singularSearch(final String groupId, final String artifactId, final String version) {
-        var query = String.format("g:%s AND a:%s AND v:%s", groupId, artifactId, version);
-        return performSearch(query);
-    }
-
-    private Result<SearchResponse> performSearch(final String query) {
-        var uri = String.format("%s/solrsearch/select?q=%s&start=0&rows=%d",
-                hostname, URLEncoder.encode(query, StandardCharsets.UTF_8), MAX_SEARCH_RESULTS);
+    public Result<SearchResponse> search(final SearchQuery query) {
+        var uri = String.format("%s/solrsearch/select?%s", hostname, query.toSolrQuery());
 
         var request = HttpRequest.newBuilder()
                 .uri(URI.create(uri))
