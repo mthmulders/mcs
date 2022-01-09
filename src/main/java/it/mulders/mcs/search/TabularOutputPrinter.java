@@ -10,7 +10,6 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Collection;
 
 import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
 
@@ -25,7 +24,7 @@ public class TabularOutputPrinter implements OutputPrinter {
     private String header(final SearchResponse.Response response) {
         var numFound = response.numFound();
         var additionalMessage = numFound > DEFAULT_MAX_SEARCH_RESULTS
-                ? String.format(" (showing first %d)", DEFAULT_MAX_SEARCH_RESULTS)
+                ? String.format(" (showing first %d)", response.docs().length)
                 : "";
         return String.format("Found @|bold %d|@ results%s%n",
                 response.numFound(), additionalMessage);
@@ -36,7 +35,7 @@ public class TabularOutputPrinter implements OutputPrinter {
 
         var colorScheme = Help.defaultColorScheme(Ansi.AUTO);
 
-        var maxKeyLength = maxLength(Arrays.stream(response.docs()).map(this::gav).toList());
+        var maxKeyLength = calculateCoordinateColumnWidth(response.docs());
 
         var table = CommandLine.Help.TextTable.forColumns(colorScheme,
                 new CommandLine.Help.Column(maxKeyLength + SPACING, INDENT, Overflow.SPAN),
@@ -50,8 +49,12 @@ public class TabularOutputPrinter implements OutputPrinter {
         stream.println(table);
     }
 
-    private String gav(final SearchResponse.Response.Doc doc) {
-        return String.format("%s:%s", doc.id(), doc.latestVersion());
+    private int calculateCoordinateColumnWidth(final SearchResponse.Response.Doc[] results) {
+        return Arrays.stream(results)
+                .map(SearchResponse.Response.Doc::id)
+                .mapToInt(String::length)
+                .max()
+                .orElseThrow(() -> new IllegalStateException("Used TabularOutputPrinter without any output"));
     }
 
     private void printRow(final Help.TextTable table, final SearchResponse.Response.Doc doc) {
@@ -59,12 +62,6 @@ public class TabularOutputPrinter implements OutputPrinter {
                 Instant.ofEpochMilli(doc.timestamp()).atZone(ZoneId.systemDefault())
         );
 
-        table.addRowValues(gav(doc), lastUpdated);
-    }
-
-    private static int maxLength(Collection<?> any) {
-        int result = 0;
-        for (Object value : any) { result = Math.max(result, String.valueOf(value).length()); }
-        return result;
+        table.addRowValues(doc.id(), lastUpdated);
     }
 }

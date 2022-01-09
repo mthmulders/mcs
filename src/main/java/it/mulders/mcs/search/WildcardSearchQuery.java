@@ -9,8 +9,17 @@ public record WildcardSearchQuery(
         String term,
         Integer searchLimit
 ) implements SearchQuery {
-    WildcardSearchQuery(final String term) {
+    public WildcardSearchQuery(final String term) {
         this(term, DEFAULT_MAX_SEARCH_RESULTS);
+    }
+
+    @Override
+    public SearchQuery withLimit(final Integer limit) {
+        if (limit != null) {
+            return new WildcardSearchQuery(term, limit);
+        } else {
+            return this;
+        }
     }
 
     @Override
