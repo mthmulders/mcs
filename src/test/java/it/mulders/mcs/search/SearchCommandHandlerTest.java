@@ -48,7 +48,7 @@ class SearchCommandHandlerTest implements WithAssertions {
 
     @Nested
     @DisplayName("Wildcard search")
-    class WildcardSearch {
+    class WildcardSearchTest {
         @Test
         void should_invoke_search_client() {
             handler.search("plexus-utils", null);
@@ -58,7 +58,7 @@ class SearchCommandHandlerTest implements WithAssertions {
 
     @Nested
     @DisplayName("Coordinate search")
-    class CoordinateSearch {
+    class CoordinateSearchTest {
         @Test
         void should_reject_search_terms_in_wrong_format() {
             assertThatThrownBy(() -> handler.search("foo:bar:baz:qux", null))
