@@ -14,52 +14,17 @@ public class SearchCommandHandler {
         this.outputPrinter = outputPrinter;
     }
 
-    public void search(final String query) {
-        System.out.printf("Searching for %s...%n", query);
+    public void search(final String input) {
+        System.out.printf("Searching for %s...%n", input);
 
-        if (isCoordinateSearch(query)) {
-            performCoordinateSearch(query);
-        } else {
-            performWildcardSearch(query);
-        }
-    }
+        var query = SearchQuery.fromUserInput(input);
 
-    private void performWildcardSearch(final String query) {
-        searchClient.wildcardSearch(query)
+        searchClient.search(query)
                 .map(SearchResponse::response)
                 .ifPresent(this::printResponse);
     }
 
-    private void performCoordinateSearch(final String query) {
-        var parts = query.split(":");
-        if (parts.length < 2 || parts.length > 3) {
-            var msg = """
-                        Searching a particular artifact requires at least groupId:artifactId and optionally :version
-                        """;
-            throw new IllegalArgumentException(msg);
-        }
-
-        var groupId = parts[0];
-        var artifactId = parts[1];
-        var hasVersion = parts.length == 3;
-        if (hasVersion) {
-            var version = parts[2];
-
-            searchClient.singularSearch(groupId, artifactId, version)
-                    .map(SearchResponse::response)
-                    .ifPresent(this::printResponse);
-        } else {
-            searchClient.singularSearch(groupId, artifactId)
-                    .map(SearchResponse::response)
-                    .ifPresent(this::printResponse);
-        }
-    }
-
     private void printResponse(final SearchResponse.Response response) {
         outputPrinter.print(response, System.out);
-    }
-
-    private boolean isCoordinateSearch(final String query) {
-        return query.contains(":");
     }
 }
