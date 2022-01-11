@@ -134,7 +134,7 @@ class SearchClientIT implements WithAssertions {
     @Nested
     class ErrorHandlingTest {
         @Test
-        void should_gracefully_return_failures(final WireMockRuntimeInfo wmRuntimeInfo) {
+        void should_gracefully_return_failures(final WireMockRuntimeInfo wmRuntimeInfo) throws MalformedURLException {
             // Very unlikely there's an HTTP server running there...
             var result = new SearchClient("http://localhost:21")
                     .wildcardSearch("plexus-utils");

@@ -49,7 +49,7 @@ public class Cli {
         }
 
         @Override
-        public Integer call() {
+        public Integer call() throws Exception {
             searchCommandHandler.search(this.query);
             return 0;
         }
