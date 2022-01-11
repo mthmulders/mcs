@@ -21,17 +21,17 @@ public class TabularOutputPrinter implements OutputPrinter {
     private static final int MAX_LINE_LENGTH = 120;
     private static final int SPACING = 3;
 
-    private String header(final SearchResponse.Response response) {
+    private String header(final SearchQuery query, final SearchResponse.Response response) {
         var numFound = response.numFound();
-        var additionalMessage = numFound > DEFAULT_MAX_SEARCH_RESULTS
+        var additionalMessage = numFound != query.searchLimit()
                 ? String.format(" (showing first %d)", response.docs().length)
                 : "";
         return String.format("Found @|bold %d|@ results%s%n",
                 response.numFound(), additionalMessage);
     }
 
-    public void print(final SearchResponse.Response response, final PrintStream stream) {
-        stream.println(CommandLine.Help.Ansi.AUTO.string(header(response)));
+    public void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream) {
+        stream.println(CommandLine.Help.Ansi.AUTO.string(header(query, response)));
 
         var colorScheme = Help.defaultColorScheme(Ansi.AUTO);
 

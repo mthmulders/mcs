@@ -22,11 +22,11 @@ public class DelegatingOutputPrinter implements OutputPrinter {
     }
 
     @Override
-    public void print(final SearchResponse.Response response, final PrintStream stream) {
+    public void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream) {
         switch (response.numFound()) {
-            case 0 -> noOutput.print(response, stream);
-            case 1 -> pomXmlOutput.print(response, stream);
-            default -> tabularSearchOutput.print(response, stream);
+            case 0 -> noOutput.print(query, response, stream);
+            case 1 -> pomXmlOutput.print(query, response, stream);
+            default -> tabularSearchOutput.print(query, response, stream);
         }
     }
 }

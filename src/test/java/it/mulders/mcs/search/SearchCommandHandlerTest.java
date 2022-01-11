@@ -52,7 +52,7 @@ class SearchCommandHandlerTest implements WithAssertions {
         @Test
         void should_invoke_search_client() {
             handler.search("plexus-utils", null);
-            verify(outputPrinter).print(eq(wildcardResponse), any());
+            verify(outputPrinter).print(any(WildcardSearchQuery.class), eq(wildcardResponse), any());
         }
     }
 
@@ -68,13 +68,13 @@ class SearchCommandHandlerTest implements WithAssertions {
         @Test
         void should_invoke_search_client_with_groupId_and_artifactId() {
             handler.search("org.codehaus.plexus:plexus-utils", null);
-            verify(outputPrinter).print(eq(twoPartCoordinateResponse), any());
+            verify(outputPrinter).print(any(CoordinateQuery.class), eq(twoPartCoordinateResponse), any());
         }
 
         @Test
         void should_invoke_search_client_with_groupId_and_artifactId_and_version() {
             handler.search("org.codehaus.plexus:plexus-utils:3.4.1", null);
-            verify(outputPrinter).print(eq(threePartCoordinateResponse), any());
+            verify(outputPrinter).print(any(CoordinateQuery.class), eq(threePartCoordinateResponse), any());
         }
     }
 }

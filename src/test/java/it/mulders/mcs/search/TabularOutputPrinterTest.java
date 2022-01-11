@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class TabularOutputPrinterTest implements WithAssertions {
     private final TabularOutputPrinter output = new TabularOutputPrinter();
+    private final SearchQuery query = new CoordinateQuery("org.codehaus.plexus", "plexus-utils");
 
     @Test
     void should_print_gav() {
@@ -33,7 +34,7 @@ class TabularOutputPrinterTest implements WithAssertions {
 
 
         // Act
-        output.print(response, new PrintStream(buffer));
+        output.print(query, response, new PrintStream(buffer));
 
 
         // Assert
@@ -59,7 +60,7 @@ class TabularOutputPrinterTest implements WithAssertions {
 
 
         // Act
-        output.print(response, new PrintStream(buffer));
+        output.print(query, response, new PrintStream(buffer));
 
 
         // Assert
@@ -67,5 +68,57 @@ class TabularOutputPrinterTest implements WithAssertions {
         var lastUpdated = DateTimeFormatter.ofPattern("dd MMM yyyy 'at' HH:mm (zzz)")
                 .format(Instant.ofEpochMilli(1630022910000L).atZone(ZoneId.systemDefault()));
         assertThat(table).contains(lastUpdated);
+    }
+
+    @Test
+    void should_mention_number_of_results() {
+        // Arrange
+        var response = new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[] {
+                new SearchResponse.Response.Doc(
+                        "org.codehaus.plexus:plexus-utils",
+                        "org.codehaus.plexus",
+                        "plexus-utils",
+                        null,
+                        "3.4.1",
+                        "jar",
+                        1630022910000L
+                )
+        });
+        var buffer = new ByteArrayOutputStream();
+
+
+        // Act
+        output.print(query, response, new PrintStream(buffer));
+
+
+        // Assert
+        var table = buffer.toString();
+        assertThat(table).contains("Found 1 results");
+    }
+
+    @Test
+    void should_mention_when_number_of_results_differs_from_requested() {
+        // Arrange
+        var response = new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[] {
+                new SearchResponse.Response.Doc(
+                        "org.codehaus.plexus:plexus-utils",
+                        "org.codehaus.plexus",
+                        "plexus-utils",
+                        null,
+                        "3.4.1",
+                        "jar",
+                        1630022910000L
+                )
+        });
+        var buffer = new ByteArrayOutputStream();
+
+
+        // Act
+        output.print(query.withLimit(5), response, new PrintStream(buffer));
+
+
+        // Assert
+        var table = buffer.toString();
+        assertThat(table).contains("showing first 1");
     }
 }

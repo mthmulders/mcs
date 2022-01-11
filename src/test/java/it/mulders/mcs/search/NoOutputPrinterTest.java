@@ -14,15 +14,15 @@ class NoOutputPrinterTest implements WithAssertions {
 
     @Test
     void should_fail_with_non_empty_result() {
-        assertThatThrownBy(() -> printer.print(responseWithResult(1), new PrintStream(outputStream)))
+        assertThatThrownBy(() -> printer.print(null, responseWithResult(1), new PrintStream(outputStream)))
                 .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> printer.print(responseWithResult(2), new PrintStream(outputStream)))
+        assertThatThrownBy(() -> printer.print(null, responseWithResult(2), new PrintStream(outputStream)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void should_print_message_with_empty_result() {
-        printer.print(responseWithResult(0), new PrintStream(outputStream));
+        printer.print(null, responseWithResult(0), new PrintStream(outputStream));
         assertThat(outputStream.toString(StandardCharsets.UTF_8)).contains("No results found");
     }
 

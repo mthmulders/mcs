@@ -11,6 +11,7 @@ import java.io.PrintStream;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PomXmlOutputTest implements WithAssertions {
     private final PomXmlOutput output = new PomXmlOutput();
+    private final SearchQuery query = new CoordinateQuery("org.codehaus.plexus", "plexus-utils");
 
     @Test
     void should_print_pom_snippet() {
@@ -29,7 +30,7 @@ class PomXmlOutputTest implements WithAssertions {
         var buffer = new ByteArrayOutputStream();
 
         // Act
-        output.print(response, new PrintStream(buffer));
+        output.print(query, response, new PrintStream(buffer));
 
 
         // Assert

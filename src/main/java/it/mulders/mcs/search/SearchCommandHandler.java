@@ -22,10 +22,10 @@ public class SearchCommandHandler {
 
         searchClient.search(query)
                 .map(SearchResponse::response)
-                .ifPresent(this::printResponse);
+                .ifPresent(response -> printResponse(query, response));
     }
 
-    private void printResponse(final SearchResponse.Response response) {
-        outputPrinter.print(response, System.out);
+    private void printResponse(final SearchQuery query, final SearchResponse.Response response) {
+        outputPrinter.print(query, response, System.out);
     }
 }
