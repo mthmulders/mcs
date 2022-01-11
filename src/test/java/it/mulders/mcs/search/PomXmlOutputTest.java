@@ -35,8 +35,14 @@ class PomXmlOutputTest implements WithAssertions {
 
         // Assert
         var xml = buffer.toString();
-        assertThat(xml).contains("<groupId>org.codehaus.plexus</groupId>");
-        assertThat(xml).contains("<artifactId>plexus-utils</artifactId>");
-        assertThat(xml).contains("<version>3.4.1</version>");
+        assertThat(xml).contains("""
+                
+                    <dependency>
+                        <groupId>org.codehaus.plexus</groupId>
+                        <artifactId>plexus-utils</artifactId>
+                        <version>3.4.1</version>
+                    </dependency>
+
+                """);
     }
 }
