@@ -24,7 +24,15 @@ class CliTest implements WithAssertions {
             var program = new CommandLine(cli, new CommandClassFactory(cli));
             program.execute("search", "test");
 
-            verify(searchCommandHandler).search("test");
+            verify(searchCommandHandler).search("test", null);
+        }
+
+        @Test
+        void accepts_last_versions_parameter() {
+            var program = new CommandLine(cli, new CommandClassFactory(cli));
+            program.execute("search", "--last", "3", "test");
+
+            verify(searchCommandHandler).search("test", 3);
         }
     }
 }

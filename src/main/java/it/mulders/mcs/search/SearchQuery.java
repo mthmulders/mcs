@@ -1,6 +1,8 @@
 package it.mulders.mcs.search;
 
 public sealed interface SearchQuery permits CoordinateQuery, WildcardSearchQuery {
+    SearchQuery withLimit(final Integer limit);
+
     Integer searchLimit();
 
     String toSolrQuery();

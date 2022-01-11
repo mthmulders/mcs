@@ -11,16 +11,20 @@ public record CoordinateQuery (
         String version,
         Integer searchLimit
 ) implements SearchQuery {
-    CoordinateQuery(final String groupId, final String artifactId) {
+    public CoordinateQuery(final String groupId, final String artifactId) {
         this(groupId, artifactId, null, DEFAULT_MAX_SEARCH_RESULTS);
     }
 
-    CoordinateQuery(final String groupId, final String artifactId, final String version) {
+    public CoordinateQuery(final String groupId, final String artifactId, final String version) {
         this(groupId, artifactId, version, DEFAULT_MAX_SEARCH_RESULTS);
     }
 
     public SearchQuery withLimit(final Integer limit) {
-        return new CoordinateQuery(groupId, artifactId, version, limit);
+        if (limit != null) {
+            return new CoordinateQuery(groupId, artifactId, version, limit);
+        } else {
+            return this;
+        }
     }
 
     @Override
@@ -32,7 +36,7 @@ public record CoordinateQuery (
             query = String.format("g:%s AND a:%s AND v:%s", groupId, artifactId, version);
         }
 
-        return String.format("q=%s&start=%d&rows=%d",
+        return String.format("q=%s&core=gav&start=%d&rows=%d",
                 URLEncoder.encode(query, StandardCharsets.UTF_8), 0, searchLimit());
     }
 }

@@ -48,32 +48,32 @@ class SearchCommandHandlerTest implements WithAssertions {
 
     @Nested
     @DisplayName("Wildcard search")
-    class WildcardSearch {
+    class WildcardSearchTest {
         @Test
         void should_invoke_search_client() {
-            handler.search("plexus-utils");
+            handler.search("plexus-utils", null);
             verify(outputPrinter).print(eq(wildcardResponse), any());
         }
     }
 
     @Nested
     @DisplayName("Coordinate search")
-    class CoordinateSearch {
+    class CoordinateSearchTest {
         @Test
         void should_reject_search_terms_in_wrong_format() {
-            assertThatThrownBy(() -> handler.search("foo:bar:baz:qux"))
+            assertThatThrownBy(() -> handler.search("foo:bar:baz:qux", null))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
         void should_invoke_search_client_with_groupId_and_artifactId() {
-            handler.search("org.codehaus.plexus:plexus-utils");
+            handler.search("org.codehaus.plexus:plexus-utils", null);
             verify(outputPrinter).print(eq(twoPartCoordinateResponse), any());
         }
 
         @Test
         void should_invoke_search_client_with_groupId_and_artifactId_and_version() {
-            handler.search("org.codehaus.plexus:plexus-utils:3.4.1");
+            handler.search("org.codehaus.plexus:plexus-utils:3.4.1", null);
             verify(outputPrinter).print(eq(threePartCoordinateResponse), any());
         }
     }

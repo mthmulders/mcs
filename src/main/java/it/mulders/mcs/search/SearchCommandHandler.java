@@ -14,10 +14,11 @@ public class SearchCommandHandler {
         this.outputPrinter = outputPrinter;
     }
 
-    public void search(final String input) {
+    public void search(final String input, final Integer lastVersions) {
         System.out.printf("Searching for %s...%n", input);
 
-        var query = SearchQuery.fromUserInput(input);
+        var query = SearchQuery.fromUserInput(input)
+                .withLimit(lastVersions);
 
         searchClient.search(query)
                 .map(SearchResponse::response)

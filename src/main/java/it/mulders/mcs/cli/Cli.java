@@ -53,12 +53,19 @@ public class Cli {
         )
         private String query;
 
+        @CommandLine.Option(
+                names = { "-l", "--last" },
+                description = "Show <count> last versions",
+                paramLabel = "<count>"
+        )
+        private Integer lastVersions;
+
         public SearchCommand() {
         }
 
         @Override
         public Integer call() {
-            searchCommandHandler.search(this.query);
+            searchCommandHandler.search(this.query, this.lastVersions);
             return 0;
         }
     }
