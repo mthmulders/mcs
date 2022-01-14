@@ -9,23 +9,8 @@ public record CoordinateQuery (
         String groupId,
         String artifactId,
         String version,
-        Integer searchLimit
+        int searchLimit
 ) implements SearchQuery {
-    public CoordinateQuery(final String groupId, final String artifactId) {
-        this(groupId, artifactId, null, DEFAULT_MAX_SEARCH_RESULTS);
-    }
-
-    public CoordinateQuery(final String groupId, final String artifactId, final String version) {
-        this(groupId, artifactId, version, DEFAULT_MAX_SEARCH_RESULTS);
-    }
-
-    public SearchQuery withLimit(final Integer limit) {
-        if (limit != null) {
-            return new CoordinateQuery(groupId, artifactId, version, limit);
-        } else {
-            return this;
-        }
-    }
 
     @Override
     public String toSolrQuery() {

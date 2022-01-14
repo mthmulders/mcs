@@ -23,7 +23,7 @@ class DelegatingOutputPrinterTest implements WithAssertions {
 
     private final DelegatingOutputPrinter printer = new DelegatingOutputPrinter(noOutput, pomXmlOutput, tabularSearchOutput);
 
-    private final SearchQuery query = new CoordinateQuery("org.codehaus.plexus", "plexus-utils");
+    private final SearchQuery query = SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
     private final PrintStream outputStream = new PrintStream(NullOutputStream.nullOutputStream());
 
     @Test

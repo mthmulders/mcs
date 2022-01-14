@@ -1,13 +1,14 @@
 package it.mulders.mcs.cli;
 
 import it.mulders.mcs.search.SearchCommandHandler;
+import it.mulders.mcs.search.SearchQuery;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(
         name = "mcs",
-        subcommands = { Cli.SearchCommand.class },
+        subcommands = { Cli.SearchCommand.class, Cli.ClassSearchCommand.class},
         usageHelpAutoWidth = true,
         versionProvider = ClasspathVersionProvider.class
 )
@@ -35,6 +36,10 @@ public class Cli {
 
     public SearchCommand createSearchCommand() {
         return new SearchCommand();
+    }
+
+    public ClassSearchCommand createClassSearchCommand() {
+        return new ClassSearchCommand();
     }
 
     @CommandLine.Command(
@@ -65,9 +70,42 @@ public class Cli {
 
         @Override
         public Integer call() {
-            searchCommandHandler.search(this.query, this.lastVersions);
+            System.out.printf("Searching for %s...%n", query);
+            searchCommandHandler.search(SearchQuery.search(this.query).withLimit(this.lastVersions).build());
             return 0;
         }
     }
 
+    @CommandLine.Command(
+            name = "class-search",
+            description = "Search artifacts in Maven Central",
+            usageHelpAutoWidth = true
+    )
+    public class ClassSearchCommand implements Callable<Integer> {
+
+        @CommandLine.Parameters(
+                arity = "1",
+                description = {
+                        "What to search for.",
+                        "This should be a class name. The result is the artifacts that contain the class.",
+                }
+        )
+        private String query;
+
+        @CommandLine.Option(
+                names = { "-f", "--full-name" },
+                negatable = true,
+                arity = "0",
+                description = "Show <count> last versions",
+                paramLabel = "<count>"
+        )
+        private Boolean fullName;
+
+        @Override
+        public Integer call() {
+            System.out.printf("Searching libs that contain %s...%n", query);
+            searchCommandHandler.search(SearchQuery.classSearch(this.query).withFullName(this.fullName).build());
+            return 0;
+        }
+    }
 }

@@ -1,0 +1,51 @@
+package it.mulders.mcs.search;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+public class FullClassnameQueryTest {
+    @Nested
+    @DisplayName("builder")
+    class SearchQueryBuilderTest {
+
+        @Test
+        void can_create_classname_query() {
+            SearchQuery query = SearchQuery.classSearch("test").withFullName(true).build();
+            assertThat(query).isInstanceOf(FullClassnameQuery.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("toSolrQuery")
+    class ToSolrQueryTest {
+        @Test
+        void solr_query_should_contain_limit() {
+            var query = SearchQuery.classSearch("foo").withLimit(5).build();
+
+            var solrQuery = query.toSolrQuery();
+
+            assertThat(solrQuery).contains("rows=5");
+        }
+
+        @Test
+        void solr_query_should_contain_search_term() {
+            var query = SearchQuery.classSearch("foo").build();
+
+            var solrQuery = query.toSolrQuery();
+
+            assertThat(solrQuery).contains("q=c:foo");
+        }
+
+        @Test
+        void solr_query_should_contain_start() {
+            var query = SearchQuery.classSearch("foo").build();
+
+            var solrQuery = query.toSolrQuery();
+
+            assertThat(solrQuery).contains("start=0");
+        }
+    }
+}

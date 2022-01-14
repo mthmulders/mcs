@@ -13,30 +13,17 @@ class WildcardSearchQueryTest implements WithAssertions {
     @DisplayName("withLimit")
     class WithLimitTest {
         @Test
-        void null_limit_should_return_original_object() {
-            var query = new WildcardSearchQuery("foo");
+        void simple_query_should_return_wildcard_query() {
+            var query = SearchQuery.search("foo").build();
 
-            var result = query.withLimit(null);
-
-            assertThat(result).isSameAs(query);
-        }
-
-        @Test
-        void non_null_limit_should_return_new_object() {
-            var query = new WildcardSearchQuery("foo");
-
-            var result = query.withLimit(1);
-
-            assertThat(result).isNotSameAs(query);
+            assertThat(query).isInstanceOf(WildcardSearchQuery.class);
         }
 
         @Test
         void non_null_limit_should_return_object_with_limit() {
-            var query = new WildcardSearchQuery("foo");
+            var query = SearchQuery.search("foo").build();
 
-            var result = query.withLimit(1);
-
-            assertThat(result.searchLimit()).isEqualTo(1);
+            assertThat(query.searchLimit()).isEqualTo(1);
         }
     }
 
@@ -45,8 +32,7 @@ class WildcardSearchQueryTest implements WithAssertions {
     class ToSolrQueryTest {
         @Test
         void solr_query_should_contain_limit() {
-            var query = new WildcardSearchQuery("foo")
-                    .withLimit(5);
+            var query = SearchQuery.search("foo").withLimit(5).build();
 
             var solrQuery = query.toSolrQuery();
 
@@ -55,7 +41,7 @@ class WildcardSearchQueryTest implements WithAssertions {
 
         @Test
         void solr_query_should_contain_search_term() {
-            var query = new WildcardSearchQuery("foo");
+            var query = SearchQuery.search("foo").build();
 
             var solrQuery = query.toSolrQuery();
 
@@ -64,7 +50,7 @@ class WildcardSearchQueryTest implements WithAssertions {
 
         @Test
         void solr_query_should_contain_start() {
-            var query = new WildcardSearchQuery("foo");
+            var query = SearchQuery.search("foo").build();
 
             var solrQuery = query.toSolrQuery();
 

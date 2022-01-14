@@ -19,6 +19,8 @@ public class CommandClassFactory implements CommandLine.IFactory {
     public <K> K create(Class<K> cls) throws Exception {
         if (cls == Cli.SearchCommand.class) {
             return (K) cli.createSearchCommand();
+        } else if (cls == Cli.ClassSearchCommand.class) {
+            return (K) cli.createClassSearchCommand();
         }
 
         return defaultFactory.create(cls);
