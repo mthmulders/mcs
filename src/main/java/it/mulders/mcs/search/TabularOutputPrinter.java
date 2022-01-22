@@ -18,7 +18,6 @@ public class TabularOutputPrinter implements OutputPrinter {
             "dd MMM yyyy 'at' HH:mm (zzz)"
     );
     private static final int INDENT = 2;
-    private static final int MAX_LINE_LENGTH = 120;
     private static final int SPACING = 3;
 
     private String header(final SearchQuery query, final SearchResponse.Response response) {
@@ -39,7 +38,7 @@ public class TabularOutputPrinter implements OutputPrinter {
 
         var table = CommandLine.Help.TextTable.forColumns(colorScheme,
                 new CommandLine.Help.Column(maxKeyLength + SPACING, INDENT, Overflow.SPAN),
-                new CommandLine.Help.Column(MAX_LINE_LENGTH - (maxKeyLength + SPACING), INDENT, Overflow.WRAP)
+                new CommandLine.Help.Column(30, INDENT, Overflow.WRAP)
         );
 
         table.addRowValues("Coordinates", "Last updated");
