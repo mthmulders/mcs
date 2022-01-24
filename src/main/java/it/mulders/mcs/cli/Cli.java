@@ -1,6 +1,7 @@
 package it.mulders.mcs.cli;
 
 import it.mulders.mcs.search.SearchCommandHandler;
+import it.mulders.mcs.search.SearchQuery;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -65,7 +66,11 @@ public class Cli {
 
         @Override
         public Integer call() {
-            searchCommandHandler.search(this.query, this.lastVersions);
+            System.out.printf("Searching for %s...%n", query);
+            var searchQuery = SearchQuery.search(this.query)
+                    .withLimit(this.lastVersions)
+                    .build();
+            searchCommandHandler.search(searchQuery);
             return 0;
         }
     }

@@ -1,37 +1,30 @@
 package it.mulders.mcs.search;
 
 public sealed interface SearchQuery permits CoordinateQuery, WildcardSearchQuery {
-    SearchQuery withLimit(final Integer limit);
-
     Integer searchLimit();
 
     String toSolrQuery();
 
-    static SearchQuery fromUserInput(final String input) {
-        if (isCoordinateSearch(input)) {
-            var parts = input.split(":");
-            if (parts.length < 2 || parts.length > 3) {
-                var msg = """
+    static SearchQuery.Builder search(String query) {
+        var isCoordinateSearch = query.contains(":");
+        if (isCoordinateSearch) {
+            var parts = query.split(":");
+            switch (parts.length) {
+                case 2: return new CoordinateQuery.Builder(parts[0], parts[1]);
+                case 3: return new CoordinateQuery.Builder(parts[0], parts[1], parts[2]);
+                default:
+                    var msg = """
                         Searching a particular artifact requires at least groupId:artifactId and optionally :version
                         """;
-                throw new IllegalArgumentException(msg);
-            }
-
-            var groupId = parts[0];
-            var artifactId = parts[1];
-            var hasVersion = parts.length == 3;
-            if (hasVersion) {
-                var version = parts[2];
-                return new CoordinateQuery(groupId, artifactId, version);
-            } else {
-                return new CoordinateQuery(groupId, artifactId);
+                    throw new IllegalArgumentException(msg);
             }
         } else {
-            return new WildcardSearchQuery(input);
+            return new WildcardSearchQuery.Builder(query);
         }
     }
 
-    private static boolean isCoordinateSearch(final String query) {
-        return query.contains(":");
+    interface Builder {
+        <T extends Builder> T withLimit(final Integer limit);
+        SearchQuery build();
     }
 }

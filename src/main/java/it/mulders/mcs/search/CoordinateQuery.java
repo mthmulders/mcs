@@ -11,22 +11,6 @@ public record CoordinateQuery (
         String version,
         Integer searchLimit
 ) implements SearchQuery {
-    public CoordinateQuery(final String groupId, final String artifactId) {
-        this(groupId, artifactId, null, DEFAULT_MAX_SEARCH_RESULTS);
-    }
-
-    public CoordinateQuery(final String groupId, final String artifactId, final String version) {
-        this(groupId, artifactId, version, DEFAULT_MAX_SEARCH_RESULTS);
-    }
-
-    public SearchQuery withLimit(final Integer limit) {
-        if (limit != null) {
-            return new CoordinateQuery(groupId, artifactId, version, limit);
-        } else {
-            return this;
-        }
-    }
-
     @Override
     public String toSolrQuery() {
         String query;
@@ -38,5 +22,33 @@ public record CoordinateQuery (
 
         return String.format("q=%s&core=gav&start=%d&rows=%d",
                 URLEncoder.encode(query, StandardCharsets.UTF_8), 0, searchLimit());
+    }
+
+    public static class Builder implements SearchQuery.Builder {
+        private String groupId;
+        private String artifactId;
+        private String version;
+        private Integer limit = DEFAULT_MAX_SEARCH_RESULTS;
+
+        public Builder(String groupId, String artifactId) {
+            this(groupId, artifactId, null);
+        }
+
+        public Builder(String groupId, String artifactId, String version) {
+            this.groupId = groupId;
+            this.artifactId = artifactId;
+            this.version = version;
+        }
+
+        @Override
+        public Builder withLimit(Integer limit) {
+            this.limit = limit;
+            return this;
+        }
+
+        @Override
+        public SearchQuery build() {
+            return new CoordinateQuery(groupId, artifactId, version, limit);
+        }
     }
 }

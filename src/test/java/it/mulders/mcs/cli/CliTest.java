@@ -1,6 +1,7 @@
 package it.mulders.mcs.cli;
 
 import it.mulders.mcs.search.SearchCommandHandler;
+import it.mulders.mcs.search.SearchQuery;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -24,7 +25,7 @@ class CliTest implements WithAssertions {
             var program = new CommandLine(cli, new CommandClassFactory(cli));
             program.execute("search", "test");
 
-            verify(searchCommandHandler).search("test", null);
+            verify(searchCommandHandler).search(SearchQuery.search("test").build());
         }
 
         @Test
@@ -32,7 +33,7 @@ class CliTest implements WithAssertions {
             var program = new CommandLine(cli, new CommandClassFactory(cli));
             program.execute("search", "--last", "3", "test");
 
-            verify(searchCommandHandler).search("test", 3);
+            verify(searchCommandHandler).search(SearchQuery.search("test").withLimit(3).build());
         }
     }
 }

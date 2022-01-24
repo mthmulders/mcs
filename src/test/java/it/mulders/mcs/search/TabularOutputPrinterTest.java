@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class TabularOutputPrinterTest implements WithAssertions {
     private final TabularOutputPrinter output = new TabularOutputPrinter();
-    private final SearchQuery query = new CoordinateQuery("org.codehaus.plexus", "plexus-utils");
+    private final SearchQuery query = SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
 
     @Test
     void should_print_gav() {
@@ -114,7 +114,8 @@ class TabularOutputPrinterTest implements WithAssertions {
 
 
         // Act
-        output.print(query.withLimit(5), response, new PrintStream(buffer));
+        var query = SearchQuery.search("org.codehaus.plexus:plexus-utils").withLimit(5).build();
+        output.print(query, response, new PrintStream(buffer));
 
 
         // Assert
