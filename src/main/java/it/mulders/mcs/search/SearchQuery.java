@@ -1,6 +1,6 @@
 package it.mulders.mcs.search;
 
-public sealed interface SearchQuery permits CoordinateQuery, WildcardSearchQuery {
+public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, WildcardSearchQuery {
     int searchLimit();
 
     String toSolrQuery();
@@ -21,6 +21,10 @@ public sealed interface SearchQuery permits CoordinateQuery, WildcardSearchQuery
         } else {
             return new WildcardSearchQuery.Builder(query);
         }
+    }
+
+    static ClassnameQuery.Builder classSearch(String query) {
+        return new ClassnameQuery.Builder(query);
     }
 
     interface Builder {

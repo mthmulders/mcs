@@ -1,5 +1,6 @@
 package it.mulders.mcs.cli;
 
+import it.mulders.mcs.search.Constants;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
 import org.assertj.core.api.WithAssertions;
@@ -34,6 +35,31 @@ class CliTest implements WithAssertions {
             program.execute("search", "--last", "3", "test");
 
             verify(searchCommandHandler).search(SearchQuery.search("test").withLimit(3).build());
+        }
+    }
+
+    @Nested
+    class ClassSearchCommandTest {
+        @Test
+        void delegates_to_handler() {
+            var program = new CommandLine(cli, new CommandClassFactory(cli));
+            program.execute("class-search", "test");
+
+            var query = SearchQuery.classSearch("test")
+                    .build();
+            verify(searchCommandHandler).search(query);
+        }
+
+        @Test
+        void accepts_full_name_parameter() {
+            var program = new CommandLine(cli, new CommandClassFactory(cli));
+            program.execute("class-search", "--full-name", "test");
+
+            var query = SearchQuery.classSearch("test")
+                    .isFullyQualified(true)
+                    .withLimit(Constants.DEFAULT_MAX_SEARCH_RESULTS)
+                    .build();
+            verify(searchCommandHandler).search(query);
         }
     }
 }
