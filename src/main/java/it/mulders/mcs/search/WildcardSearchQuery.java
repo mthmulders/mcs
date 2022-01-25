@@ -7,7 +7,7 @@ import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
 
 public record WildcardSearchQuery(
         String term,
-        Integer searchLimit
+        int searchLimit
 ) implements SearchQuery {
     @Override
     public String toSolrQuery() {

@@ -9,7 +9,7 @@ public record CoordinateQuery (
         String groupId,
         String artifactId,
         String version,
-        Integer searchLimit
+        int searchLimit
 ) implements SearchQuery {
     @Override
     public String toSolrQuery() {
@@ -42,7 +42,9 @@ public record CoordinateQuery (
 
         @Override
         public Builder withLimit(Integer limit) {
-            this.limit = limit;
+            if (limit != null) {
+                this.limit = limit;
+            }
             return this;
         }
 
