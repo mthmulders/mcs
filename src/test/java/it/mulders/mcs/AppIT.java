@@ -29,6 +29,11 @@ class AppIT implements WithAssertions  {
         assertThat(App.doMain("-V")).isEqualTo(0);
     }
 
+    @Test
+    void should_exit_nonzero_on_wrong_invocation() {
+        assertThat(App.doMain("--does-not-exist")).isNotEqualTo(0);
+    }
+
     @AfterEach
     void restore_original_output() {
         System.setOut(originalOutput);
