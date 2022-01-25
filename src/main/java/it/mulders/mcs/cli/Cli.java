@@ -65,9 +65,6 @@ public class Cli {
         )
         private Integer lastVersions;
 
-        public SearchCommand() {
-        }
-
         @Override
         public Integer call() {
             System.out.printf("Searching for %s...%n", query);
