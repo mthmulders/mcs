@@ -8,22 +8,31 @@
 Use `mcs` to quickly lookup dependency coordinates in Maven Central, without having to switch to your browser.
 
 ## Usage
-This tool supports two modes of searching:
+This tool supports the following modes of searching:
 
 1. **Wildcard search**
-    ```console
-    mcs search plexus-utils
-    ```
-    This will give you all artifacts in Maven Central that have "plexus-utils" in their name.
-    The output is in a tabular form, showing the exact coordinate of each artifact and the moment when its latest version was deployed.
+   ```console
+   mcs search plexus-utils
+   ```
+   This will give you all artifacts in Maven Central that have "plexus-utils" in their name.
+   The output is in a tabular form, showing the exact coordinate of each artifact and the moment when its latest version was deployed.
 2. **Coordinate search**
-    ```console
+   ```console
    mcs search org.codehaus.plexus:plexus-utils
    mcs search org.codehaus.plexus:plexus-utils:3.4.1
     ```
-   This will give you a pom.xml snippet for the artifact you searched for.
-   Ready for copy & paste in your favourite IDE.
+   If there are multiple hits, you will get the same table output as above.
+   But if there's only one hit, this will give you a pom.xml snippet for the artifact you searched for.
+   Ready for copy & paste in your favourite IDE!
+3. **Class-name search**
+   ```console
+   mcs class-search CommandLine
+   mcs class-search -f picocli.CommandLine
+   ```
+   This will give you all artifacts in Maven Central that contain a particular class.
+   If you set the `-f` flag, the search term is considered a "fully classified" class name, so including the package name.
 
+All modi recognise the `-l <number>` switch, which lets you specify how many results you want to see _at most_.
 
 ## Installation
 You can install mcs using the package manager of your choice:
