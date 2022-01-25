@@ -101,11 +101,12 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1.10.0
 
       - name: Setup GraalVM
-        uses: ayltai/setup-graalvm@v1
+        uses: graalvm/setup-graalvm@v1
         with:
           java-version: 17
           graalvm-version: 21.3.0
-          native-image: true
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cache Maven packages
         uses: actions/cache@v2.1.7
