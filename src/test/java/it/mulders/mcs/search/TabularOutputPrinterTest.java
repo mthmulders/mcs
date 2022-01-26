@@ -120,6 +120,6 @@ class TabularOutputPrinterTest implements WithAssertions {
 
         // Assert
         var table = buffer.toString();
-        assertThat(table).contains("showing first 1");
+        assertThat(table).contains("showing 1");
     }
 }

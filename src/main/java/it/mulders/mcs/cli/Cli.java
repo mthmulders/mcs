@@ -59,17 +59,17 @@ public class Cli {
         private String query;
 
         @CommandLine.Option(
-                names = { "-l", "--last" },
-                description = "Show <count> last versions",
+                names = { "-l", "--limit" },
+                description = "Show <count> results",
                 paramLabel = "<count>"
         )
-        private Integer lastVersions;
+        private Integer limit;
 
         @Override
         public Integer call() {
             System.out.printf("Searching for %s...%n", query);
             var searchQuery = SearchQuery.search(this.query)
-                    .withLimit(this.lastVersions)
+                    .withLimit(this.limit)
                     .build();
             searchCommandHandler.search(searchQuery);
             return 0;
@@ -99,18 +99,18 @@ public class Cli {
         private boolean fullName;
 
         @CommandLine.Option(
-                names = { "-l", "--last" },
-                description = "Show <count> last versions",
+                names = { "-l", "--limit" },
+                description = "Show <count> results",
                 paramLabel = "<count>"
         )
-        private Integer lastVersions;
+        private Integer limit;
 
         @Override
         public Integer call() {
             System.out.printf("Searching for artifacts containing %s...%n", query);
             var searchQuery = SearchQuery.classSearch(this.query)
                     .isFullyQualified(this.fullName)
-                    .withLimit(lastVersions)
+                    .withLimit(limit)
                     .build();
             searchCommandHandler.search(searchQuery);
             return 0;
