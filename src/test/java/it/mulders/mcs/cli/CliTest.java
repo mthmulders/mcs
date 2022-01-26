@@ -30,9 +30,9 @@ class CliTest implements WithAssertions {
         }
 
         @Test
-        void accepts_last_versions_parameter() {
+        void accepts_limit_results_parameter() {
             var program = new CommandLine(cli, new CommandClassFactory(cli));
-            program.execute("search", "--last", "3", "test");
+            program.execute("search", "--limit", "3", "test");
 
             verify(searchCommandHandler).search(SearchQuery.search("test").withLimit(3).build());
         }

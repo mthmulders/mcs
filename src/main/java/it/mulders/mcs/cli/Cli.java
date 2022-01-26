@@ -59,8 +59,8 @@ public class Cli {
         private String query;
 
         @CommandLine.Option(
-                names = { "-l", "--last" },
-                description = "Show <count> last versions",
+                names = { "-l", "--limit" },
+                description = "Show <count> results",
                 paramLabel = "<count>"
         )
         private Integer lastVersions;
@@ -99,8 +99,8 @@ public class Cli {
         private boolean fullName;
 
         @CommandLine.Option(
-                names = { "-l", "--last" },
-                description = "Show <count> last versions",
+                names = { "-l", "--limit" },
+                description = "Show <count> results",
                 paramLabel = "<count>"
         )
         private Integer lastVersions;
