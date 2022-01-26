@@ -2,7 +2,7 @@ project:
   name: mcs
   description: Maven Central Search
   longDescription: Use Maven Central Repository Search from your command line!
-  website: https://github.com/mthmulders/mcs
+  website: https://github.com/mthmulders/mcs/
   authors:
     - Maarten Mulders
   license: MIT

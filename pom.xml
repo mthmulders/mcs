@@ -9,7 +9,7 @@
     <description>Use Maven Central Repository Search from your command line!</description>
     <inceptionYear>2021</inceptionYear>
     <name>Maven Central Search</name>
-    <url>https://github.com/mthmulders/mcs</url>
+    <url>https://maarten.mulders.it/projects/mcs/</url>
 
     <developers>
         <developer>
