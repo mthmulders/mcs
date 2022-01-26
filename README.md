@@ -37,17 +37,19 @@ All modi recognise the `-l <number>` switch, which lets you specify how many res
 ## Installation
 You can install mcs using the package manager of your choice:
 
-| Package manager | Platform | Installation                         | Remarks                                                                                     |
-|-----------------|----------|--------------------------------------|---------------------------------------------------------------------------------------------|
-| **Homebrew**    | 🍎 🐧    | `brew install mthmulders/tap/mcs`    |                                                                                             |
-| **Snap**        | 🐧       | `snap install maven-central-search`  | There is no global alias (yet), <br /> so you have to run <br /> `maven-central-search.mcs` |
-| **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                    |                                                                                             |
-| **Chocolatey**  | 🪟       | `choco install mcs --version=0.1.18` |                                                                                              |
+| Package manager | Platform | Installation                         | Remarks |
+|-----------------|----------|--------------------------------------|---------|
+| **Homebrew**    | 🍎 🐧    | `brew install mthmulders/tap/mcs`    | ⚠️ 1     |
+| **Snap**        | 🐧       | `snap install maven-central-search`  |        |
+| **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                    | ℹ️ 2    |
+| **Chocolatey**  | 🪟       | `choco install mcs --version=0.1.18` | ℹ️ 3    |
 
-⚠️
-The macOS and Linux binaries only work on x86_64 CPU's.
-If you have a Mac with Apple Silicon, you can use mcs through Rosetta.
-⚠️
+1. The macOS and Linux binaries only work on x86_64 CPU's.
+   If you have a Mac with Apple Silicon, you can use **mcs** through Rosetta.
+2. There is no global alias (yet), so you have to run `maven-central-search.mcs`.
+   Alternatively, you can define one in your favourite shell; `alias mcs=maven-central-search.mcs` should do.
+3. For now, you have to specify the exact version when installing **mcs**.
+   When the Chocolatey community has approved of the package, this requirement will be lifted.
 
 ## Ideas for future development
 * [ ] Proper support for multiple classifiers at a particular coordinate.
