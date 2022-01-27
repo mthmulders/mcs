@@ -1,0 +1,95 @@
+# Inspired by & copied from JReleaser sample:
+# https://github.com/jreleaser/jreleaser/blob/main/.github/workflows/trigger-early-access.yml
+
+name: Publish Early Access builds
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  # Build native executable per runner
+  build:
+    name: build-${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ ubuntu-latest, macOS-latest, windows-latest ]
+        gu-binary: [ gu, gu.cmd ]
+        exclude:
+          - os: ubuntu-latest
+            gu-binary: gu.cmd
+          - os: macos-latest
+            gu-binary: gu.cmd
+          - os: windows-latest
+            gu-binary: gu
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v2.0.10
+
+      - name: Check out repository
+        uses: actions/checkout@v2.4.0
+        with:
+          ref: ${{ steps.head.outputs.content }}
+
+      # This action supports Windows; it does nothing on Linux and macOS.
+      - name: Add Developer Command Prompt for Microsoft Visual C++
+        uses: ilammy/msvc-dev-cmd@v1.10.0
+
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          version: 22.0.0.2
+          java-version: 17
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cache Maven packages
+        uses: actions/cache@v2.1.7
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build Native Image
+        run: mvn -B -Pnative package
+
+      - name: Create distribution
+        run: mvn -B -Pdist package -DskipTests
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: artifacts
+          path: |
+            target/distributions/*.zip
+            target/distributions/*.tar.gz
+
+  # Collect all executables and release
+  release:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2.4.0
+        with:
+          ref: ${{ steps.head.outputs.content }}
+          fetch-depth: 0
+
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v2.0.10
+
+      - name: Cache Maven packages
+        uses: actions/cache@v2.1.7
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Release with JReleaser
+        run: mvn -B -Prelease -DartifactsDir=artifacts jreleaser:full-release
+        env:
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
