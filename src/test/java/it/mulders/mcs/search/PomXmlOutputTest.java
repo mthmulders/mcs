@@ -35,14 +35,13 @@ class PomXmlOutputTest implements WithAssertions {
 
         // Assert
         var xml = buffer.toString();
-        assertThat(xml).contains("""
-                
+        assertThat(xml).containsIgnoringWhitespaces(
+                    """
                     <dependency>
                         <groupId>org.codehaus.plexus</groupId>
                         <artifactId>plexus-utils</artifactId>
                         <version>3.4.1</version>
                     </dependency>
-
-                """);
+                    """);
     }
 }
