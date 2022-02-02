@@ -39,9 +39,9 @@ You can install mcs using the package manager of your choice:
 
 | Package manager | Platform | Installation                         | Remarks |
 |-----------------|----------|--------------------------------------|---------|
-| **Homebrew**    | 🍎 🐧    | `brew install mthmulders/tap/mcs`    | ⚠️ 1     |
-| **Snap**        | 🐧       | `snap install maven-central-search`  |        |
-| **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                    | ℹ️ 2    |
+| **Homebrew**    | 🍎 🐧    | `brew install mthmulders/tap/mcs`    | ⚠️ 1    |
+| **Snap**        | 🐧       | `snap install maven-central-search`  | ℹ️ 2    |
+| **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                    |         |
 | **Chocolatey**  | 🪟       | `choco install mcs --version=0.1.18` | ℹ️ 3    |
 
 1. The macOS and Linux binaries only work on x86_64 CPU's.
