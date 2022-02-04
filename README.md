@@ -37,17 +37,15 @@ All modi recognise the `-l <number>` switch, which lets you specify how many res
 ## Installation
 You can install mcs using the package manager of your choice:
 
-| Package manager | Platform | Installation                         | Remarks |
-|-----------------|----------|--------------------------------------|---------|
-| **Homebrew**    | 🍎 🐧    | `brew install mthmulders/tap/mcs`    | ⚠️ 1    |
-| **Snap**        | 🐧       | `snap install maven-central-search`  |         |
-| **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                    |         |
-| **Chocolatey**  | 🪟       | `choco install mcs --version=0.1.18` | ℹ️ 2     |
+| Package manager | Platform | Installation                        | Remarks |
+|-----------------|----------|-------------------------------------|---------|
+| **Homebrew**    | 🍎 🐧    | `brew install mthmulders/tap/mcs`   | ⚠️ 1    |
+| **Snap**        | 🐧       | `snap install maven-central-search` |         |
+| **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                   |         |
+| **Chocolatey**  | 🪟       | `choco install mcs`                 |         |
 
 1. The macOS and Linux binaries only work on x86_64 CPU's.
    If you have a Mac with Apple Silicon, you can use **mcs** through Rosetta.
-2. For now, you have to specify the exact version when installing **mcs**.
-   When the Chocolatey community has approved of the package, this requirement will be lifted.
 
 ## Ideas for future development
 * [ ] Proper support for multiple classifiers at a particular coordinate.
