@@ -30,6 +30,14 @@ class CliTest implements WithAssertions {
         }
 
         @Test
+        void accepts_space_separated_terms() {
+            var program = new CommandLine(cli, new CommandClassFactory(cli));
+            program.execute("search", "jakarta", "rs");
+
+            verify(searchCommandHandler).search(SearchQuery.search("jakarta rs").build());
+        }
+
+        @Test
         void accepts_limit_results_parameter() {
             var program = new CommandLine(cli, new CommandClassFactory(cli));
             program.execute("search", "--limit", "3", "test");
