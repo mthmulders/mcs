@@ -49,14 +49,14 @@ public class Cli {
     )
     public class SearchCommand implements Callable<Integer> {
         @CommandLine.Parameters(
-                arity = "1",
+                arity = "1..n",
                 description = {
                         "What to search for.",
                         "If the search term contains a colon ( : ), it is considered a literal groupId and artifactId",
                         "Otherwise, the search term is considered a wildcard search"
                 }
         )
-        private String query;
+        private String[] query;
 
         @CommandLine.Option(
                 names = { "-l", "--limit" },
@@ -67,8 +67,9 @@ public class Cli {
 
         @Override
         public Integer call() {
-            System.out.printf("Searching for %s...%n", query);
-            var searchQuery = SearchQuery.search(this.query)
+            var combinedQuery = String.join(" ", query);
+            System.out.printf("Searching for %s...%n", combinedQuery);
+            var searchQuery = SearchQuery.search(combinedQuery)
                     .withLimit(this.limit)
                     .build();
             searchCommandHandler.search(searchQuery);
