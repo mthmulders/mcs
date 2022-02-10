@@ -22,7 +22,7 @@ public class TabularOutputPrinter implements OutputPrinter {
 
     private String header(final SearchQuery query, final SearchResponse.Response response) {
         var numFound = response.numFound();
-        var additionalMessage = numFound != query.searchLimit()
+        var additionalMessage = numFound > query.searchLimit()
                 ? String.format(" (showing %d)", response.docs().length)
                 : "";
         return String.format("Found @|bold %d|@ results%s%n",
