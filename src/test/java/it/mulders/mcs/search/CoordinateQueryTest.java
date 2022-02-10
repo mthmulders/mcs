@@ -15,7 +15,7 @@ class CoordinateQueryTest implements WithAssertions {
     class ToSolrQueryTest {
         @Test
         void solr_query_should_contain_groupId() {
-            var query = new CoordinateQuery("foo", "bar", null, Constants.DEFAULT_MAX_SEARCH_RESULTS);
+            var query = new CoordinateQuery("foo", "bar", "", Constants.DEFAULT_MAX_SEARCH_RESULTS);
 
             var solrQuery = query.toSolrQuery();
 
@@ -24,7 +24,7 @@ class CoordinateQueryTest implements WithAssertions {
 
         @Test
         void solr_query_should_contain_artifactId() {
-            var query = new CoordinateQuery("foo", "bar", null, Constants.DEFAULT_MAX_SEARCH_RESULTS);
+            var query = new CoordinateQuery("foo", "bar", "", Constants.DEFAULT_MAX_SEARCH_RESULTS);
 
             var solrQuery = query.toSolrQuery();
 
@@ -42,7 +42,7 @@ class CoordinateQueryTest implements WithAssertions {
 
         @Test
         void solr_query_should_contain_start() {
-            var query = new CoordinateQuery("foo", "bar", null, Constants.DEFAULT_MAX_SEARCH_RESULTS);
+            var query = new CoordinateQuery("foo", "bar", "", Constants.DEFAULT_MAX_SEARCH_RESULTS);
 
             var solrQuery = query.toSolrQuery();
 
