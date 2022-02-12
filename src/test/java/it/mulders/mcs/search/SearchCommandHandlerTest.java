@@ -36,7 +36,7 @@ class SearchCommandHandlerTest implements WithAssertions {
         public Result<SearchResponse> search(final SearchQuery query) {
             if (query instanceof WildcardSearchQuery) {
                 return new Result.Success<>(new SearchResponse(null, wildcardResponse));
-            } else if (query instanceof CoordinateQuery cq && cq.version() == null) {
+            } else if (query instanceof CoordinateQuery cq && cq.version().isBlank()) {
                 return new Result.Success<>(new SearchResponse(null, twoPartCoordinateResponse));
             } else {
                 return new Result.Success<>(new SearchResponse(null, threePartCoordinateResponse));

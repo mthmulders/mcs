@@ -10,6 +10,7 @@ public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, Wil
         if (isCoordinateSearch) {
             var parts = query.split(":");
             switch (parts.length) {
+                case 1: return new CoordinateQuery.Builder(parts[0], null);
                 case 2: return new CoordinateQuery.Builder(parts[0], parts[1]);
                 case 3: return new CoordinateQuery.Builder(parts[0], parts[1], parts[2]);
                 default:
