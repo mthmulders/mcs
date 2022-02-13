@@ -1,41 +1,54 @@
 package it.mulders.mcs.common;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.jr.ob.JSON;
+import com.fasterxml.jackson.jr.ob.JSONObjectException;
 import it.mulders.mcs.search.SearchResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UncheckedIOException;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
-public class SearchResponseBodyHandler implements HttpResponse.BodyHandler<Supplier<SearchResponse>> {
+public class SearchResponseBodyHandler implements HttpResponse.BodyHandler<Result<SearchResponse>> {
     @Override
-    public HttpResponse.BodySubscriber<Supplier<SearchResponse>> apply(final HttpResponse.ResponseInfo responseInfo) {
+    public HttpResponse.BodySubscriber<Result<SearchResponse>> apply(final HttpResponse.ResponseInfo responseInfo) {
         return asObject();
     }
 
-    static HttpResponse.BodySubscriber<Supplier<SearchResponse>> asObject() {
+    static HttpResponse.BodySubscriber<Result<SearchResponse>> asObject() {
         var upstream = HttpResponse.BodySubscribers.ofInputStream();
 
         return HttpResponse.BodySubscribers.mapping(
                 upstream,
-                SearchResponseBodyHandler::toSupplierOfSearchResponse
+                SearchResponseBodyHandler::toSearchResponse
         );
     }
 
-    static Supplier<SearchResponse> toSupplierOfSearchResponse(final InputStream inputStream) {
-        return () -> {
-            try (final InputStream input = inputStream) {
-                var map = JSON.std.mapFrom(input);
-                return constructSearchResponse(map);
-            } catch (final IOException ioe) {
-                System.err.printf("Error parsing search response: %s%n", ioe.getLocalizedMessage());
-                throw new UncheckedIOException(ioe);
-            }
-        };
+    static Result<SearchResponse> toSearchResponse(final InputStream inputStream) {
+        try (final InputStream input = inputStream) {
+            var map = JSON.std.mapFrom(input);
+            return new Result.Success<>(constructSearchResponse(map));
+        } catch (final JsonParseException | JSONObjectException joe) {
+            return new Result.Failure<>(
+                    new IllegalStateException(
+                            """
+                            
+                            Error parsing the search result. This may be a temporary failure from search.maven.org.
+                            If the problem persists, please open a conversation at
+                            
+                                https://github.com/mthmulders/mcs/discussions
+                            
+                            Make sure to at least provide your invocation of mcs and the version of mcs you're using.
+                            """
+                    )
+            );
+        } catch (final IOException ioe) {
+            return new Result.Failure<>(
+                    new IllegalStateException("Error processing response: %s%n".formatted(ioe.getLocalizedMessage()))
+            );
+        }
     }
 
     static SearchResponse constructSearchResponse(final Map<String, Object> input) {
