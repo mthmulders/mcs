@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.badRequest;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.ok;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
@@ -106,7 +106,23 @@ class SearchClientIT implements WithAssertions {
     @Nested
     class ErrorHandlingTest {
         @Test
-        void should_gracefully_return_failures(final WireMockRuntimeInfo wmRuntimeInfo) throws MalformedURLException {
+        void should_gracefully_handle_4xx_response(final WireMockRuntimeInfo wmRuntimeInfo) {
+            // Arrange
+            stubFor(get(urlPathMatching("/solrsearch/select*"))
+                    .willReturn(badRequest().withBody("Solr returned 400, msg: ")));
+
+            // Act
+            var result = new SearchClient(wmRuntimeInfo.getHttpBaseUrl())
+                    .search(SearchQuery.search("org.codehaus.plexus:plexus-utils").build());
+
+            // Assert
+            assertThat(result).isInstanceOf(Result.Failure.class);
+            assertThat(result.cause()).isInstanceOf(IllegalStateException.class);
+            assertThat(result.cause()).hasMessageContaining("https://github.com/mthmulders/mcs/discussions");
+        }
+
+        @Test
+        void should_gracefully_handle_connection_failure(final WireMockRuntimeInfo wmRuntimeInfo) throws MalformedURLException {
             // Very unlikely there's an HTTP server running there...
             var result = new SearchClient("http://localhost:21")
                     .search(new WildcardSearchQuery("plexus-utils", Constants.DEFAULT_MAX_SEARCH_RESULTS));

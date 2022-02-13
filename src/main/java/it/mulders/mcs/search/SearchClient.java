@@ -30,13 +30,9 @@ public class SearchClient {
                 .build();
 
         try {
-            var response = client.send(request, new SearchResponseBodyHandler())
-                    .body()
-                    .get();
-
-            return new Result.Success<>(response);
+            return client.send(request, new SearchResponseBodyHandler())
+                    .body();
         } catch (IOException | InterruptedException e) {
-            System.err.printf("Error performing search: %s%n", e.getLocalizedMessage());
             return new Result.Failure<>(e);
         }
     }

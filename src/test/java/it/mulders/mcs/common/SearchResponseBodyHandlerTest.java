@@ -4,7 +4,6 @@ import it.mulders.mcs.search.SearchResponse;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -19,9 +18,11 @@ class SearchResponseBodyHandlerTest implements WithAssertions {
         var input = getClass().getResourceAsStream("/wildcard-search-response.json");
 
         // Act
-        var response = SearchResponseBodyHandler.toSupplierOfSearchResponse(input).get();
+        var result = SearchResponseBodyHandler.toSearchResponse(input);
 
         // Assert
+        assertThat(result).isInstanceOf(Result.Success.class);
+        var response = result.value();
         assertThat(response.response()).isNotNull();
         assertThat(response.response().numFound()).isEqualTo(2);
         assertThat(response.response().start()).isEqualTo(0);
@@ -62,9 +63,11 @@ class SearchResponseBodyHandlerTest implements WithAssertions {
         var input = getClass().getResourceAsStream("/group-artifact-version-search.json");
 
         // Act
-        var response = SearchResponseBodyHandler.toSupplierOfSearchResponse(input).get();
+        var result = SearchResponseBodyHandler.toSearchResponse(input);
 
         // Assert
+        assertThat(result).isInstanceOf(Result.Success.class);
+        var response = result.value();
         assertThat(response.response()).isNotNull();
         assertThat(response.response().numFound()).isEqualTo(1);
         assertThat(response.response().start()).isEqualTo(0);
@@ -93,9 +96,11 @@ class SearchResponseBodyHandlerTest implements WithAssertions {
         var input = getClass().getResourceAsStream("/group-artifact-search.json");
 
         // Act
-        var response = SearchResponseBodyHandler.toSupplierOfSearchResponse(input).get();
+        var result = SearchResponseBodyHandler.toSearchResponse(input);
 
         // Assert
+        assertThat(result).isInstanceOf(Result.Success.class);
+        var response = result.value();
         assertThat(response.response()).isNotNull();
         assertThat(response.response().numFound()).isEqualTo(1);
         assertThat(response.response().start()).isEqualTo(0);
