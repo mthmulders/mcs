@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Download all build artifacts
-        uses: actions/download-artifact@v2.1.0
+        uses: actions/download-artifact@v3
 
       - name: Check out repository
         uses: actions/checkout@v3
@@ -80,7 +80,7 @@ jobs:
           fetch-depth: 0
 
       - name: Download all build artifacts
-        uses: actions/download-artifact@v2.1.0
+        uses: actions/download-artifact@v3
 
       - name: Cache Maven packages
         uses: actions/cache@v2.1.7
