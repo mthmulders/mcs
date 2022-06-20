@@ -23,7 +23,7 @@
         <maven.compiler.release>17</maven.compiler.release>
 
         <assert-j.version>3.22.0</assert-j.version>
-        <jackson-jr.version>2.13.2</jackson-jr.version>
+        <jackson-jr.version>2.13.3</jackson-jr.version>
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
         <picocli.version>4.6.3</picocli.version>
         <wiremock.version>2.33.2</wiremock.version>
