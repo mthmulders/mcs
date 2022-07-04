@@ -6,12 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
+import static it.mulders.mcs.search.Constants.DEFAULT_START;
 
 public record CoordinateQuery (
         String groupId,
         String artifactId,
         String version,
-        int searchLimit
+        int searchLimit,
+        int start
 ) implements SearchQuery {
     @Override
     public String toSolrQuery() {
@@ -22,7 +24,14 @@ public record CoordinateQuery (
         var query = String.join(" AND ", parts);
 
         return String.format("q=%s&core=gav&start=%d&rows=%d",
-                URLEncoder.encode(query, StandardCharsets.UTF_8), 0, searchLimit());
+                URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit());
+    }
+
+    @Override
+    public CoordinateQuery.Builder toBuilder() {
+        return new CoordinateQuery.Builder(groupId(), artifactId(), version())
+                .withLimit(searchLimit())
+                .withStart(start());
     }
 
     public static class Builder implements SearchQuery.Builder {
@@ -30,6 +39,7 @@ public record CoordinateQuery (
         private String artifactId;
         private String version;
         private Integer limit = DEFAULT_MAX_SEARCH_RESULTS;
+        private Integer start = DEFAULT_START;
 
         public Builder(String groupId, String artifactId) {
             this(groupId, artifactId, null);
@@ -47,6 +57,14 @@ public record CoordinateQuery (
         }
 
         @Override
+        public Builder withStart(Integer start) {
+            if (this.start != null) {
+                this.start = start;
+            }
+            return this;
+        }
+
+        @Override
         public Builder withLimit(Integer limit) {
             if (limit != null) {
                 this.limit = limit;
@@ -56,7 +74,7 @@ public record CoordinateQuery (
 
         @Override
         public SearchQuery build() {
-            return new CoordinateQuery(groupId, artifactId, version, limit);
+            return new CoordinateQuery(groupId, artifactId, version, limit, start);
         }
     }
 }

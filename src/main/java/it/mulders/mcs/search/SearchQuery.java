@@ -2,8 +2,10 @@ package it.mulders.mcs.search;
 
 public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, WildcardSearchQuery {
     int searchLimit();
+    int start();
 
     String toSolrQuery();
+    Builder<?> toBuilder();
 
     static SearchQuery.Builder search(String query) {
         var isCoordinateSearch = query.contains(":");
@@ -28,8 +30,9 @@ public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, Wil
         return new ClassnameQuery.Builder(query);
     }
 
-    interface Builder {
+    interface Builder<T extends SearchQuery> {
         <T extends Builder> T withLimit(final Integer limit);
+        <T extends Builder> T withStart(final Integer start);
         SearchQuery build();
     }
 }
