@@ -27,7 +27,9 @@ public class SearchCommandHandler {
     private SearchResponse.Response performAdditionalSearch(final SearchQuery query,
                                                             final SearchResponse.Response previousResponse) {
         var lastItemFoundIndex = previousResponse.docs().length;
-        if (lastItemFoundIndex >= query.searchLimit() || lastItemFoundIndex == previousResponse.numFound()) {
+        var enoughItemsForUserLimit = lastItemFoundIndex >= query.searchLimit();
+        var allItemsReceived = lastItemFoundIndex == previousResponse.numFound();
+        if (enoughItemsForUserLimit || allItemsReceived) {
             return previousResponse;
         }
         var remainingItems = query.searchLimit() - lastItemFoundIndex;
