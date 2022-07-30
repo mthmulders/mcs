@@ -25,20 +25,5 @@ jobs:
 
       - name: Run Pitest
         run: mvn test-compile org.pitest:pitest-maven:mutationCoverage
-
-      - name: Upload mutation testing score
-        run: |
-          mutation_report_content=$(<target/pit-reports/html2/report.js)
-          echo "${mutation_report_content:60}" > target/pit-reports/html2/mutation-testing-report.json
-
-          curl -X PUT \
-            ${BASE_URL}/api/reports/${PROJECT}/${VERSION} \
-            -H 'Content-Type: application/json' \
-            -H 'Host: dashboard.stryker-mutator.io' \
-            -H "X-Api-Key: ${API_KEY}" \
-            -d @target/pit-reports/html2/mutation-testing-report.json
         env:
-          BASE_URL: https://dashboard.stryker-mutator.io
-          PROJECT: github.com/mthmulders/mcs
-          VERSION: main
-          API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}

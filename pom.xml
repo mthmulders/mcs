@@ -105,17 +105,16 @@
                             <version>0.16</version>
                         </dependency>
                         <dependency>
-                            <groupId>io.github.wmaarts</groupId>
-                            <artifactId>pitest-mutation-testing-elements-plugin</artifactId>
-                            <version>0.4.0</version>
+                            <groupId>it.mulders.stryker</groupId>
+                            <artifactId>pit-dashboard-reporter</artifactId>
+                            <version>0.1.2</version>
                         </dependency>
                     </dependencies>
                     <configuration>
                         <outputFormats>
-                            <format>HTML2</format>
+                            <format>stryker-dashboard</format>
                         </outputFormats>
                         <testPlugin>junit5</testPlugin>
-                        <timestampedReports>false</timestampedReports>
                     </configuration>
                 </plugin>
                 <plugin>
