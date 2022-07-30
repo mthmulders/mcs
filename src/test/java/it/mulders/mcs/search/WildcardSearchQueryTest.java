@@ -5,16 +5,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 class WildcardSearchQueryTest implements WithAssertions {
     @Nested
     @DisplayName("toSolrQuery")
     class ToSolrQueryTest {
         @Test
         void solr_query_should_contain_limit() {
-            var query = new WildcardSearchQuery("foo", 5);
+            var query = new WildcardSearchQuery("foo", 5, Constants.DEFAULT_START);
 
             var solrQuery = query.toSolrQuery();
 
@@ -23,7 +20,7 @@ class WildcardSearchQueryTest implements WithAssertions {
 
         @Test
         void solr_query_should_contain_search_term() {
-            var query = new WildcardSearchQuery("foo", Constants.DEFAULT_MAX_SEARCH_RESULTS);
+            var query = new WildcardSearchQuery("foo", Constants.DEFAULT_MAX_SEARCH_RESULTS, Constants.DEFAULT_START);
 
             var solrQuery = query.toSolrQuery();
 
@@ -32,11 +29,11 @@ class WildcardSearchQueryTest implements WithAssertions {
 
         @Test
         void solr_query_should_contain_start() {
-            var query = new WildcardSearchQuery("foo", Constants.DEFAULT_MAX_SEARCH_RESULTS);
+            var query = new WildcardSearchQuery("foo", Constants.DEFAULT_MAX_SEARCH_RESULTS, 3);
 
             var solrQuery = query.toSolrQuery();
 
-            assertThat(solrQuery).contains("start=0");
+            assertThat(solrQuery).contains("start=3");
         }
     }
 }

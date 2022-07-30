@@ -15,7 +15,7 @@ class CoordinateQueryTest implements WithAssertions {
     class ToSolrQueryTest {
         @Test
         void solr_query_should_contain_groupId() {
-            var query = new CoordinateQuery("foo", "bar", "", Constants.DEFAULT_MAX_SEARCH_RESULTS);
+            var query = new CoordinateQuery("foo", "bar", "", Constants.DEFAULT_MAX_SEARCH_RESULTS, Constants.DEFAULT_START);
 
             var solrQuery = query.toSolrQuery();
 
@@ -24,7 +24,7 @@ class CoordinateQueryTest implements WithAssertions {
 
         @Test
         void solr_query_should_contain_artifactId() {
-            var query = new CoordinateQuery("foo", "bar", "", Constants.DEFAULT_MAX_SEARCH_RESULTS);
+            var query = new CoordinateQuery("foo", "bar", "", Constants.DEFAULT_MAX_SEARCH_RESULTS, Constants.DEFAULT_START);
 
             var solrQuery = query.toSolrQuery();
 
@@ -33,7 +33,7 @@ class CoordinateQueryTest implements WithAssertions {
 
         @Test
         void solr_query_should_contain_version() {
-            var query = new CoordinateQuery("foo", "bar", "1.0", Constants.DEFAULT_MAX_SEARCH_RESULTS);
+            var query = new CoordinateQuery("foo", "bar", "1.0", Constants.DEFAULT_MAX_SEARCH_RESULTS, Constants.DEFAULT_START);
 
             var solrQuery = query.toSolrQuery();
 
@@ -42,16 +42,16 @@ class CoordinateQueryTest implements WithAssertions {
 
         @Test
         void solr_query_should_contain_start() {
-            var query = new CoordinateQuery("foo", "bar", "", Constants.DEFAULT_MAX_SEARCH_RESULTS);
+            var query = new CoordinateQuery("foo", "bar", "", Constants.DEFAULT_MAX_SEARCH_RESULTS, 3);
 
             var solrQuery = query.toSolrQuery();
 
-            assertThat(solrQuery).contains("start=0");
+            assertThat(solrQuery).contains("start=3");
         }
 
         @Test
         void solr_query_should_contain_limit() {
-            var query = new CoordinateQuery("foo", "bar", "1.0", 5);
+            var query = new CoordinateQuery("foo", "bar", "1.0", 5, Constants.DEFAULT_START);
 
             var solrQuery = query.toSolrQuery();
 
