@@ -18,11 +18,19 @@ class SearchResponseBodyHandlerTest implements WithAssertions {
         var input = getClass().getResourceAsStream("/wildcard-search-response.json");
 
         // Act
-        var result = SearchResponseBodyHandler.toSearchResponse(input);
+        var result = SearchResponseBodyHandler.toSearchResponse.apply(input);
 
         // Assert
         assertThat(result).isInstanceOf(Result.Success.class);
         var response = result.value();
+
+        assertThat(response.header()).isNotNull();
+        assertThat(response.header().params()).isNotNull();
+        assertThat(response.header().params().q()).isEqualTo("plexus-utils");
+        assertThat(response.header().params().start()).isEqualTo(0);
+        assertThat(response.header().params().rows()).isEqualTo(20);
+        assertThat(response.header().params().sort()).isEqualTo("score desc,timestamp desc,g asc,a asc");
+
         assertThat(response.response()).isNotNull();
         assertThat(response.response().numFound()).isEqualTo(2);
         assertThat(response.response().start()).isEqualTo(0);
@@ -63,11 +71,19 @@ class SearchResponseBodyHandlerTest implements WithAssertions {
         var input = getClass().getResourceAsStream("/group-artifact-version-search.json");
 
         // Act
-        var result = SearchResponseBodyHandler.toSearchResponse(input);
+        var result = SearchResponseBodyHandler.toSearchResponse.apply(input);
 
         // Assert
         assertThat(result).isInstanceOf(Result.Success.class);
         var response = result.value();
+
+        assertThat(response.header()).isNotNull();
+        assertThat(response.header().params()).isNotNull();
+        assertThat(response.header().params().q()).isEqualTo("g:org.codehaus.plexus AND a:plexus-utils AND v:3.4.1");
+        assertThat(response.header().params().start()).isEqualTo(0);
+        assertThat(response.header().params().rows()).isEqualTo(20);
+        assertThat(response.header().params().sort()).isEqualTo("score desc,timestamp desc,g asc,a asc,v desc");
+
         assertThat(response.response()).isNotNull();
         assertThat(response.response().numFound()).isEqualTo(1);
         assertThat(response.response().start()).isEqualTo(0);
@@ -96,11 +112,19 @@ class SearchResponseBodyHandlerTest implements WithAssertions {
         var input = getClass().getResourceAsStream("/group-artifact-search.json");
 
         // Act
-        var result = SearchResponseBodyHandler.toSearchResponse(input);
+        var result = SearchResponseBodyHandler.toSearchResponse.apply(input);
 
         // Assert
         assertThat(result).isInstanceOf(Result.Success.class);
         var response = result.value();
+
+        assertThat(response.header()).isNotNull();
+        assertThat(response.header().params()).isNotNull();
+        assertThat(response.header().params().q()).isEqualTo("g:org.codehaus.plexus AND a:plexus-utils");
+        assertThat(response.header().params().start()).isEqualTo(0);
+        assertThat(response.header().params().rows()).isEqualTo(20);
+        assertThat(response.header().params().sort()).isEqualTo("score desc,timestamp desc,g asc,a asc");
+
         assertThat(response.response()).isNotNull();
         assertThat(response.response().numFound()).isEqualTo(1);
         assertThat(response.response().start()).isEqualTo(0);

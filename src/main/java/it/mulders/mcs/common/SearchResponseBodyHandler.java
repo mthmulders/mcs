@@ -7,9 +7,11 @@ import it.mulders.mcs.search.SearchResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public class SearchResponseBodyHandler implements HttpResponse.BodyHandler<Result<SearchResponse>> {
     @Override
@@ -20,41 +22,56 @@ public class SearchResponseBodyHandler implements HttpResponse.BodyHandler<Resul
     static HttpResponse.BodySubscriber<Result<SearchResponse>> asObject() {
         var upstream = HttpResponse.BodySubscribers.ofInputStream();
 
-        return HttpResponse.BodySubscribers.mapping(
-                upstream,
-                SearchResponseBodyHandler::toSearchResponse
-        );
+        return HttpResponse.BodySubscribers.mapping(upstream, toSearchResponse);
     }
 
-    static Result<SearchResponse> toSearchResponse(final InputStream inputStream) {
+    // Visible for testing
+    static final Function<InputStream, Result<SearchResponse>> toSearchResponse = (final InputStream inputStream) -> {
         try (final InputStream input = inputStream) {
             var map = JSON.std.mapFrom(input);
-            return new Result.Success<>(constructSearchResponse(map));
+            var response = constructSearchResponse(map);
+            return new Result.Success<>(response);
         } catch (final JsonParseException | JSONObjectException joe) {
             return new Result.Failure<>(
-                    new IllegalStateException(
-                            """
-                            
-                            Error parsing the search result. This may be a temporary failure from search.maven.org.
-                            If the problem persists, please open a conversation at
-                            
-                                https://github.com/mthmulders/mcs/discussions
-                            
-                            Make sure to at least provide your invocation of mcs and the version of mcs you're using.
-                            """
-                    )
+                new IllegalStateException(
+                        """
+                        
+                        Error parsing the search result. This may be a temporary failure from search.maven.org.
+                        If the problem persists, please open a conversation at
+                        
+                            https://github.com/mthmulders/mcs/discussions
+                        
+                        Make sure to at least provide your invocation of mcs and the version of mcs you're using.
+                        """
+                )
             );
         } catch (final IOException ioe) {
+            System.err.printf("Error parsing search response: %s%n", ioe.getLocalizedMessage());
             return new Result.Failure<>(
-                    new IllegalStateException("Error processing response: %s%n".formatted(ioe.getLocalizedMessage()))
+                    new UncheckedIOException(ioe)
             );
         }
-    }
+    };
 
     static SearchResponse constructSearchResponse(final Map<String, Object> input) {
         return new SearchResponse(
-                null,
+                constructHeader((Map<String, Object>) input.get("responseHeader")),
                 constructResponse((Map<String, Object>) input.get("response"))
+        );
+    }
+
+    private static SearchResponse.Header constructHeader(final Map<String, Object> input) {
+        return new SearchResponse.Header(
+                constructParams((Map<String, Object>) input.get("params"))
+        );
+    }
+
+    private static SearchResponse.Header.Params constructParams(final Map<String, Object> input) {
+        return new SearchResponse.Header.Params(
+                (String) input.get("q"),
+                Integer.parseInt((String) input.get("start"), 10),
+                (String) input.get("sort"),
+                Integer.parseInt((String) input.get("rows"), 10)
         );
     }
 
