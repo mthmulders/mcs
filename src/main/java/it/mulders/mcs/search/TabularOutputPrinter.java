@@ -11,8 +11,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
-import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
-
 public class TabularOutputPrinter implements OutputPrinter {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(
             "dd MMM yyyy 'at' HH:mm (zzz)"

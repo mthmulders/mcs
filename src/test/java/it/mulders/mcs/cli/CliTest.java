@@ -26,7 +26,7 @@ class CliTest implements WithAssertions {
             var program = new CommandLine(cli, new CommandClassFactory(cli));
             program.execute("search", "test");
 
-            verify(searchCommandHandler).search(SearchQuery.search("test").build());
+            verify(searchCommandHandler).search2(SearchQuery.search("test").build());
         }
 
         @Test
@@ -34,7 +34,7 @@ class CliTest implements WithAssertions {
             var program = new CommandLine(cli, new CommandClassFactory(cli));
             program.execute("search", "jakarta", "rs");
 
-            verify(searchCommandHandler).search(SearchQuery.search("jakarta rs").build());
+            verify(searchCommandHandler).search2(SearchQuery.search("jakarta rs").build());
         }
 
         @Test
@@ -42,7 +42,7 @@ class CliTest implements WithAssertions {
             var program = new CommandLine(cli, new CommandClassFactory(cli));
             program.execute("search", "--limit", "3", "test");
 
-            verify(searchCommandHandler).search(SearchQuery.search("test").withLimit(3).build());
+            verify(searchCommandHandler).search2(SearchQuery.search("test").withLimit(3).build());
         }
     }
 
@@ -55,7 +55,7 @@ class CliTest implements WithAssertions {
 
             var query = SearchQuery.classSearch("test")
                     .build();
-            verify(searchCommandHandler).search(query);
+            verify(searchCommandHandler).search2(query);
         }
 
         @Test
@@ -67,7 +67,7 @@ class CliTest implements WithAssertions {
                     .isFullyQualified(true)
                     .withLimit(Constants.DEFAULT_MAX_SEARCH_RESULTS)
                     .build();
-            verify(searchCommandHandler).search(query);
+            verify(searchCommandHandler).search2(query);
         }
     }
 }

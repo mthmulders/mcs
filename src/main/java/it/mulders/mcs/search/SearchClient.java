@@ -30,8 +30,7 @@ public class SearchClient {
                 .build();
 
         try {
-            return client.send(request, new SearchResponseBodyHandler())
-                    .body();
+            return client.send(request, new SearchResponseBodyHandler()).body();
         } catch (IOException | InterruptedException e) {
             return new Result.Failure<>(e);
         }

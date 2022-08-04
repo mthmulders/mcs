@@ -51,8 +51,13 @@ class SearchCommandHandlerTest implements WithAssertions {
     class WildcardSearchTest {
         @Test
         void should_invoke_search_client() {
-            handler.search(SearchQuery.search("plexus-utils").build());
+            handler.search2(SearchQuery.search("plexus-utils").build());
             verify(outputPrinter).print(any(WildcardSearchQuery.class), eq(wildcardResponse), any());
+        }
+
+        @Test
+        void should_invoke_again_() {
+            handler.search2(SearchQuery.search("plexus-utils").build());
         }
     }
 
@@ -61,19 +66,19 @@ class SearchCommandHandlerTest implements WithAssertions {
     class CoordinateSearchTest {
         @Test
         void should_reject_search_terms_in_wrong_format() {
-            assertThatThrownBy(() -> handler.search(SearchQuery.search("foo:bar:baz:qux").build()))
+            assertThatThrownBy(() -> handler.search2(SearchQuery.search("foo:bar:baz:qux").build()))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
         void should_invoke_search_client_with_groupId_and_artifactId() {
-            handler.search(SearchQuery.search("org.codehaus.plexus:plexus-utils").build());
+            handler.search2(SearchQuery.search("org.codehaus.plexus:plexus-utils").build());
             verify(outputPrinter).print(any(CoordinateQuery.class), eq(twoPartCoordinateResponse), any());
         }
 
         @Test
         void should_invoke_search_client_with_groupId_and_artifactId_and_version() {
-            handler.search(SearchQuery.search("org.codehaus.plexus:plexus-utils:3.4.1").build());
+            handler.search2(SearchQuery.search("org.codehaus.plexus:plexus-utils:3.4.1").build());
             verify(outputPrinter).print(any(CoordinateQuery.class), eq(threePartCoordinateResponse), any());
         }
     }

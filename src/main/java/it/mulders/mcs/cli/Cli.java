@@ -72,7 +72,7 @@ public class Cli {
             var searchQuery = SearchQuery.search(combinedQuery)
                     .withLimit(this.limit)
                     .build();
-            searchCommandHandler.search(searchQuery);
+            searchCommandHandler.search2(searchQuery);
             return 0;
         }
     }
@@ -113,7 +113,7 @@ public class Cli {
                     .isFullyQualified(this.fullName)
                     .withLimit(limit)
                     .build();
-            searchCommandHandler.search(searchQuery);
+            searchCommandHandler.search2(searchQuery);
             return 0;
         }
     }

@@ -16,6 +16,15 @@ public sealed interface Result<T> permits Result.Success, Result.Failure {
         }
 
         @Override
+        public <U> Result<U> flatMap(Function<T, Result<U>> mapping) {
+            try {
+                return mapping.apply(value);
+            } catch (final Throwable throwable) {
+                return new Failure<>(throwable);
+            }
+        }
+
+        @Override
         public void ifPresent(final Consumer<T> consumer) {
             consumer.accept(this.value);
         }
@@ -33,6 +42,11 @@ public sealed interface Result<T> permits Result.Success, Result.Failure {
         }
 
         @Override
+        public <U> Result<U> flatMap(Function<T, Result<U>> mapping) {
+            return (Failure<U>) this;
+        }
+
+        @Override
         public void ifPresent(final Consumer<T> consumer) {
         }
 
@@ -43,6 +57,7 @@ public sealed interface Result<T> permits Result.Success, Result.Failure {
     }
 
     <U> Result<U> map(final Function<T, U> mapping);
+    <U> Result<U> flatMap(final Function<T, Result<U>> mapping);
 
     void ifPresent(final Consumer<T> consumer);
 
