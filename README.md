@@ -47,6 +47,14 @@ You can install mcs using the package manager of your choice:
 1. The macOS and Linux binaries only work on x86_64 CPU's.
    If you have a Mac with Apple Silicon, you can use **mcs** through Rosetta.
 
+## Contributing
+Probably the easiest way to get a working development environment is to use Gitpod:
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/mthmulders/mcs)
+
+It will configure a workspace in your browser and show that everything works as expected by running `mvn verify`.
+This setup does not touch your computer - as soon as you close your browser tab, it's gone.
+
 ## Ideas for future development
 * [ ] Proper support for multiple classifiers at a particular coordinate.
 * [ ] Immediately copy the pom.xml snippet to the clipboard.
