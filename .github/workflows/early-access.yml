@@ -10,19 +10,24 @@ on:
 jobs:
   # Build native executable per runner
   build:
-    name: build-${{ matrix.os }}
+    name: build-${{ matrix.os }}-${{ matrix.architecture }}
     strategy:
       fail-fast: true
       matrix:
         os: [ ubuntu-latest, macOS-latest, windows-latest ]
+        architecture: [ x86, arm64 ]
         gu-binary: [ gu, gu.cmd ]
         exclude:
           - os: ubuntu-latest
             gu-binary: gu.cmd
+          - os: ubuntu-latest
+            architecture: arm64
           - os: macos-latest
             gu-binary: gu.cmd
           - os: windows-latest
             gu-binary: gu
+          - os: windows-latest
+            architecture: arm64
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -41,7 +46,7 @@ jobs:
       - name: Setup GraalVM
         uses: graalvm/setup-graalvm@v1
         with:
-          version: 22.0.0.2
+          version: 22.2.0
           java-version: 17
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
