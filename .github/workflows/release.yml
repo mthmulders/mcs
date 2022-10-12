@@ -87,7 +87,7 @@ jobs:
 
       - name: Read HEAD ref
         id: head
-        uses: juliangruber/read-file-action@v1.1.4
+        uses: juliangruber/read-file-action@v1.1.5
         with:
           path: artifacts/HEAD
 
@@ -141,7 +141,7 @@ jobs:
 
       - name: Read HEAD ref
         id: head
-        uses: juliangruber/read-file-action@v1
+        uses: juliangruber/read-file-action@v1.1.5
         with:
           path: artifacts/HEAD
 
