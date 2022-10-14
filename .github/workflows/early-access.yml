@@ -10,24 +10,21 @@ on:
 jobs:
   # Build native executable per runner
   build:
-    name: build-${{ matrix.os }}-${{ matrix.architecture }}
+    name: build-${{ matrix.os }}
     strategy:
       fail-fast: true
       matrix:
-        os: [ ubuntu-latest, macOS-latest, windows-latest ]
-        architecture: [ x86, arm64 ]
+        os: [ ubuntu-latest, macOS-latest, macOS-arm64-latest, windows-latest ]
         gu-binary: [ gu, gu.cmd ]
         exclude:
           - os: ubuntu-latest
             gu-binary: gu.cmd
-          - os: ubuntu-latest
-            architecture: arm64
           - os: macos-latest
+            gu-binary: gu.cmd
+          - os: macos-arm64-latest
             gu-binary: gu.cmd
           - os: windows-latest
             gu-binary: gu
-          - os: windows-latest
-            architecture: arm64
     runs-on: ${{ matrix.os }}
 
     steps:
