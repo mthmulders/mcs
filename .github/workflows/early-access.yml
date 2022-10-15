@@ -95,3 +95,12 @@ jobs:
         run: mvn -B -Prelease -DartifactsDir=artifacts jreleaser:full-release
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Capture JReleaser output
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: jreleaser-release-output
+          path: |
+            target/jreleaser/trace.log
+            target/jreleaser/output.properties
