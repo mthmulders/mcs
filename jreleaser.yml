@@ -6,7 +6,6 @@ project:
     bugTracker: https://github.com/mthmulders/mcs/issues
     homepage: https://maarten.mulders.it/projects/mcs/
     vcsBrowser: https://github.com/mthmulders/mcs
-  website: https://github.com/mthmulders/mcs/
   authors:
     - Maarten Mulders
   license: MIT
