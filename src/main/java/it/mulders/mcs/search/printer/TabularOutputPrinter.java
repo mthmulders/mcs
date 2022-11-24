@@ -1,5 +1,7 @@
-package it.mulders.mcs.search;
+package it.mulders.mcs.search.printer;
 
+import it.mulders.mcs.search.SearchQuery;
+import it.mulders.mcs.search.SearchResponse;
 import picocli.CommandLine;
 import picocli.CommandLine.Help;
 import picocli.CommandLine.Help.Ansi;
@@ -10,8 +12,6 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-
-import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
 
 public class TabularOutputPrinter implements OutputPrinter {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(

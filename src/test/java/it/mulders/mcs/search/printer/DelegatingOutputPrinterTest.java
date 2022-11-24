@@ -1,19 +1,16 @@
-package it.mulders.mcs.search;
+package it.mulders.mcs.search.printer;
 
+import it.mulders.mcs.search.SearchQuery;
+import it.mulders.mcs.search.SearchResponse;
 import org.apache.commons.io.output.NullOutputStream;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import java.io.OutputStream;
 import java.io.PrintStream;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DelegatingOutputPrinterTest implements WithAssertions {

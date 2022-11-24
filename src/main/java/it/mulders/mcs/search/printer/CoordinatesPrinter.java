@@ -1,0 +1,32 @@
+package it.mulders.mcs.search.printer;
+
+import it.mulders.mcs.search.SearchQuery;
+import it.mulders.mcs.search.SearchResponse;
+
+import java.io.PrintStream;
+
+public interface CoordinatesPrinter extends OutputPrinter {
+
+    String provideCoordinates(String group, String artifact, String version);
+
+    @Override
+    default void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream) {
+        if (response.numFound() != 1) {
+            throw new IllegalArgumentException("Search response with more than one result not expected here");
+        }
+
+        var doc = response.docs()[0];
+        stream.println();
+        stream.println(provideCoordinates(doc.g(), doc.a(), first(doc.v(), doc.latestVersion())));
+        stream.println();
+    }
+
+    private String first(final String... values) {
+        for (var value : values) {
+            if (value != null) {
+                return value;
+            }
+        }
+        return null;
+    }
+}

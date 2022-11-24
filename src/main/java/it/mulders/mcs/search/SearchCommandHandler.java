@@ -1,6 +1,8 @@
 package it.mulders.mcs.search;
 
 import it.mulders.mcs.common.Result;
+import it.mulders.mcs.search.printer.DelegatingOutputPrinter;
+import it.mulders.mcs.search.printer.OutputPrinter;
 
 import static it.mulders.mcs.search.Constants.MAX_LIMIT;
 
