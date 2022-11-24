@@ -5,15 +5,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 
-import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
-import static it.mulders.mcs.search.Constants.DEFAULT_START;
+import static it.mulders.mcs.search.Constants.*;
 
-public record CoordinateQuery (
+public record CoordinateQuery(
         String groupId,
         String artifactId,
         String version,
         int searchLimit,
-        int start
+        int start,
+        OutputType outputType
 ) implements SearchQuery {
     @Override
     public String toSolrQuery() {
@@ -31,15 +31,17 @@ public record CoordinateQuery (
     public CoordinateQuery.Builder toBuilder() {
         return new CoordinateQuery.Builder(groupId(), artifactId(), version())
                 .withLimit(searchLimit())
-                .withStart(start());
+                .withStart(start())
+                .withOutputType(outputType());
     }
 
     public static class Builder implements SearchQuery.Builder {
-        private String groupId;
-        private String artifactId;
-        private String version;
+        private final String groupId;
+        private final String artifactId;
+        private final String version;
         private Integer limit = DEFAULT_MAX_SEARCH_RESULTS;
         private Integer start = DEFAULT_START;
+        private OutputType outputType = OUTPUT_TYPE;
 
         public Builder(String groupId, String artifactId) {
             this(groupId, artifactId, null);
@@ -73,8 +75,16 @@ public record CoordinateQuery (
         }
 
         @Override
+        public Builder withOutputType(OutputType outputType) {
+            if (outputType != null) {
+                this.outputType = outputType;
+            }
+            return this;
+        }
+
+        @Override
         public SearchQuery build() {
-            return new CoordinateQuery(groupId, artifactId, version, limit, start);
+            return new CoordinateQuery(groupId, artifactId, version, limit, start, outputType);
         }
     }
 }

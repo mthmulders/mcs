@@ -18,23 +18,23 @@ public record WildcardSearchQuery(
     }
 
     @Override
-    public WildcardSearchQuery.Builder toBuilder() {
-        return new WildcardSearchQuery.Builder(term())
+    public WildcardSearchQuery.BasicBuilder toBuilder() {
+        return new BasicBuilder(term())
                 .withLimit(searchLimit())
                 .withStart(start());
     }
 
-    public static class Builder implements SearchQuery.Builder {
-        private String query;
+    public static class BasicBuilder implements SearchQuery.BasicBuilder {
+        private final String query;
         private Integer limit = DEFAULT_MAX_SEARCH_RESULTS;
         private Integer start = DEFAULT_START;
 
-        public Builder(String query) {
+        public BasicBuilder(String query) {
             this.query = query;
         }
 
         @Override
-        public Builder withStart(Integer start) {
+        public BasicBuilder withStart(Integer start) {
             if (this.start != null) {
                 this.start = start;
             }
@@ -42,7 +42,7 @@ public record WildcardSearchQuery(
         }
 
         @Override
-        public Builder withLimit(final Integer limit) {
+        public BasicBuilder withLimit(final Integer limit) {
             if (limit != null) {
                 this.limit = limit;
             }

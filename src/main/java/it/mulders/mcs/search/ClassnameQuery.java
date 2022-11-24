@@ -24,30 +24,30 @@ public record ClassnameQuery(
     }
 
     @Override
-    public ClassnameQuery.Builder toBuilder() {
-        return new ClassnameQuery.Builder(query())
+    public ClassnameQuery.BasicBuilder toBuilder() {
+        return new ClassnameQuery.BasicBuilder(query())
                 .isFullyQualified(fullyQualified())
                 .withLimit(searchLimit())
                 .withStart(start());
     }
 
-    public static class Builder implements SearchQuery.Builder {
-        private String query;
+    public static class BasicBuilder implements SearchQuery.BasicBuilder {
+        private final String query;
         private Integer limit = DEFAULT_MAX_SEARCH_RESULTS;
         private Integer start = DEFAULT_START;
         private boolean fullyQualified = false;
 
-        public Builder(String query) {
+        public BasicBuilder(String query) {
             this.query = query;
         }
 
-        public Builder isFullyQualified(boolean isFullyQualified) {
+        public BasicBuilder isFullyQualified(boolean isFullyQualified) {
             this.fullyQualified = isFullyQualified;
             return this;
         }
 
         @Override
-        public Builder withStart(Integer start) {
+        public BasicBuilder withStart(Integer start) {
             if (this.start != null) {
                 this.start = start;
             }
@@ -55,7 +55,7 @@ public record ClassnameQuery(
         }
 
         @Override
-        public Builder withLimit(Integer limit) {
+        public BasicBuilder withLimit(Integer limit) {
             if (limit != null) {
                 this.limit = limit;
             }
