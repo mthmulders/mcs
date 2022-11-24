@@ -1,7 +1,6 @@
 package it.mulders.mcs.search;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 public enum OutputType {
     MAVEN("maven"),
@@ -15,11 +14,16 @@ public enum OutputType {
     }
 
     public static OutputType parse(String text) {
-        return Optional.ofNullable(text)
-                .map(t -> Arrays.stream(values())
-                        .filter(type -> type.label.equals(text))
-                        .findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("Output format '%s' is not supported.".formatted(text))))
-                .orElse(Constants.OUTPUT_TYPE);
+        if (text == null) {
+            return Constants.OUTPUT_TYPE;
+        }
+        if (text.isBlank()) {
+            throw new IllegalArgumentException("Output format is empty.");
+        }
+
+        return Arrays.stream(values())
+                .filter(type -> type.label.equals(text))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Output format '%s' is not supported.".formatted(text)));
     }
 }
