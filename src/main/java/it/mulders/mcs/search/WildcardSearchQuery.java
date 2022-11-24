@@ -3,13 +3,13 @@ package it.mulders.mcs.search;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
-import static it.mulders.mcs.search.Constants.DEFAULT_START;
+import static it.mulders.mcs.search.Constants.*;
 
 public record WildcardSearchQuery(
         String term,
         int searchLimit,
-        int start
+        int start,
+        OutputType outputType
 ) implements SearchQuery {
     @Override
     public String toSolrQuery() {
@@ -18,23 +18,25 @@ public record WildcardSearchQuery(
     }
 
     @Override
-    public WildcardSearchQuery.BasicBuilder toBuilder() {
-        return new BasicBuilder(term())
+    public WildcardSearchQuery.Builder toBuilder() {
+        return new Builder(term())
                 .withLimit(searchLimit())
-                .withStart(start());
+                .withStart(start())
+                .withOutputType(outputType());
     }
 
-    public static class BasicBuilder implements SearchQuery.BasicBuilder {
+    public static class Builder implements SearchQuery.Builder {
         private final String query;
         private Integer limit = DEFAULT_MAX_SEARCH_RESULTS;
         private Integer start = DEFAULT_START;
+        private OutputType outputType = OUTPUT_TYPE;
 
-        public BasicBuilder(String query) {
+        public Builder(String query) {
             this.query = query;
         }
 
         @Override
-        public BasicBuilder withStart(Integer start) {
+        public Builder withStart(Integer start) {
             if (this.start != null) {
                 this.start = start;
             }
@@ -42,7 +44,7 @@ public record WildcardSearchQuery(
         }
 
         @Override
-        public BasicBuilder withLimit(final Integer limit) {
+        public Builder withLimit(final Integer limit) {
             if (limit != null) {
                 this.limit = limit;
             }
@@ -50,8 +52,16 @@ public record WildcardSearchQuery(
         }
 
         @Override
+        public Builder withOutputType(OutputType outputType) {
+            if (outputType != null) {
+                this.outputType = outputType;
+            }
+            return this;
+        }
+
+        @Override
         public SearchQuery build() {
-            return new WildcardSearchQuery(query, limit, start);
+            return new WildcardSearchQuery(query, limit, start, outputType);
         }
     }
 }

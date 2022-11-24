@@ -1,5 +1,6 @@
 package it.mulders.mcs.cli;
 
+import it.mulders.mcs.search.OutputType;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
 import picocli.CommandLine;
@@ -65,12 +66,20 @@ public class Cli {
         )
         private Integer limit;
 
+        @CommandLine.Option(
+                names = { "-o", "--output" },
+                description = "Show result in <output> format",
+                paramLabel = "<output>"
+        )
+        private OutputType outputType;
+
         @Override
         public Integer call() {
             var combinedQuery = String.join(" ", query);
             System.out.printf("Searching for %s...%n", combinedQuery);
             var searchQuery = SearchQuery.search(combinedQuery)
                     .withLimit(this.limit)
+                    .withOutputType(this.outputType)
                     .build();
             searchCommandHandler.search(searchQuery);
             return 0;

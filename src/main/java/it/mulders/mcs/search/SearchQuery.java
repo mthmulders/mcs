@@ -3,11 +3,12 @@ package it.mulders.mcs.search;
 public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, WildcardSearchQuery {
     int searchLimit();
     int start();
+    OutputType outputType();
 
     String toSolrQuery();
-    BasicBuilder toBuilder();
+    Builder toBuilder();
 
-    static SearchQuery.BasicBuilder search(String query) {
+    static SearchQuery.Builder search(String query) {
         var isCoordinateSearch = query.contains(":");
         if (isCoordinateSearch) {
             var parts = query.split(":");
@@ -22,21 +23,18 @@ public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, Wil
                     throw new IllegalArgumentException(msg);
             }
         } else {
-            return new WildcardSearchQuery.BasicBuilder(query);
+            return new WildcardSearchQuery.Builder(query);
         }
     }
 
-    static ClassnameQuery.BasicBuilder classSearch(String query) {
-        return new ClassnameQuery.BasicBuilder(query);
+    static ClassnameQuery.Builder classSearch(String query) {
+        return new ClassnameQuery.Builder(query);
     }
 
-    interface BasicBuilder<T extends SearchQuery> {
-        <U extends BasicBuilder<T>> U withLimit(final Integer limit);
-        <U extends BasicBuilder<T>> U withStart(final Integer start);
+    interface Builder<T extends SearchQuery> {
+        <U extends Builder<T>> U withLimit(final Integer limit);
+        <U extends Builder<T>> U withStart(final Integer start);
+        <U extends Builder<T>> U withOutputType(final OutputType outputType);
         SearchQuery build();
-    }
-
-    interface Builder<T extends SearchQuery> extends BasicBuilder<T> {
-        <U extends Builder<T>> U withOutputType(OutputType outputType);
     }
 }
