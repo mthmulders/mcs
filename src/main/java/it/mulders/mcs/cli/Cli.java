@@ -71,15 +71,16 @@ public class Cli {
                 description = "Show result in <output> format",
                 paramLabel = "<output>"
         )
-        private OutputType outputType;
+        private String outputType;
 
         @Override
         public Integer call() {
+            OutputType type = OutputType.parse(outputType);
             var combinedQuery = String.join(" ", query);
             System.out.printf("Searching for %s...%n", combinedQuery);
             var searchQuery = SearchQuery.search(combinedQuery)
-                    .withLimit(this.limit)
-                    .withOutputType(this.outputType)
+                    .withLimit(limit)
+                    .withOutputType(type)
                     .build();
             searchCommandHandler.search(searchQuery);
             return 0;
