@@ -1,6 +1,7 @@
 package it.mulders.mcs.search;
 
 import it.mulders.mcs.common.Result;
+import it.mulders.mcs.search.printer.OutputPrinter;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;

@@ -1,6 +1,8 @@
 package it.mulders.mcs.search;
 
 import it.mulders.mcs.common.Result;
+import it.mulders.mcs.search.printer.DelegatingOutputPrinter;
+import it.mulders.mcs.search.printer.OutputPrinter;
 
 import static it.mulders.mcs.search.Constants.MAX_LIMIT;
 
@@ -9,7 +11,11 @@ public class SearchCommandHandler {
     private final OutputPrinter outputPrinter;
 
     public SearchCommandHandler() {
-        this(new DelegatingOutputPrinter(), new SearchClient());
+        this(Constants.DEFAULT_PRINTER);
+    }
+
+    public SearchCommandHandler(final OutputPrinter coordinateOutput) {
+        this(new DelegatingOutputPrinter(coordinateOutput), new SearchClient());
     }
 
     // Visible for testing

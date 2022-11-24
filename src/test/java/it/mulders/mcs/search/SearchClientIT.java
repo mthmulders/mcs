@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ConnectException;
-import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
@@ -28,7 +27,8 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
 class SearchClientIT implements WithAssertions {
     String getResourceAsString(final String resourceName) {
         try (final InputStream input = getClass().getResourceAsStream(resourceName)) {
-            return new String(input.readAllBytes(), StandardCharsets.UTF_8);
+            byte[] bytes = input != null ? input.readAllBytes() : new byte[]{};
+            return new String(bytes, StandardCharsets.UTF_8);
         } catch (final IOException ioe) {
             return fail("Can't load resource %s", resourceName, ioe);
         }
@@ -122,7 +122,7 @@ class SearchClientIT implements WithAssertions {
         }
 
         @Test
-        void should_gracefully_handle_connection_failure(final WireMockRuntimeInfo wmRuntimeInfo) throws MalformedURLException {
+        void should_gracefully_handle_connection_failure() {
             // Very unlikely there's an HTTP server running there...
             var result = new SearchClient("http://localhost:21")
                     .search(new WildcardSearchQuery("plexus-utils", Constants.DEFAULT_MAX_SEARCH_RESULTS, Constants.DEFAULT_START));

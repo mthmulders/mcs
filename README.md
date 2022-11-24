@@ -22,8 +22,10 @@ This tool supports the following modes of searching:
    mcs search org.codehaus.plexus:plexus-utils:3.4.1
     ```
    If there are multiple hits, you will get the same table output as above.
-   But if there's only one hit, this will give you a pom.xml snippet for the artifact you searched for.
-   Ready for copy & paste in your favourite IDE!
+   But if there's only one hit, this will give you by default a pom.xml snippet for the artifact you searched for.
+   Ready for copy & paste in your favourite IDE!  
+   If you require snippet in different format, use `-f <type>` or `--format=<type>`.
+   Supported types are: `maven`, `gradle`, `gradle-short`, `gradle-kotlin`, `sbt`, `ivy`, `grape`, `leiningen`, `buildr`.
 3. **Class-name search**
    ```console
    mcs class-search CommandLine
@@ -32,7 +34,7 @@ This tool supports the following modes of searching:
    This will give you all artifacts in Maven Central that contain a particular class.
    If you set the `-f` flag, the search term is considered a "fully classified" class name, so including the package name.
 
-All modi recognise the `-l <number>` switch, which lets you specify how many results you want to see _at most_.
+All modes recognise the `-l <number>` switch, which lets you specify how many results you want to see _at most_.
 
 ## Installation
 You can install mcs using the package manager of your choice:
@@ -58,6 +60,6 @@ This setup does not touch your computer - as soon as you close your browser tab,
 ## Ideas for future development
 * [ ] Proper support for multiple classifiers at a particular coordinate.
 * [ ] Immediately copy the pom.xml snippet to the clipboard.
-* [ ] Show the coordinates in a different form (Ivy, Gradle, SBT).
+* [x] Show the coordinates in a different form (Ivy, Gradle, SBT).
 
 

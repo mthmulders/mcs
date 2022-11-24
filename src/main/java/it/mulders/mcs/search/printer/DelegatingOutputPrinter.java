@@ -1,4 +1,7 @@
-package it.mulders.mcs.search;
+package it.mulders.mcs.search.printer;
+
+import it.mulders.mcs.search.SearchQuery;
+import it.mulders.mcs.search.SearchResponse;
 
 import java.io.PrintStream;
 
@@ -7,17 +10,17 @@ import java.io.PrintStream;
  */
 public class DelegatingOutputPrinter implements OutputPrinter {
     private final OutputPrinter noOutput;
-    private final OutputPrinter pomXmlOutput;
+    private final OutputPrinter coordinateOutput;
     private final OutputPrinter tabularSearchOutput;
 
-    public DelegatingOutputPrinter() {
-        this(new NoOutputPrinter(), new PomXmlOutput(), new TabularOutputPrinter());
+    public DelegatingOutputPrinter(final OutputPrinter coordinateOutput) {
+        this(new NoOutputPrinter(), coordinateOutput, new TabularOutputPrinter());
     }
 
     // Visible for testing
-    DelegatingOutputPrinter(final OutputPrinter noOutput, final OutputPrinter pomXmlOutput, final OutputPrinter tabularSearchOutput) {
+    DelegatingOutputPrinter(final OutputPrinter noOutput, final OutputPrinter coordinateOutput, final OutputPrinter tabularSearchOutput) {
         this.noOutput = noOutput;
-        this.pomXmlOutput = pomXmlOutput;
+        this.coordinateOutput = coordinateOutput;
         this.tabularSearchOutput = tabularSearchOutput;
     }
 
@@ -25,7 +28,7 @@ public class DelegatingOutputPrinter implements OutputPrinter {
     public void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream) {
         switch (response.numFound()) {
             case 0 -> noOutput.print(query, response, stream);
-            case 1 -> pomXmlOutput.print(query, response, stream);
+            case 1 -> coordinateOutput.print(query, response, stream);
             default -> tabularSearchOutput.print(query, response, stream);
         }
     }

@@ -1,7 +1,9 @@
 package it.mulders.mcs.cli;
 
+import it.mulders.mcs.search.FormatType;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
+import it.mulders.mcs.search.printer.CoordinatePrinter;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -13,7 +15,6 @@ import java.util.concurrent.Callable;
         versionProvider = ClasspathVersionProvider.class
 )
 public class Cli {
-    private final SearchCommandHandler searchCommandHandler;
 
     @CommandLine.Option(
             names = { "-V", "--version" },
@@ -28,11 +29,7 @@ public class Cli {
             scope = CommandLine.ScopeType.INHERIT,
             usageHelp = true
     )
-    boolean usageHelpRequested;
-
-    public Cli(final SearchCommandHandler searchCommandHandler) {
-        this.searchCommandHandler = searchCommandHandler;
-    }
+    private boolean usageHelpRequested;
 
     public SearchCommand createSearchCommand() {
         return new SearchCommand();
@@ -65,6 +62,17 @@ public class Cli {
         )
         private Integer limit;
 
+        @CommandLine.Option(
+                names = { "-f", "--format" },
+                description = """
+                        Show result in <type> format
+                        Supported types are:
+                          maven, gradle, gradle-short, gradle-kotlin, sbt, ivy, grape, leiningen, buildr
+                        """,
+                paramLabel = "<type>"
+        )
+        private String responseFormat;
+
         @Override
         public Integer call() {
             var combinedQuery = String.join(" ", query);
@@ -72,6 +80,9 @@ public class Cli {
             var searchQuery = SearchQuery.search(combinedQuery)
                     .withLimit(this.limit)
                     .build();
+
+            CoordinatePrinter coordinatePrinter = FormatType.providePrinter(responseFormat);
+            var searchCommandHandler = new SearchCommandHandler(coordinatePrinter);
             searchCommandHandler.search(searchQuery);
             return 0;
         }
@@ -113,6 +124,7 @@ public class Cli {
                     .isFullyQualified(this.fullName)
                     .withLimit(limit)
                     .build();
+            var searchCommandHandler = new SearchCommandHandler();
             searchCommandHandler.search(searchQuery);
             return 0;
         }

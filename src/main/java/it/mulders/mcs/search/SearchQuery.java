@@ -5,22 +5,23 @@ public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, Wil
     int start();
 
     String toSolrQuery();
-    Builder<?> toBuilder();
+    Builder<? extends SearchQuery> toBuilder();
 
-    static SearchQuery.Builder search(String query) {
+    static SearchQuery.Builder<? extends SearchQuery> search(String query) {
         var isCoordinateSearch = query.contains(":");
         if (isCoordinateSearch) {
             var parts = query.split(":");
-            switch (parts.length) {
-                case 1: return new CoordinateQuery.Builder(parts[0], null);
-                case 2: return new CoordinateQuery.Builder(parts[0], parts[1]);
-                case 3: return new CoordinateQuery.Builder(parts[0], parts[1], parts[2]);
-                default:
+            return switch (parts.length) {
+                case 1 -> new CoordinateQuery.Builder(parts[0], null);
+                case 2 -> new CoordinateQuery.Builder(parts[0], parts[1]);
+                case 3 -> new CoordinateQuery.Builder(parts[0], parts[1], parts[2]);
+                default -> {
                     var msg = """
-                        Searching a particular artifact requires at least groupId:artifactId and optionally :version
-                        """;
+                            Searching a particular artifact requires at least groupId:artifactId and optionally :version
+                            """;
                     throw new IllegalArgumentException(msg);
-            }
+                }
+            };
         } else {
             return new WildcardSearchQuery.Builder(query);
         }
@@ -31,8 +32,8 @@ public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, Wil
     }
 
     interface Builder<T extends SearchQuery> {
-        <T extends Builder> T withLimit(final Integer limit);
-        <T extends Builder> T withStart(final Integer start);
+        Builder<T> withLimit(final Integer limit);
+        Builder<T> withStart(final Integer start);
         SearchQuery build();
     }
 }

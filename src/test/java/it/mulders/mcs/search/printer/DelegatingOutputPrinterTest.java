@@ -1,12 +1,13 @@
-package it.mulders.mcs.search;
+package it.mulders.mcs.search.printer;
 
+import it.mulders.mcs.search.SearchQuery;
+import it.mulders.mcs.search.SearchResponse;
 import org.apache.commons.io.output.NullOutputStream;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import java.io.OutputStream;
 import java.io.PrintStream;
 
 import static org.mockito.Mockito.any;
@@ -18,10 +19,10 @@ import static org.mockito.Mockito.verify;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DelegatingOutputPrinterTest implements WithAssertions {
     private final OutputPrinter noOutput = mock(OutputPrinter.class);
-    private final OutputPrinter pomXmlOutput = mock(OutputPrinter.class);
+    private final OutputPrinter coordinateOutput = mock(OutputPrinter.class);
     private final OutputPrinter tabularSearchOutput = mock(OutputPrinter.class);
 
-    private final DelegatingOutputPrinter printer = new DelegatingOutputPrinter(noOutput, pomXmlOutput, tabularSearchOutput);
+    private final DelegatingOutputPrinter printer = new DelegatingOutputPrinter(noOutput, coordinateOutput, tabularSearchOutput);
 
     private final SearchQuery query = SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
     private final PrintStream outputStream = new PrintStream(NullOutputStream.nullOutputStream());
@@ -30,7 +31,7 @@ class DelegatingOutputPrinterTest implements WithAssertions {
     void no_results_delegate() {
         printer.print(query, responseWithResult(0), outputStream);
         verify(noOutput).print(eq(query), any(), eq(outputStream));
-        verify(pomXmlOutput, never()).print(any(), any(), any());
+        verify(coordinateOutput, never()).print(any(), any(), any());
         verify(tabularSearchOutput, never()).print(any(), any(), any());
     }
 
@@ -38,7 +39,7 @@ class DelegatingOutputPrinterTest implements WithAssertions {
     void one_result_delegate() {
         printer.print(query, responseWithResult(1), outputStream);
         verify(noOutput, never()).print(any(), any(), any());
-        verify(pomXmlOutput).print(eq(query), any(), eq(outputStream));
+        verify(coordinateOutput).print(eq(query), any(), eq(outputStream));
         verify(tabularSearchOutput, never()).print(any(), any(), any());
     }
 
@@ -46,7 +47,7 @@ class DelegatingOutputPrinterTest implements WithAssertions {
     void multiple_results_delegate() {
         printer.print(query, responseWithResult(2), outputStream);
         verify(noOutput, never()).print(any(), any(), any());
-        verify(pomXmlOutput, never()).print(any(), any(), any());
+        verify(coordinateOutput, never()).print(any(), any(), any());
         verify(tabularSearchOutput).print(eq(query), any(), eq(outputStream));
     }
 

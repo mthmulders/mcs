@@ -2,7 +2,6 @@ package it.mulders.mcs;
 
 import it.mulders.mcs.cli.Cli;
 import it.mulders.mcs.cli.CommandClassFactory;
-import it.mulders.mcs.search.SearchCommandHandler;
 import picocli.CommandLine;
 
 public class App {
@@ -12,7 +11,7 @@ public class App {
 
     // Visible for testing
     static int doMain(final String... args) {
-        var cli = new Cli(new SearchCommandHandler());
+        var cli = new Cli();
         var program = new CommandLine(cli, new CommandClassFactory(cli));
         return program.execute(args);
     }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CommandClassFactoryTest implements WithAssertions {
-    private final Cli cli = new Cli(null);
+    private final Cli cli = new Cli();
     private final CommandClassFactory factory = new CommandClassFactory(cli);
 
     @Test

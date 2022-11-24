@@ -8,7 +8,7 @@ import java.util.List;
 import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
 import static it.mulders.mcs.search.Constants.DEFAULT_START;
 
-public record CoordinateQuery (
+public record CoordinateQuery(
         String groupId,
         String artifactId,
         String version,
@@ -34,10 +34,10 @@ public record CoordinateQuery (
                 .withStart(start());
     }
 
-    public static class Builder implements SearchQuery.Builder {
-        private String groupId;
-        private String artifactId;
-        private String version;
+    public static class Builder implements SearchQuery.Builder<CoordinateQuery> {
+        private final String groupId;
+        private final String artifactId;
+        private final String version;
         private Integer limit = DEFAULT_MAX_SEARCH_RESULTS;
         private Integer start = DEFAULT_START;
 
@@ -52,8 +52,7 @@ public record CoordinateQuery (
         }
 
         private String sanitise(String input) {
-            if (input == null) return "";
-            return input;
+            return input == null ? "" : input;
         }
 
         @Override

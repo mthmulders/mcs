@@ -1,5 +1,6 @@
-package it.mulders.mcs.search;
+package it.mulders.mcs.search.printer;
 
+import it.mulders.mcs.search.SearchResponse;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Test;
 
