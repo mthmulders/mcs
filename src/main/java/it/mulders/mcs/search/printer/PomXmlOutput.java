@@ -1,6 +1,6 @@
 package it.mulders.mcs.search.printer;
 
-public class PomXmlOutput implements CoordinatesPrinter {
+public class PomXmlOutput implements CoordinatePrinter {
 
     @Override
     public String provideCoordinates(String group, String artifact, String version) {

@@ -10,9 +10,9 @@ public enum OutputType {
     GRADLE_SHORT("gradle-short", new GradleGroovyShortOutput());
 
     private final String label;
-    private final OutputPrinter printer;
+    private final CoordinatePrinter printer;
 
-    OutputType(String outputType, CoordinatesPrinter printer) {
+    OutputType(String outputType, CoordinatePrinter printer) {
         this.label = outputType;
         this.printer = printer;
     }

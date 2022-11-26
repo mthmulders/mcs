@@ -5,7 +5,7 @@ import it.mulders.mcs.search.SearchResponse;
 
 import java.io.PrintStream;
 
-public interface CoordinatesPrinter extends OutputPrinter {
+public interface CoordinatePrinter extends OutputPrinter {
 
     String provideCoordinates(String group, String artifact, String version);
 
