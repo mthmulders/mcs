@@ -53,6 +53,14 @@ class CliTest implements WithAssertions {
 
             verify(searchCommandHandler).search(SearchQuery.search("test").withOutputType(OutputType.GRADLE_SHORT).build());
         }
+
+        @Test
+        void accepts_default_output_type_parameter() {
+            var program = new CommandLine(cli, new CommandClassFactory(cli));
+            program.execute("search", "test");
+
+            verify(searchCommandHandler).search(SearchQuery.search("test").withOutputType(Constants.OUTPUT_TYPE).build());
+        }
     }
 
     @Nested
