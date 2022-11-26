@@ -1,7 +1,5 @@
-package it.mulders.mcs.search.printer;
+package it.mulders.mcs.search;
 
-import it.mulders.mcs.search.Constants;
-import it.mulders.mcs.search.OutputType;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EmptySource;
