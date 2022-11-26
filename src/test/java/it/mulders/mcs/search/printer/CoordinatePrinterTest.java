@@ -35,6 +35,20 @@ class CoordinatePrinterTest implements WithAssertions {
             """;
     private static final String GRADLE_GROOVY_OUTPUT = "implementation group: 'org.codehaus.plexus', name: 'plexus-utils', version: '3.4.1'";
     private static final String GRADLE_GROOVY_SHORT_OUTPUT = "'org.codehaus.plexus:plexus-utils:3.4.1'";
+    private static final String GRADLE_KOTLIN_OUTPUT = "implementation(\"org.codehaus.plexus:plexus-utils:3.4.1\")";
+    private static final String SBT_OUTPUT = """
+            libraryDependencies += "org.codehaus.plexus" % "plexus-utils" % "3.4.1"
+            """;
+    private static final String IVY_XML_OUTPUT = """
+            <dependency org="org.codehaus.plexus" name="plexus-utils" rev="3.4.1"/>
+            """;
+    private static final String GRAPE_OUTPUT = """
+            @Grapes(
+                @Grab(group='org.codehaus.plexus', module='plexus-utils', version='3.4.1')
+            )
+            """;
+    private static final String LEININGEN_OUTPUT = "[org.codehaus.plexus/plexus-utils \"3.4.1\"]";
+    private static final String BUILDR_OUTPUT = "'org.codehaus.plexus:plexus-utils:jar:3.4.1'";
 
     private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
@@ -42,7 +56,13 @@ class CoordinatePrinterTest implements WithAssertions {
         return Stream.of(
                 Arguments.of(new PomXmlOutput(), POM_XML_OUTPUT),
                 Arguments.of(new GradleGroovyOutput(), GRADLE_GROOVY_OUTPUT),
-                Arguments.of(new GradleGroovyShortOutput(), GRADLE_GROOVY_SHORT_OUTPUT)
+                Arguments.of(new GradleGroovyShortOutput(), GRADLE_GROOVY_SHORT_OUTPUT),
+                Arguments.of(new GradleKotlinOutput(), GRADLE_KOTLIN_OUTPUT),
+                Arguments.of(new SbtOutput(), SBT_OUTPUT),
+                Arguments.of(new IvyXmlOutput(), IVY_XML_OUTPUT),
+                Arguments.of(new GrapeOutput(), GRAPE_OUTPUT),
+                Arguments.of(new LeiningenOutput(), LEININGEN_OUTPUT),
+                Arguments.of(new BuildrOutput(), BUILDR_OUTPUT)
         );
     }
 
