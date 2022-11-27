@@ -1,6 +1,6 @@
 package it.mulders.mcs.search.printer;
 
-public class LeiningenOutput implements CoordinatePrinter {
+public final class LeiningenOutput implements CoordinatePrinter {
 
     @Override
     public String provideCoordinates(String group, String artifact, String version) {

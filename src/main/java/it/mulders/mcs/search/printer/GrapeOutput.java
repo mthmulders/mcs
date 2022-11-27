@@ -1,6 +1,6 @@
 package it.mulders.mcs.search.printer;
 
-public class GrapeOutput implements CoordinatePrinter {
+public final class GrapeOutput implements CoordinatePrinter {
 
     @Override
     public String provideCoordinates(String group, String artifact, String version) {
