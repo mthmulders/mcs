@@ -8,8 +8,7 @@ import static it.mulders.mcs.search.Constants.*;
 public record WildcardSearchQuery(
         String term,
         int searchLimit,
-        int start,
-        OutputType outputType
+        int start
 ) implements SearchQuery {
     @Override
     public String toSolrQuery() {
@@ -21,15 +20,13 @@ public record WildcardSearchQuery(
     public WildcardSearchQuery.Builder toBuilder() {
         return new Builder(term())
                 .withLimit(searchLimit())
-                .withStart(start())
-                .withOutputType(outputType());
+                .withStart(start());
     }
 
     public static class Builder implements SearchQuery.Builder {
         private final String query;
         private Integer limit = DEFAULT_MAX_SEARCH_RESULTS;
         private Integer start = DEFAULT_START;
-        private OutputType outputType = OUTPUT_TYPE;
 
         public Builder(String query) {
             this.query = query;
@@ -52,16 +49,8 @@ public record WildcardSearchQuery(
         }
 
         @Override
-        public Builder withOutputType(OutputType outputType) {
-            if (outputType != null) {
-                this.outputType = outputType;
-            }
-            return this;
-        }
-
-        @Override
         public SearchQuery build() {
-            return new WildcardSearchQuery(query, limit, start, outputType);
+            return new WildcardSearchQuery(query, limit, start);
         }
     }
 }

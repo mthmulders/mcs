@@ -5,8 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static it.mulders.mcs.search.Constants.OUTPUT_TYPE;
-
 class WildcardSearchQueryTest implements WithAssertions {
     @Nested
     @DisplayName("toSolrQuery")
@@ -39,7 +37,7 @@ class WildcardSearchQueryTest implements WithAssertions {
         }
 
         private WildcardSearchQuery createQuery(Integer maxSearchResults, Integer start) {
-            return new WildcardSearchQuery("foo", maxSearchResults, start, OUTPUT_TYPE);
+            return new WildcardSearchQuery("foo", maxSearchResults, start);
         }
     }
 }

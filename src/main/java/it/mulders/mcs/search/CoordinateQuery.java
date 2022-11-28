@@ -12,8 +12,7 @@ public record CoordinateQuery(
         String artifactId,
         String version,
         int searchLimit,
-        int start,
-        OutputType outputType
+        int start
 ) implements SearchQuery {
     @Override
     public String toSolrQuery() {
@@ -31,8 +30,7 @@ public record CoordinateQuery(
     public CoordinateQuery.Builder toBuilder() {
         return new CoordinateQuery.Builder(groupId(), artifactId(), version())
                 .withLimit(searchLimit())
-                .withStart(start())
-                .withOutputType(outputType());
+                .withStart(start());
     }
 
     public static class Builder implements SearchQuery.Builder {
@@ -41,7 +39,6 @@ public record CoordinateQuery(
         private final String version;
         private Integer limit = DEFAULT_MAX_SEARCH_RESULTS;
         private Integer start = DEFAULT_START;
-        private OutputType outputType = OUTPUT_TYPE;
 
         public Builder(String groupId, String artifactId) {
             this(groupId, artifactId, null);
@@ -54,8 +51,7 @@ public record CoordinateQuery(
         }
 
         private String sanitise(String input) {
-            if (input == null) return "";
-            return input;
+            return input == null ? "" : input;
         }
 
         @Override
@@ -75,16 +71,8 @@ public record CoordinateQuery(
         }
 
         @Override
-        public Builder withOutputType(OutputType outputType) {
-            if (outputType != null) {
-                this.outputType = outputType;
-            }
-            return this;
-        }
-
-        @Override
         public SearchQuery build() {
-            return new CoordinateQuery(groupId, artifactId, version, limit, start, outputType);
+            return new CoordinateQuery(groupId, artifactId, version, limit, start);
         }
     }
 }

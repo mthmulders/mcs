@@ -27,20 +27,6 @@ public enum OutputType {
         return printer;
     }
 
-    public static OutputType parse(String text) {
-        if (text == null) {
-            return Constants.OUTPUT_TYPE;
-        }
-        if (text.isBlank()) {
-            throw new IllegalArgumentException("Output format is empty.");
-        }
-
-        return Arrays.stream(values())
-                .filter(type -> type.label.equals(text))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Output format '%s' is not supported.".formatted(text)));
-    }
-
     public static CoordinatePrinter providePrinter(String text) {
         if (text == null) {
             return Constants.DEFAULT_PRINTER;

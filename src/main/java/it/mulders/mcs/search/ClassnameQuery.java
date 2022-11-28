@@ -9,8 +9,7 @@ public record ClassnameQuery(
         String query,
         boolean fullyQualified,
         int searchLimit,
-        int start,
-        OutputType outputType
+        int start
 ) implements SearchQuery {
     @Override
     public String toSolrQuery() {
@@ -36,7 +35,6 @@ public record ClassnameQuery(
         private Integer limit = DEFAULT_MAX_SEARCH_RESULTS;
         private Integer start = DEFAULT_START;
         private boolean fullyQualified = false;
-        private OutputType outputType = OUTPUT_TYPE;
 
         public Builder(String query) {
             this.query = query;
@@ -64,16 +62,8 @@ public record ClassnameQuery(
         }
 
         @Override
-        public Builder withOutputType(OutputType outputType) {
-            if (outputType != null) {
-                this.outputType = outputType;
-            }
-            return this;
-        }
-
-        @Override
         public SearchQuery build() {
-            return new ClassnameQuery(query, fullyQualified, limit, start, outputType);
+            return new ClassnameQuery(query, fullyQualified, limit, start);
         }
     }
 }

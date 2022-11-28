@@ -3,6 +3,7 @@ package it.mulders.mcs.cli;
 import it.mulders.mcs.search.OutputType;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
+import it.mulders.mcs.search.printer.CoordinatePrinter;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -71,16 +72,16 @@ public class Cli {
                 description = "Show result in <output> format",
                 paramLabel = "<output>"
         )
-        private String outputType;
+        private String outputForm;
 
         @Override
         public Integer call() {
-            OutputType type = OutputType.parse(outputType);
+            // ToDo - printer must be processed
+            CoordinatePrinter printer = OutputType.providePrinter(outputForm);
             var combinedQuery = String.join(" ", query);
             System.out.printf("Searching for %s...%n", combinedQuery);
             var searchQuery = SearchQuery.search(combinedQuery)
                     .withLimit(limit)
-                    .withOutputType(type)
                     .build();
             searchCommandHandler.search(searchQuery);
             return 0;
