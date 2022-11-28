@@ -30,9 +30,9 @@ public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, Wil
         return new ClassnameQuery.Builder(query);
     }
 
-    interface Builder<T extends SearchQuery> {
-        <U extends Builder<T>> U withLimit(final Integer limit);
-        <U extends Builder<T>> U withStart(final Integer start);
+    interface Builder {
+        Builder withLimit(final Integer limit);
+        Builder withStart(final Integer start);
         SearchQuery build();
     }
 }
