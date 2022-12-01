@@ -32,13 +32,13 @@ public enum FormatType {
             return Constants.DEFAULT_PRINTER;
         }
         if (text.isBlank()) {
-            throw new IllegalArgumentException("Format type is empty.");
+            throw new UnsupportedFormatException("Format type is empty.");
         }
 
         return Arrays.stream(values())
                 .filter(type -> type.label.equals(text))
                 .map(FormatType::getPrinter)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Format type '%s' is not supported.".formatted(text)));
+                .orElseThrow(() -> new UnsupportedFormatException("Format type '%s' is not supported.".formatted(text)));
     }
 }

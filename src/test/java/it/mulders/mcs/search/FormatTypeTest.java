@@ -21,7 +21,7 @@ class FormatTypeTest {
     @EmptySource
     @ValueSource(strings = {" ", "nuget"})
     void throw_exception_when_format_type_is_blank_or_unknown(String parameter) {
-        assertThrows(IllegalArgumentException.class, () -> FormatType.providePrinter(parameter));
+        assertThrows(UnsupportedFormatException.class, () -> FormatType.providePrinter(parameter));
     }
 
     @ParameterizedTest
