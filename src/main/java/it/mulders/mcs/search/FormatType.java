@@ -4,7 +4,7 @@ import it.mulders.mcs.search.printer.*;
 
 import java.util.Arrays;
 
-public enum OutputType {
+public enum FormatType {
     MAVEN("maven", new PomXmlOutput()),
     GRADLE("gradle", new GradleGroovyOutput()),
     GRADLE_SHORT("gradle-short", new GradleGroovyShortOutput()),
@@ -18,7 +18,7 @@ public enum OutputType {
     private final String label;
     private final CoordinatePrinter printer;
 
-    OutputType(String outputType, CoordinatePrinter printer) {
+    FormatType(String outputType, CoordinatePrinter printer) {
         this.label = outputType;
         this.printer = printer;
     }
@@ -32,13 +32,13 @@ public enum OutputType {
             return Constants.DEFAULT_PRINTER;
         }
         if (text.isBlank()) {
-            throw new IllegalArgumentException("Output format is empty.");
+            throw new IllegalArgumentException("Format type is empty.");
         }
 
         return Arrays.stream(values())
                 .filter(type -> type.label.equals(text))
-                .map(OutputType::getPrinter)
+                .map(FormatType::getPrinter)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Output format '%s' is not supported.".formatted(text)));
+                .orElseThrow(() -> new IllegalArgumentException("Format type '%s' is not supported.".formatted(text)));
     }
 }

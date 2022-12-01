@@ -49,7 +49,7 @@ class CliTest implements WithAssertions {
         @Test
         void accepts_output_type_parameter() {
             var program = new CommandLine(cli, new CommandClassFactory(cli));
-            program.execute("search", "--output", "gradle-short", "test");
+            program.execute("search", "--format", "gradle-short", "test");
 
             verify(searchCommandHandler).search(SearchQuery.search("test").build());
         }

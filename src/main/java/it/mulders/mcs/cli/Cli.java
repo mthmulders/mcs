@@ -1,6 +1,6 @@
 package it.mulders.mcs.cli;
 
-import it.mulders.mcs.search.OutputType;
+import it.mulders.mcs.search.FormatType;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.printer.CoordinatePrinter;
@@ -68,16 +68,20 @@ public class Cli {
         private Integer limit;
 
         @CommandLine.Option(
-                names = { "-o", "--output" },
-                description = "Show result in <output> format",
-                paramLabel = "<output>"
+                names = { "-f", "--format" },
+                description = """
+                        Show result in <type> format
+                        Supported types are:
+                          maven, gradle, gradle-short, gradle-kotlin, sbt, ivy, grape, leiningen, buildr
+                        """,
+                paramLabel = "<type>"
         )
-        private String outputForm;
+        private String responseFormat;
 
         @Override
         public Integer call() {
             // ToDo - printer must be processed
-            CoordinatePrinter printer = OutputType.providePrinter(outputForm);
+            CoordinatePrinter printer = FormatType.providePrinter(responseFormat);
             var combinedQuery = String.join(" ", query);
             System.out.printf("Searching for %s...%n", combinedQuery);
             var searchQuery = SearchQuery.search(combinedQuery)
