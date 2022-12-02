@@ -1,9 +1,7 @@
 package it.mulders.mcs.cli;
 
-import it.mulders.mcs.search.FormatType;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
-import it.mulders.mcs.search.printer.CoordinatePrinter;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -80,8 +78,6 @@ public class Cli {
 
         @Override
         public Integer call() {
-            // ToDo - printer must be processed
-            CoordinatePrinter printer = FormatType.providePrinter(responseFormat);
             var combinedQuery = String.join(" ", query);
             System.out.printf("Searching for %s...%n", combinedQuery);
             var searchQuery = SearchQuery.search(combinedQuery)

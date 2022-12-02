@@ -15,10 +15,10 @@ import static org.mockito.Mockito.*;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DelegatingOutputPrinterTest implements WithAssertions {
     private final OutputPrinter noOutput = mock(OutputPrinter.class);
-    private final OutputPrinter pomXmlOutput = mock(OutputPrinter.class);
+    private final OutputPrinter snippetOutput = mock(OutputPrinter.class);
     private final OutputPrinter tabularSearchOutput = mock(OutputPrinter.class);
 
-    private final DelegatingOutputPrinter printer = new DelegatingOutputPrinter(noOutput, pomXmlOutput, tabularSearchOutput);
+    private final DelegatingOutputPrinter printer = new DelegatingOutputPrinter(noOutput, snippetOutput, tabularSearchOutput);
 
     private final SearchQuery query = SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
     private final PrintStream outputStream = new PrintStream(NullOutputStream.nullOutputStream());
@@ -27,7 +27,7 @@ class DelegatingOutputPrinterTest implements WithAssertions {
     void no_results_delegate() {
         printer.print(query, responseWithResult(0), outputStream);
         verify(noOutput).print(eq(query), any(), eq(outputStream));
-        verify(pomXmlOutput, never()).print(any(), any(), any());
+        verify(snippetOutput, never()).print(any(), any(), any());
         verify(tabularSearchOutput, never()).print(any(), any(), any());
     }
 
@@ -35,7 +35,7 @@ class DelegatingOutputPrinterTest implements WithAssertions {
     void one_result_delegate() {
         printer.print(query, responseWithResult(1), outputStream);
         verify(noOutput, never()).print(any(), any(), any());
-        verify(pomXmlOutput).print(eq(query), any(), eq(outputStream));
+        verify(snippetOutput).print(eq(query), any(), eq(outputStream));
         verify(tabularSearchOutput, never()).print(any(), any(), any());
     }
 
@@ -43,7 +43,7 @@ class DelegatingOutputPrinterTest implements WithAssertions {
     void multiple_results_delegate() {
         printer.print(query, responseWithResult(2), outputStream);
         verify(noOutput, never()).print(any(), any(), any());
-        verify(pomXmlOutput, never()).print(any(), any(), any());
+        verify(snippetOutput, never()).print(any(), any(), any());
         verify(tabularSearchOutput).print(eq(query), any(), eq(outputStream));
     }
 
