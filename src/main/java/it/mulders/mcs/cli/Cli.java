@@ -83,7 +83,7 @@ public class Cli {
             var combinedQuery = String.join(" ", query);
             System.out.printf("Searching for %s...%n", combinedQuery);
             var searchQuery = SearchQuery.search(combinedQuery)
-                    .withLimit(limit)
+                    .withLimit(this.limit)
                     .build();
 
             CoordinatePrinter coordinatePrinter = FormatType.providePrinter(responseFormat);

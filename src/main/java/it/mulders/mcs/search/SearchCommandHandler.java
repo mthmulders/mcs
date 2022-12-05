@@ -26,7 +26,7 @@ public class SearchCommandHandler {
                 .ifPresent(response -> printResponse(query, response));
     }
 
-    public void setCoordinatePrinter(OutputPrinter coordinatePrinter) {
+    public void setCoordinatePrinter(final OutputPrinter coordinatePrinter) {
         outputPrinter.setCoordinatePrinter(coordinatePrinter);
     }
 

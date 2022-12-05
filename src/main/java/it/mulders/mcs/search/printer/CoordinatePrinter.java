@@ -9,7 +9,7 @@ public sealed interface CoordinatePrinter extends OutputPrinter
         permits BuildrOutput, GradleGroovyOutput, GradleGroovyShortOutput, GradleKotlinOutput, GrapeOutput,
         IvyXmlOutput, LeiningenOutput, PomXmlOutput, SbtOutput {
 
-    String provideCoordinates(String group, String artifact, String version);
+    String provideCoordinates(final String group, final String artifact, final String version);
 
     @Override
     default void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream) {

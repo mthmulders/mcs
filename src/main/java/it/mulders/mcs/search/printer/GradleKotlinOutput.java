@@ -3,7 +3,7 @@ package it.mulders.mcs.search.printer;
 public final class GradleKotlinOutput implements CoordinatePrinter {
 
     @Override
-    public String provideCoordinates(String group, String artifact, String version) {
+    public String provideCoordinates(final String group, final String artifact, final String version) {
         return "implementation(\"%s:%s:%s\")".formatted(group, artifact, version);
     }
 }

@@ -5,7 +5,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 
-import static it.mulders.mcs.search.Constants.*;
+import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
+import static it.mulders.mcs.search.Constants.DEFAULT_START;
 
 public record CoordinateQuery(
         String groupId,

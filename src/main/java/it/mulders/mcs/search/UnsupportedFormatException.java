@@ -4,11 +4,11 @@ public class UnsupportedFormatException extends RuntimeException {
 
     private final boolean suppressStacktrace;
 
-    public UnsupportedFormatException(String message) {
+    public UnsupportedFormatException(final String message) {
         this(message, true);
     }
 
-    public UnsupportedFormatException(String message, boolean suppressStacktrace) {
+    public UnsupportedFormatException(final String message, final boolean suppressStacktrace) {
         super(message, null, suppressStacktrace, !suppressStacktrace);
         this.suppressStacktrace = suppressStacktrace;
     }

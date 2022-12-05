@@ -11,7 +11,7 @@ class WildcardSearchQueryTest implements WithAssertions {
     class ToSolrQueryTest {
         @Test
         void solr_query_should_contain_limit() {
-            var query = createQuery(5, Constants.DEFAULT_START);
+            var query = new WildcardSearchQuery("foo", 5, Constants.DEFAULT_START);
 
             var solrQuery = query.toSolrQuery();
 
@@ -20,7 +20,7 @@ class WildcardSearchQueryTest implements WithAssertions {
 
         @Test
         void solr_query_should_contain_search_term() {
-            var query = createQuery(Constants.DEFAULT_MAX_SEARCH_RESULTS, Constants.DEFAULT_START);
+            var query = new WildcardSearchQuery("foo", Constants.DEFAULT_MAX_SEARCH_RESULTS, Constants.DEFAULT_START);
 
             var solrQuery = query.toSolrQuery();
 
@@ -29,15 +29,11 @@ class WildcardSearchQueryTest implements WithAssertions {
 
         @Test
         void solr_query_should_contain_start() {
-            var query = createQuery(Constants.DEFAULT_MAX_SEARCH_RESULTS, 3);
+            var query = new WildcardSearchQuery("foo", Constants.DEFAULT_MAX_SEARCH_RESULTS, 3);
 
             var solrQuery = query.toSolrQuery();
 
             assertThat(solrQuery).contains("start=3");
-        }
-
-        private WildcardSearchQuery createQuery(Integer maxSearchResults, Integer start) {
-            return new WildcardSearchQuery("foo", maxSearchResults, start);
         }
     }
 }

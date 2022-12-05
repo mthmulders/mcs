@@ -3,7 +3,8 @@ package it.mulders.mcs.search;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import static it.mulders.mcs.search.Constants.*;
+import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
+import static it.mulders.mcs.search.Constants.DEFAULT_START;
 
 public record WildcardSearchQuery(
         String term,
@@ -18,7 +19,7 @@ public record WildcardSearchQuery(
 
     @Override
     public WildcardSearchQuery.Builder toBuilder() {
-        return new Builder(term())
+        return new WildcardSearchQuery.Builder(term())
                 .withLimit(searchLimit())
                 .withStart(start());
     }

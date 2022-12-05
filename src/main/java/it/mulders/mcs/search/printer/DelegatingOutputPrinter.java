@@ -11,8 +11,8 @@ import java.io.PrintStream;
  */
 public class DelegatingOutputPrinter implements OutputPrinter {
     private final OutputPrinter noOutput;
-    private final OutputPrinter tabularSearchOutput;
     private OutputPrinter coordinateOutput;
+    private final OutputPrinter tabularSearchOutput;
 
     public DelegatingOutputPrinter() {
         this(new NoOutputPrinter(), Constants.DEFAULT_PRINTER, new TabularOutputPrinter());
@@ -34,7 +34,7 @@ public class DelegatingOutputPrinter implements OutputPrinter {
         }
     }
 
-    public void setCoordinatePrinter(OutputPrinter coordinatePrinter) {
+    public void setCoordinatePrinter(final OutputPrinter coordinatePrinter) {
         this.coordinateOutput = coordinatePrinter;
     }
 }

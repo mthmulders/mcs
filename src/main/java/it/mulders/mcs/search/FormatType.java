@@ -18,7 +18,7 @@ public enum FormatType {
     private final String label;
     private final CoordinatePrinter printer;
 
-    FormatType(String outputType, CoordinatePrinter printer) {
+    FormatType(final String outputType, final CoordinatePrinter printer) {
         this.label = outputType;
         this.printer = printer;
     }
@@ -27,7 +27,7 @@ public enum FormatType {
         return printer;
     }
 
-    public static CoordinatePrinter providePrinter(String text) {
+    public static CoordinatePrinter providePrinter(final String text) {
         if (text == null) {
             return Constants.DEFAULT_PRINTER;
         }
