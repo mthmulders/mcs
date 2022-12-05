@@ -31,7 +31,7 @@ public record ClassnameQuery(
                 .withStart(start());
     }
 
-    public static class Builder implements SearchQuery.Builder {
+    public static class Builder implements SearchQuery.Builder<ClassnameQuery> {
         private final String query;
         private Integer limit = DEFAULT_MAX_SEARCH_RESULTS;
         private Integer start = DEFAULT_START;

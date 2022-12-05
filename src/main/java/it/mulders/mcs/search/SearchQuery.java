@@ -5,9 +5,9 @@ public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, Wil
     int start();
 
     String toSolrQuery();
-    Builder toBuilder();
+    Builder<? extends SearchQuery> toBuilder();
 
-    static SearchQuery.Builder search(String query) {
+    static SearchQuery.Builder<? extends SearchQuery> search(String query) {
         var isCoordinateSearch = query.contains(":");
         if (isCoordinateSearch) {
             var parts = query.split(":");
@@ -31,9 +31,9 @@ public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, Wil
         return new ClassnameQuery.Builder(query);
     }
 
-    interface Builder {
-        Builder withLimit(final Integer limit);
-        Builder withStart(final Integer start);
+    interface Builder<T extends SearchQuery> {
+        Builder<T> withLimit(final Integer limit);
+        Builder<T> withStart(final Integer start);
         SearchQuery build();
     }
 }

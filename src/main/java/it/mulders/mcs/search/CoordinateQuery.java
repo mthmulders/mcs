@@ -34,7 +34,7 @@ public record CoordinateQuery(
                 .withStart(start());
     }
 
-    public static class Builder implements SearchQuery.Builder {
+    public static class Builder implements SearchQuery.Builder<CoordinateQuery> {
         private final String groupId;
         private final String artifactId;
         private final String version;
