@@ -36,7 +36,7 @@ public enum FormatType {
         }
 
         return Arrays.stream(values())
-                .filter(type -> type.label.equals(text))
+                .filter(type -> type.label.equals(text.trim()))
                 .map(FormatType::getPrinter)
                 .findFirst()
                 .orElseThrow(() -> new UnsupportedFormatException("Format type '%s' is not supported.".formatted(text)));

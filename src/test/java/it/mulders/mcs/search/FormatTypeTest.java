@@ -1,6 +1,7 @@
 package it.mulders.mcs.search;
 
 import it.mulders.mcs.search.printer.*;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 
@@ -22,6 +23,13 @@ class FormatTypeTest {
     @ValueSource(strings = {" ", "nuget"})
     void throw_exception_when_format_type_is_blank_or_unknown(String parameter) {
         assertThrows(UnsupportedFormatException.class, () -> FormatType.providePrinter(parameter));
+    }
+
+    @Test
+    void return_expected_printer_when_format_type_contains_leading_and_trailing_white_spaces() {
+        CoordinatePrinter printer = FormatType.providePrinter(" gradle ");
+        assertThat(printer.getClass()).isEqualTo(GradleGroovyOutput.class);
+        assertThat(printer.getClass()).isEqualTo(GradleGroovyOutput.class);
     }
 
     @ParameterizedTest
