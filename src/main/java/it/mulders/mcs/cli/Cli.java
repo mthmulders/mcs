@@ -1,7 +1,9 @@
 package it.mulders.mcs.cli;
 
+import it.mulders.mcs.search.FormatType;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
+import it.mulders.mcs.search.printer.CoordinatePrinter;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -83,6 +85,9 @@ public class Cli {
             var searchQuery = SearchQuery.search(combinedQuery)
                     .withLimit(limit)
                     .build();
+
+            CoordinatePrinter coordinatePrinter = FormatType.providePrinter(responseFormat);
+            searchCommandHandler.setCoordinatePrinter(coordinatePrinter);
             searchCommandHandler.search(searchQuery);
             return 0;
         }

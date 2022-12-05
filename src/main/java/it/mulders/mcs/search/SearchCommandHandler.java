@@ -8,14 +8,14 @@ import static it.mulders.mcs.search.Constants.MAX_LIMIT;
 
 public class SearchCommandHandler {
     private final SearchClient searchClient;
-    private final OutputPrinter outputPrinter;
+    private final DelegatingOutputPrinter outputPrinter;
 
     public SearchCommandHandler() {
         this(new DelegatingOutputPrinter(), new SearchClient());
     }
 
     // Visible for testing
-    SearchCommandHandler(final OutputPrinter outputPrinter, final SearchClient searchClient) {
+    SearchCommandHandler(final DelegatingOutputPrinter outputPrinter, final SearchClient searchClient) {
         this.searchClient = searchClient;
         this.outputPrinter = outputPrinter;
     }
@@ -24,6 +24,10 @@ public class SearchCommandHandler {
         performSearch(query)
                 .map(response -> performAdditionalSearch(query, response))
                 .ifPresent(response -> printResponse(query, response));
+    }
+
+    public void setCoordinatePrinter(OutputPrinter coordinatePrinter) {
+        outputPrinter.setCoordinatePrinter(coordinatePrinter);
     }
 
     private SearchResponse.Response performAdditionalSearch(final SearchQuery query,

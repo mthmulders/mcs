@@ -23,7 +23,7 @@ public enum FormatType {
         this.printer = printer;
     }
 
-    private CoordinatePrinter getPrinter() {
+    public CoordinatePrinter getPrinter() {
         return printer;
     }
 
