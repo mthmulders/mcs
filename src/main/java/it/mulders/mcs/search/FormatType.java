@@ -32,7 +32,7 @@ public enum FormatType {
             return Constants.DEFAULT_PRINTER;
         }
         if (text.isBlank()) {
-            throw new UnsupportedFormatException("Format type is empty.");
+            throw new UnsupportedFormatException("Empty format type is not allowed.");
         }
 
         return Arrays.stream(values())

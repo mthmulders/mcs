@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.*;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FormatTypeTest {
 
@@ -22,7 +22,7 @@ class FormatTypeTest {
     @EmptySource
     @ValueSource(strings = {" ", "nuget"})
     void throw_exception_when_format_type_is_blank_or_unknown(String parameter) {
-        assertThrows(UnsupportedFormatException.class, () -> FormatType.providePrinter(parameter));
+        assertThatThrownBy(() -> FormatType.providePrinter(parameter)).isInstanceOf(UnsupportedFormatException.class);
     }
 
     @Test
