@@ -9,7 +9,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import static it.mulders.mcs.search.Constants.*;
+import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
+import static it.mulders.mcs.search.Constants.DEFAULT_START;
 
 class CoordinateQueryTest implements WithAssertions {
 
