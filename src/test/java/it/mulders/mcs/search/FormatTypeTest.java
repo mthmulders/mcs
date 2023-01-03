@@ -42,7 +42,6 @@ class FormatTypeTest {
     void return_expected_printer_when_format_type_contains_leading_and_trailing_white_spaces() {
         CoordinatePrinter printer = FormatType.providePrinter(" gradle ");
         assertThat(printer.getClass()).isEqualTo(GradleGroovyOutput.class);
-        assertThat(printer.getClass()).isEqualTo(GradleGroovyOutput.class);
     }
 
     @ParameterizedTest
