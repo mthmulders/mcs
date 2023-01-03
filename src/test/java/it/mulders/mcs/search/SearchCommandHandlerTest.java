@@ -1,7 +1,7 @@
 package it.mulders.mcs.search;
 
 import it.mulders.mcs.common.Result;
-import it.mulders.mcs.search.printer.DelegatingOutputPrinter;
+import it.mulders.mcs.search.printer.OutputPrinter;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.verify;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SearchCommandHandlerTest implements WithAssertions {
-    private final DelegatingOutputPrinter outputPrinter = mock(DelegatingOutputPrinter.class);
+    private final OutputPrinter outputPrinter = mock(OutputPrinter.class);
     private final SearchResponse.Response wildcardResponse = new SearchResponse.Response(
             0,
             0,

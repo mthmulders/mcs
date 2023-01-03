@@ -8,7 +8,7 @@ import static it.mulders.mcs.search.Constants.MAX_LIMIT;
 
 public class SearchCommandHandler {
     private final SearchClient searchClient;
-    private final DelegatingOutputPrinter outputPrinter;
+    private final OutputPrinter outputPrinter;
 
     public SearchCommandHandler() {
         this(Constants.DEFAULT_PRINTER);
@@ -19,7 +19,7 @@ public class SearchCommandHandler {
     }
 
     // Visible for testing
-    SearchCommandHandler(final DelegatingOutputPrinter outputPrinter, final SearchClient searchClient) {
+    SearchCommandHandler(final OutputPrinter outputPrinter, final SearchClient searchClient) {
         this.searchClient = searchClient;
         this.outputPrinter = outputPrinter;
     }
