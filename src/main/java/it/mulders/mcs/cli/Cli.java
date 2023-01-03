@@ -15,7 +15,6 @@ import java.util.concurrent.Callable;
         versionProvider = ClasspathVersionProvider.class
 )
 public class Cli {
-    private final SearchCommandHandler searchCommandHandler;
 
     @CommandLine.Option(
             names = { "-V", "--version" },
@@ -30,11 +29,7 @@ public class Cli {
             scope = CommandLine.ScopeType.INHERIT,
             usageHelp = true
     )
-    boolean usageHelpRequested;
-
-    public Cli(final SearchCommandHandler searchCommandHandler) {
-        this.searchCommandHandler = searchCommandHandler;
-    }
+    private boolean usageHelpRequested;
 
     public SearchCommand createSearchCommand() {
         return new SearchCommand();
@@ -87,7 +82,7 @@ public class Cli {
                     .build();
 
             CoordinatePrinter coordinatePrinter = FormatType.providePrinter(responseFormat);
-            searchCommandHandler.setCoordinatePrinter(coordinatePrinter);
+            var searchCommandHandler = new SearchCommandHandler(coordinatePrinter);
             searchCommandHandler.search(searchQuery);
             return 0;
         }
@@ -129,6 +124,7 @@ public class Cli {
                     .isFullyQualified(this.fullName)
                     .withLimit(limit)
                     .build();
+            var searchCommandHandler = new SearchCommandHandler();
             searchCommandHandler.search(searchQuery);
             return 0;
         }

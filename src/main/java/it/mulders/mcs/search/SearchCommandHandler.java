@@ -11,7 +11,11 @@ public class SearchCommandHandler {
     private final DelegatingOutputPrinter outputPrinter;
 
     public SearchCommandHandler() {
-        this(new DelegatingOutputPrinter(), new SearchClient());
+        this(Constants.DEFAULT_PRINTER);
+    }
+
+    public SearchCommandHandler(final OutputPrinter coordinateOutput) {
+        this(new DelegatingOutputPrinter(coordinateOutput), new SearchClient());
     }
 
     // Visible for testing
@@ -24,10 +28,6 @@ public class SearchCommandHandler {
         performSearch(query)
                 .map(response -> performAdditionalSearch(query, response))
                 .ifPresent(response -> printResponse(query, response));
-    }
-
-    public void setCoordinatePrinter(final OutputPrinter coordinatePrinter) {
-        outputPrinter.setCoordinatePrinter(coordinatePrinter);
     }
 
     private SearchResponse.Response performAdditionalSearch(final SearchQuery query,

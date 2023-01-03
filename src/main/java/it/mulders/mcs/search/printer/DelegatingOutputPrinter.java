@@ -1,6 +1,5 @@
 package it.mulders.mcs.search.printer;
 
-import it.mulders.mcs.search.Constants;
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
 
@@ -11,11 +10,11 @@ import java.io.PrintStream;
  */
 public class DelegatingOutputPrinter implements OutputPrinter {
     private final OutputPrinter noOutput;
-    private OutputPrinter coordinateOutput;
+    private final OutputPrinter coordinateOutput;
     private final OutputPrinter tabularSearchOutput;
 
-    public DelegatingOutputPrinter() {
-        this(new NoOutputPrinter(), Constants.DEFAULT_PRINTER, new TabularOutputPrinter());
+    public DelegatingOutputPrinter(final OutputPrinter coordinateOutput) {
+        this(new NoOutputPrinter(), coordinateOutput, new TabularOutputPrinter());
     }
 
     // Visible for testing
@@ -32,9 +31,5 @@ public class DelegatingOutputPrinter implements OutputPrinter {
             case 1 -> coordinateOutput.print(query, response, stream);
             default -> tabularSearchOutput.print(query, response, stream);
         }
-    }
-
-    public void setCoordinatePrinter(final OutputPrinter coordinatePrinter) {
-        this.coordinateOutput = coordinatePrinter;
     }
 }
