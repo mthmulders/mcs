@@ -10,7 +10,11 @@ import org.junit.jupiter.api.Test;
 
 import java.io.PrintStream;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DelegatingOutputPrinterTest implements WithAssertions {

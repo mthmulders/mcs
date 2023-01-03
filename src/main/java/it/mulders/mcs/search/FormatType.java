@@ -1,6 +1,15 @@
 package it.mulders.mcs.search;
 
-import it.mulders.mcs.search.printer.*;
+import it.mulders.mcs.search.printer.BuildrOutput;
+import it.mulders.mcs.search.printer.CoordinatePrinter;
+import it.mulders.mcs.search.printer.GradleGroovyOutput;
+import it.mulders.mcs.search.printer.GradleGroovyShortOutput;
+import it.mulders.mcs.search.printer.GradleKotlinOutput;
+import it.mulders.mcs.search.printer.GrapeOutput;
+import it.mulders.mcs.search.printer.IvyXmlOutput;
+import it.mulders.mcs.search.printer.LeiningenOutput;
+import it.mulders.mcs.search.printer.PomXmlOutput;
+import it.mulders.mcs.search.printer.SbtOutput;
 
 import java.util.Arrays;
 
