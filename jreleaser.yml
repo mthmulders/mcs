@@ -37,7 +37,7 @@ release:
 
 distributions:
   mcs:
-    type: NATIVE_IMAGE
+    type: BINARY
     brew:
       active: RELEASE
       multiPlatform: true
