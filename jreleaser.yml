@@ -37,6 +37,7 @@ release:
 
 distributions:
   mcs:
+    stereotype: CLI
     type: BINARY
     brew:
       active: RELEASE
