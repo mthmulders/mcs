@@ -135,6 +135,7 @@ jobs:
   release:
     needs: [ build ]
     runs-on: ubuntu-latest
+    permissions: write-all
 
     steps:
       # must read HEAD before checkout
