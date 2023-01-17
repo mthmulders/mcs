@@ -1,24 +1,10 @@
 package it.mulders.mcs.search;
 
-public class UnsupportedFormatException extends RuntimeException {
+import it.mulders.mcs.common.AbstractMcsException;
 
-    private final boolean suppressStacktrace;
+public class UnsupportedFormatException extends AbstractMcsException {
 
     public UnsupportedFormatException(final String message) {
-        this(message, true);
-    }
-
-    public UnsupportedFormatException(final String message, final boolean suppressStacktrace) {
-        super(message, null, suppressStacktrace, !suppressStacktrace);
-        this.suppressStacktrace = suppressStacktrace;
-    }
-
-    @Override
-    public String toString() {
-        if (suppressStacktrace) {
-            return getLocalizedMessage();
-        } else {
-            return super.toString();
-        }
+        super(message);
     }
 }
