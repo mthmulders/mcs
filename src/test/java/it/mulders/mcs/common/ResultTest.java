@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReference;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -47,10 +46,12 @@ class ResultTest implements WithAssertions {
             var input = new Result.Success<>("foo");
 
             // Act
-            var result = input.map(a -> { throw new NullPointerException(); });
+            var result = input.map(a -> {
+                throw new NullPointerException();
+            });
 
             // Assert
-            assertThatThrownBy(result::value).isInstanceOf(NoSuchElementException.class);
+            assertThatThrownBy(result::value).isInstanceOf(NoRequestedElementException.class);
             assertThat(result.cause()).isInstanceOf(NullPointerException.class);
         }
 
@@ -62,7 +63,7 @@ class ResultTest implements WithAssertions {
             // Act
 
             // Assert
-            assertThatThrownBy(input::cause).isInstanceOf(NoSuchElementException.class);
+            assertThatThrownBy(input::cause).isInstanceOf(NoRequestedElementException.class);
         }
     }
 
@@ -93,13 +94,14 @@ class ResultTest implements WithAssertions {
             var result = input.map(String::toUpperCase);
 
             // Assert
-            assertThatThrownBy(result::value).isInstanceOf(NoSuchElementException.class);
+            assertThatThrownBy(result::value).isInstanceOf(NoRequestedElementException.class);
         }
 
         @Test
         void cause() {
             // Arrange
-            var input = new Result.Failure<>(new Exception() {});
+            var input = new Result.Failure<>(new Exception() {
+            });
 
             // Act
 

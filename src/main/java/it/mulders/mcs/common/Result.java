@@ -1,6 +1,5 @@
 package it.mulders.mcs.common;
 
-import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -22,7 +21,7 @@ public sealed interface Result<T> permits Result.Success, Result.Failure {
 
         @Override
         public Throwable cause() {
-            throw new NoSuchElementException("success: " + this.value);
+            throw new NoRequestedElementException("success: " + this.value);
         }
     }
 
@@ -38,7 +37,7 @@ public sealed interface Result<T> permits Result.Success, Result.Failure {
 
         @Override
         public T value() {
-            throw new NoSuchElementException("failure: " + this.cause.getLocalizedMessage());
+            throw new NoRequestedElementException("failure: " + this.cause.getLocalizedMessage());
         }
     }
 

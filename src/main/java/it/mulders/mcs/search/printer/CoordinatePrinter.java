@@ -14,7 +14,7 @@ public sealed interface CoordinatePrinter extends OutputPrinter
     @Override
     default void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream) {
         if (response.numFound() != 1) {
-            throw new IllegalArgumentException("Search response with more than one result not expected here");
+            throw new UnexpectedResultException("Search response with more than one result not expected here");
         }
 
         var doc = response.docs()[0];

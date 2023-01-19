@@ -9,7 +9,7 @@ public class NoOutputPrinter implements OutputPrinter {
     @Override
     public void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream) {
         if (response.numFound() != 0) {
-            throw new IllegalArgumentException("Search response with any result not expected here");
+            throw new UnexpectedResultException("Search response with any result not expected here");
         }
 
         stream.println();

@@ -3,16 +3,9 @@ package it.mulders.mcs.search;
 import it.mulders.mcs.common.Result;
 import it.mulders.mcs.search.printer.OutputPrinter;
 import org.assertj.core.api.WithAssertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SearchCommandHandlerTest implements WithAssertions {
@@ -20,17 +13,17 @@ class SearchCommandHandlerTest implements WithAssertions {
     private final SearchResponse.Response wildcardResponse = new SearchResponse.Response(
             0,
             0,
-            new SearchResponse.Response.Doc[] {}
+            new SearchResponse.Response.Doc[]{}
     );
     private final SearchResponse.Response twoPartCoordinateResponse = new SearchResponse.Response(
             0,
             0,
-            new SearchResponse.Response.Doc[] {}
+            new SearchResponse.Response.Doc[]{}
     );
     private final SearchResponse.Response threePartCoordinateResponse = new SearchResponse.Response(
             0,
             0,
-            new SearchResponse.Response.Doc[] {}
+            new SearchResponse.Response.Doc[]{}
     );
     private final SearchClient searchClient = new SearchClient() {
         @Override
@@ -63,7 +56,7 @@ class SearchCommandHandlerTest implements WithAssertions {
         @Test
         void should_reject_search_terms_in_wrong_format() {
             assertThatThrownBy(() -> handler.search(SearchQuery.search("foo:bar:baz:qux").build()))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(IllegalQueryException.class);
         }
 
         @Test

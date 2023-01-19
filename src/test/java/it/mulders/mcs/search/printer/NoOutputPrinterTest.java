@@ -3,6 +3,8 @@ package it.mulders.mcs.search.printer;
 import it.mulders.mcs.search.SearchResponse;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -13,12 +15,11 @@ class NoOutputPrinterTest implements WithAssertions {
 
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-    @Test
-    void should_fail_with_non_empty_result() {
-        assertThatThrownBy(() -> printer.print(null, responseWithResult(1), new PrintStream(outputStream)))
-                .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> printer.print(null, responseWithResult(2), new PrintStream(outputStream)))
-                .isInstanceOf(IllegalArgumentException.class);
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2})
+    void should_fail_with_non_empty_result(int count) {
+        assertThatThrownBy(() -> printer.print(null, responseWithResult(count), new PrintStream(outputStream)))
+                .isInstanceOf(UnexpectedResultException.class);
     }
 
     @Test

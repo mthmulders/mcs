@@ -53,7 +53,7 @@ public class TabularOutputPrinter implements OutputPrinter {
                 .map(SearchResponse.Response.Doc::id)
                 .mapToInt(String::length)
                 .max()
-                .orElseThrow(() -> new IllegalStateException("Used TabularOutputPrinter without any output"));
+                .orElseThrow(() -> new UnexpectedResultException("Used TabularOutputPrinter without any output"));
     }
 
     private void printRow(final Help.TextTable table, final SearchResponse.Response.Doc doc) {

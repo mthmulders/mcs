@@ -1,5 +1,6 @@
 package it.mulders.mcs.search.printer;
 
+import it.mulders.mcs.search.Constants;
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
 import org.assertj.core.api.WithAssertions;
@@ -14,18 +15,21 @@ import java.util.stream.Stream;
 class CoordinatePrinterTest implements WithAssertions {
 
     private static final SearchQuery QUERY = SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
+    private static final SearchResponse.Response.Doc RESPONSE_BODY = new SearchResponse.Response.Doc(
+            "org.codehaus.plexus:plexus-utils:3.4.1",
+            "org.codehaus.plexus",
+            "plexus-utils",
+            "3.4.1",
+            null,
+            "jar",
+            1630022910000L
+    );
     private static final SearchResponse.Response RESPONSE =
-            new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[]{
-                    new SearchResponse.Response.Doc(
-                            "org.codehaus.plexus:plexus-utils:3.4.1",
-                            "org.codehaus.plexus",
-                            "plexus-utils",
-                            "3.4.1",
-                            null,
-                            "jar",
-                            1630022910000L
-                    )
-            });
+            new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[]{RESPONSE_BODY});
+    private static final SearchResponse.Response WRONG_RESPONSE =
+            new SearchResponse.Response(2, 0, new SearchResponse.Response.Doc[]{RESPONSE_BODY, RESPONSE_BODY});
+    private static final SearchResponse.Response EMPTY_RESPONSE =
+            new SearchResponse.Response(0, 0, new SearchResponse.Response.Doc[]{});
     private static final String POM_XML_OUTPUT = """
             <dependency>
                 <groupId>org.codehaus.plexus</groupId>
@@ -73,5 +77,20 @@ class CoordinatePrinterTest implements WithAssertions {
         var xml = buffer.toString();
 
         assertThat(xml).containsIgnoringWhitespaces(expected);
+    }
+
+    private static Stream<Arguments> notCorrectParameters() {
+        return Stream.of(
+                Arguments.of(QUERY, WRONG_RESPONSE),
+                Arguments.of(QUERY, EMPTY_RESPONSE)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("notCorrectParameters")
+    void should_refuse_snippet_printing(SearchQuery query, SearchResponse.Response response) {
+        CoordinatePrinter printer = Constants.DEFAULT_PRINTER;
+        assertThatThrownBy(() -> printer.print(query, response, new PrintStream(buffer)))
+                .isInstanceOf(UnexpectedResultException.class);
     }
 }

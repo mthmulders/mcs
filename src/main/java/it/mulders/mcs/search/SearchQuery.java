@@ -2,9 +2,11 @@ package it.mulders.mcs.search;
 
 public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, WildcardSearchQuery {
     int searchLimit();
+
     int start();
 
     String toSolrQuery();
+
     Builder<? extends SearchQuery> toBuilder();
 
     static SearchQuery.Builder<? extends SearchQuery> search(String query) {
@@ -19,7 +21,7 @@ public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, Wil
                     var msg = """
                             Searching a particular artifact requires at least groupId:artifactId and optionally :version
                             """;
-                    throw new IllegalArgumentException(msg);
+                    throw new IllegalQueryException(msg);
                 }
             };
         } else {
@@ -33,7 +35,9 @@ public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, Wil
 
     interface Builder<T extends SearchQuery> {
         Builder<T> withLimit(final Integer limit);
+
         Builder<T> withStart(final Integer start);
+
         SearchQuery build();
     }
 }
