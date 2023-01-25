@@ -32,7 +32,7 @@ public class SearchResponseBodyHandler implements HttpResponse.BodyHandler<Resul
             return new Result.Success<>(constructSearchResponse(map));
         } catch (final JsonParseException | JSONObjectException joe) {
             return new Result.Failure<>(
-                    new IllegalStateException(
+                    new IllegalResponseException(
                             """
                             
                             Error parsing the search result. This may be a temporary failure from search.maven.org.
@@ -46,7 +46,7 @@ public class SearchResponseBodyHandler implements HttpResponse.BodyHandler<Resul
             );
         } catch (final IOException ioe) {
             return new Result.Failure<>(
-                    new IllegalStateException("Error processing response: %s%n".formatted(ioe.getLocalizedMessage()))
+                    new IllegalResponseException("Error processing response: %s%n".formatted(ioe.getLocalizedMessage()))
             );
         }
     }

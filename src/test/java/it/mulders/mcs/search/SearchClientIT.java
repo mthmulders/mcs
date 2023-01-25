@@ -2,6 +2,7 @@ package it.mulders.mcs.search;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
+import it.mulders.mcs.common.IllegalResponseException;
 import it.mulders.mcs.common.Result;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
@@ -117,7 +118,7 @@ class SearchClientIT implements WithAssertions {
 
             // Assert
             assertThat(result).isInstanceOf(Result.Failure.class);
-            assertThat(result.cause()).isInstanceOf(IllegalStateException.class);
+            assertThat(result.cause()).isInstanceOf(IllegalResponseException.class);
             assertThat(result.cause()).hasMessageContaining("https://github.com/mthmulders/mcs/discussions");
         }
 
