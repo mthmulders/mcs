@@ -46,9 +46,7 @@ class ResultTest implements WithAssertions {
             var input = new Result.Success<>("foo");
 
             // Act
-            var result = input.map(a -> {
-                throw new NullPointerException();
-            });
+            var result = input.map(a -> { throw new NullPointerException(); });
 
             // Assert
             assertThatThrownBy(result::value).isInstanceOf(NoRequestedElementException.class);
@@ -100,8 +98,7 @@ class ResultTest implements WithAssertions {
         @Test
         void cause() {
             // Arrange
-            var input = new Result.Failure<>(new Exception() {
-            });
+            var input = new Result.Failure<>(new Exception() {});
 
             // Act
 
