@@ -38,7 +38,7 @@ jobs:
 
       # This action supports Windows; it does nothing on Linux and macOS.
       - name: Add Developer Command Prompt for Microsoft Visual C++
-        uses: ilammy/msvc-dev-cmd@v1.12.0
+        uses: ilammy/msvc-dev-cmd@v1.12.1
 
       - name: Setup GraalVM
         uses: graalvm/setup-graalvm@v1
