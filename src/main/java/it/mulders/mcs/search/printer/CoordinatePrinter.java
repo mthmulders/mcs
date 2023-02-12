@@ -2,6 +2,8 @@ package it.mulders.mcs.search.printer;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.printer.clipboard.Clipboard;
+import it.mulders.mcs.search.printer.clipboard.SystemClipboard;
 
 import java.io.PrintStream;
 
@@ -18,8 +20,18 @@ public sealed interface CoordinatePrinter extends OutputPrinter
         }
 
         var doc = response.docs()[0];
+        String coordinates = provideCoordinates(doc.g(), doc.a(), first(doc.v(), doc.latestVersion()));
+
         stream.println();
-        stream.println(provideCoordinates(doc.g(), doc.a(), first(doc.v(), doc.latestVersion())));
+        stream.println(coordinates);
+        stream.println();
+
+        copyToClipboard(stream, new SystemClipboard(), coordinates);
+    }
+
+    private void copyToClipboard(PrintStream stream, Clipboard clipboard, String coordinates) {
+        clipboard.copy(coordinates);
+        stream.println("Snippet copied to clipboard.");
         stream.println();
     }
 

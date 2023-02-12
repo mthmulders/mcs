@@ -2,6 +2,8 @@ package it.mulders.mcs.search.printer;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.printer.clipboard.Clipboard;
+import it.mulders.mcs.search.printer.clipboard.SystemClipboard;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -34,7 +36,7 @@ class CoordinatePrinterTest implements WithAssertions {
             </dependency>
             """;
     private static final String GRADLE_GROOVY_OUTPUT = "implementation group: 'org.codehaus.plexus', name: 'plexus-utils', version: '3.4.1'";
-    private static final String GRADLE_GROOVY_SHORT_OUTPUT = "'org.codehaus.plexus:plexus-utils:3.4.1'";
+    private static final String GRADLE_GROOVY_SHORT_OUTPUT = "implementation 'org.codehaus.plexus:plexus-utils:3.4.1'";
     private static final String GRADLE_KOTLIN_OUTPUT = "implementation(\"org.codehaus.plexus:plexus-utils:3.4.1\")";
     private static final String SBT_OUTPUT = """
             libraryDependencies += "org.codehaus.plexus" % "plexus-utils" % "3.4.1"
@@ -51,6 +53,7 @@ class CoordinatePrinterTest implements WithAssertions {
     private static final String BUILDR_OUTPUT = "'org.codehaus.plexus:plexus-utils:jar:3.4.1'";
 
     private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+    private final Clipboard clipboard = new SystemClipboard();
 
     private static Stream<Arguments> coordinatePrinters() {
         return Stream.of(
@@ -73,5 +76,13 @@ class CoordinatePrinterTest implements WithAssertions {
         var xml = buffer.toString();
 
         assertThat(xml).containsIgnoringWhitespaces(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("coordinatePrinters")
+    void should_copy_to_clipboard(CoordinatePrinter printer, String expected) {
+        printer.print(QUERY, RESPONSE, new PrintStream(buffer));
+
+        assertThat(clipboard.paste()).isEqualToIgnoringWhitespace(expected);
     }
 }

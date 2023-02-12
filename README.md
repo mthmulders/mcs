@@ -59,7 +59,7 @@ This setup does not touch your computer - as soon as you close your browser tab,
 
 ## Ideas for future development
 * [ ] Proper support for multiple classifiers at a particular coordinate.
-* [ ] Immediately copy the pom.xml snippet to the clipboard.
+* [x] Immediately copy the pom.xml snippet to the clipboard.
 * [x] Show the coordinates in a different form (Ivy, Gradle, SBT).
 
 
