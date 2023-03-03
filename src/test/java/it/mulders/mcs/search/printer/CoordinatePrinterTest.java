@@ -34,7 +34,7 @@ class CoordinatePrinterTest implements WithAssertions {
             </dependency>
             """;
     private static final String GRADLE_GROOVY_OUTPUT = "implementation group: 'org.codehaus.plexus', name: 'plexus-utils', version: '3.4.1'";
-    private static final String GRADLE_GROOVY_SHORT_OUTPUT = "'org.codehaus.plexus:plexus-utils:3.4.1'";
+    private static final String GRADLE_GROOVY_SHORT_OUTPUT = "implementation 'org.codehaus.plexus:plexus-utils:3.4.1'";
     private static final String GRADLE_KOTLIN_OUTPUT = "implementation(\"org.codehaus.plexus:plexus-utils:3.4.1\")";
     private static final String SBT_OUTPUT = """
             libraryDependencies += "org.codehaus.plexus" % "plexus-utils" % "3.4.1"
@@ -72,6 +72,6 @@ class CoordinatePrinterTest implements WithAssertions {
         printer.print(QUERY, RESPONSE, new PrintStream(buffer));
         var xml = buffer.toString();
 
-        assertThat(xml).containsIgnoringWhitespaces(expected);
+        assertThat(xml).isEqualToIgnoringWhitespace(expected);
     }
 }
