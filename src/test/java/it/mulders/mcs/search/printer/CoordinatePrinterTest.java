@@ -75,7 +75,7 @@ class CoordinatePrinterTest implements WithAssertions {
         printer.print(QUERY, RESPONSE, new PrintStream(buffer));
         var xml = buffer.toString();
 
-        assertThat(xml).containsIgnoringWhitespaces(expected);
+        assertThat(xml).isEqualToIgnoringWhitespace(expected);
     }
 
     @ParameterizedTest
