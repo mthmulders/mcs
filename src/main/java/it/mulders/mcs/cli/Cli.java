@@ -4,6 +4,7 @@ import it.mulders.mcs.search.FormatType;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.printer.CoordinatePrinter;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfiguration;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -15,6 +16,8 @@ import java.util.concurrent.Callable;
         versionProvider = ClasspathVersionProvider.class
 )
 public class Cli {
+    final static String COPY_SHORT_FLAG_NAME = "-c";
+    final static String COPY_LONG_FLAG_NAME = "--copy";
 
     @CommandLine.Option(
             names = { "-V", "--version" },
@@ -39,6 +42,13 @@ public class Cli {
         return new ClassSearchCommand();
     }
 
+    private CopyToClipboardConfiguration createCopyToClipboardConfiguration(boolean copyToClipboard) {
+        return new CopyToClipboardConfiguration(
+                COPY_SHORT_FLAG_NAME,
+                COPY_LONG_FLAG_NAME,
+                copyToClipboard);
+    }
+
     @CommandLine.Command(
             name = "search",
             description = "Search artifacts in Maven Central by coordinates",
@@ -54,6 +64,14 @@ public class Cli {
                 }
         )
         private String[] query;
+
+        @CommandLine.Option(
+                names = { COPY_SHORT_FLAG_NAME, COPY_LONG_FLAG_NAME },
+                negatable = true,
+                arity = "0",
+                description = "Copy dependency definition to the clipboard when a single result is found"
+        )
+        private boolean copyToClipboard;
 
         @CommandLine.Option(
                 names = { "-l", "--limit" },
@@ -83,7 +101,7 @@ public class Cli {
 
             CoordinatePrinter coordinatePrinter = FormatType.providePrinter(responseFormat);
             var searchCommandHandler = new SearchCommandHandler(coordinatePrinter);
-            searchCommandHandler.search(searchQuery);
+            searchCommandHandler.search(searchQuery, createCopyToClipboardConfiguration(copyToClipboard));
             return 0;
         }
     }
@@ -101,6 +119,14 @@ public class Cli {
                 }
         )
         private String query;
+
+        @CommandLine.Option(
+                names = { COPY_SHORT_FLAG_NAME, COPY_LONG_FLAG_NAME },
+                negatable = true,
+                arity = "0",
+                description = "Copy dependency definition to the clipboard when a single result is found"
+        )
+        private boolean copyToClipboard;
 
         @CommandLine.Option(
                 names = { "-f", "--full-name" },
@@ -125,7 +151,7 @@ public class Cli {
                     .withLimit(limit)
                     .build();
             var searchCommandHandler = new SearchCommandHandler();
-            searchCommandHandler.search(searchQuery);
+            searchCommandHandler.search(searchQuery, createCopyToClipboardConfiguration(copyToClipboard));
             return 0;
         }
     }

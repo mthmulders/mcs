@@ -2,6 +2,7 @@ package it.mulders.mcs.search;
 
 import it.mulders.mcs.common.Result;
 import it.mulders.mcs.search.printer.OutputPrinter;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfiguration;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -17,20 +18,22 @@ import static org.mockito.Mockito.verify;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SearchCommandHandlerTest implements WithAssertions {
     private final OutputPrinter outputPrinter = mock(OutputPrinter.class);
+    private final CopyToClipboardConfiguration dontCopyToClipboard = new CopyToClipboardConfiguration(
+            "-scht", "--search-command-handler-test", false);
     private final SearchResponse.Response wildcardResponse = new SearchResponse.Response(
             0,
             0,
-            new SearchResponse.Response.Doc[] {}
+            new SearchResponse.Response.Doc[]{}
     );
     private final SearchResponse.Response twoPartCoordinateResponse = new SearchResponse.Response(
             0,
             0,
-            new SearchResponse.Response.Doc[] {}
+            new SearchResponse.Response.Doc[]{}
     );
     private final SearchResponse.Response threePartCoordinateResponse = new SearchResponse.Response(
             0,
             0,
-            new SearchResponse.Response.Doc[] {}
+            new SearchResponse.Response.Doc[]{}
     );
     private final SearchClient searchClient = new SearchClient() {
         @Override
@@ -52,8 +55,9 @@ class SearchCommandHandlerTest implements WithAssertions {
     class WildcardSearchTest {
         @Test
         void should_invoke_search_client() {
-            handler.search(SearchQuery.search("plexus-utils").build());
-            verify(outputPrinter).print(any(WildcardSearchQuery.class), eq(wildcardResponse), any());
+            handler.search(SearchQuery.search("plexus-utils").build(), dontCopyToClipboard);
+            verify(outputPrinter).print(any(WildcardSearchQuery.class), eq(wildcardResponse), any(),
+                    any(CopyToClipboardConfiguration.class));
         }
     }
 
@@ -62,20 +66,23 @@ class SearchCommandHandlerTest implements WithAssertions {
     class CoordinateSearchTest {
         @Test
         void should_reject_search_terms_in_wrong_format() {
-            assertThatThrownBy(() -> handler.search(SearchQuery.search("foo:bar:baz:qux").build()))
-                    .isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> handler.search(SearchQuery.search("foo:bar:baz:qux").build(),
+                    dontCopyToClipboard)).isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
         void should_invoke_search_client_with_groupId_and_artifactId() {
-            handler.search(SearchQuery.search("org.codehaus.plexus:plexus-utils").build());
-            verify(outputPrinter).print(any(CoordinateQuery.class), eq(twoPartCoordinateResponse), any());
+            handler.search(SearchQuery.search("org.codehaus.plexus:plexus-utils").build(), dontCopyToClipboard);
+            verify(outputPrinter).print(any(CoordinateQuery.class), eq(twoPartCoordinateResponse), any(),
+                    any(CopyToClipboardConfiguration.class));
         }
 
         @Test
         void should_invoke_search_client_with_groupId_and_artifactId_and_version() {
-            handler.search(SearchQuery.search("org.codehaus.plexus:plexus-utils:3.4.1").build());
-            verify(outputPrinter).print(any(CoordinateQuery.class), eq(threePartCoordinateResponse), any());
+            handler.search(SearchQuery.search("org.codehaus.plexus:plexus-utils:3.4.1").build(),
+                    dontCopyToClipboard);
+            verify(outputPrinter).print(any(CoordinateQuery.class), eq(threePartCoordinateResponse), any(),
+                    any(CopyToClipboardConfiguration.class));
         }
     }
 }

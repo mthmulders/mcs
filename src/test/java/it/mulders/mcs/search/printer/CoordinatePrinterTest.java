@@ -3,6 +3,7 @@ package it.mulders.mcs.search.printer;
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
 import it.mulders.mcs.search.printer.clipboard.Clipboard;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfiguration;
 import it.mulders.mcs.search.printer.clipboard.SystemClipboard;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -72,17 +73,41 @@ class CoordinatePrinterTest implements WithAssertions {
     @ParameterizedTest
     @MethodSource("coordinatePrinters")
     void should_print_snippet(CoordinatePrinter printer, String expected) {
-        printer.print(QUERY, RESPONSE, new PrintStream(buffer));
+        var dontCopyToClipboard = new CopyToClipboardConfiguration(
+                "-cpt", "--coordinate-printer-test", false);
+        printer.print(QUERY, RESPONSE, new PrintStream(buffer), dontCopyToClipboard);
         var xml = buffer.toString();
 
-        assertThat(xml).isEqualToIgnoringWhitespace(expected);
+        assertThat(xml).containsIgnoringWhitespaces(expected);
     }
 
     @ParameterizedTest
     @MethodSource("coordinatePrinters")
-    void should_copy_to_clipboard(CoordinatePrinter printer, String expected) {
-        printer.print(QUERY, RESPONSE, new PrintStream(buffer));
+    void should_print_clipboard_hint(CoordinatePrinter printer, String expected) {
+        var dontCopyToClipboard = new CopyToClipboardConfiguration(
+                "-cpt", "--coordinate-printer-test", false);
+        printer.print(QUERY, RESPONSE, new PrintStream(buffer), dontCopyToClipboard);
+        var output = buffer.toString();
+
+        assertThat(output).containsIgnoringWhitespaces(String.format(
+                "(To directly copy this snippet to the clipboard, run mcs with the %s or %s flag.)",
+                dontCopyToClipboard.shortFlagName(), dontCopyToClipboard.longFlagName()));
+        assertThat(output).doesNotContain("Snippet copied to clipboard.");
+    }
+
+    @ParameterizedTest
+    @MethodSource("coordinatePrinters")
+    void should_copy_to_clipboard_and_not_print_clipboard_hint(CoordinatePrinter printer, String expected) {
+        var copyToClipboard = new CopyToClipboardConfiguration(
+                "-cpt", "--coordinate-printer-test", true);
+        printer.print(QUERY, RESPONSE, new PrintStream(buffer), copyToClipboard);
+        var output = buffer.toString();
 
         assertThat(clipboard.paste()).isEqualToIgnoringWhitespace(expected);
+
+        assertThat(output).contains("Snippet copied to clipboard.");
+        assertThat(output).doesNotContain(String.format(
+                "(To directly copy this snippet to the clipboard, run mcs with the -%s or --%s flag.)",
+                copyToClipboard.shortFlagName(), copyToClipboard.longFlagName()));
     }
 }

@@ -2,6 +2,7 @@ package it.mulders.mcs.search.printer;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfiguration;
 import picocli.CommandLine;
 import picocli.CommandLine.Help;
 import picocli.CommandLine.Help.Ansi;
@@ -29,7 +30,8 @@ public class TabularOutputPrinter implements OutputPrinter {
                 response.numFound(), additionalMessage);
     }
 
-    public void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream) {
+    public void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream,
+                      final CopyToClipboardConfiguration configuration) {
         stream.println(CommandLine.Help.Ansi.AUTO.string(header(query, response)));
 
         var colorScheme = Help.defaultColorScheme(Ansi.AUTO);
