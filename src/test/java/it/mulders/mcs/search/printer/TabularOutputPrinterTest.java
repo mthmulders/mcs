@@ -41,7 +41,7 @@ class TabularOutputPrinterTest implements WithAssertions {
 
         // Assert
         var table = buffer.toString();
-        assertThat(table).contains("org.codehaus.plexus:plexus-utils");
+        assertThat(table).contains("org.codehaus.plexus:plexus-utils:3.4.1");
     }
 
     @Test
