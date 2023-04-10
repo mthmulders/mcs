@@ -4,7 +4,7 @@ import it.mulders.mcs.search.FormatType;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.printer.CoordinatePrinter;
-import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfiguration;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfig;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -42,8 +42,8 @@ public class Cli {
         return new ClassSearchCommand();
     }
 
-    private CopyToClipboardConfiguration createCopyToClipboardConfiguration(boolean copyToClipboard) {
-        return new CopyToClipboardConfiguration(
+    private CopyToClipboardConfig createCopyToClipboardConfiguration(boolean copyToClipboard) {
+        return new CopyToClipboardConfig(
                 COPY_SHORT_FLAG_NAME,
                 COPY_LONG_FLAG_NAME,
                 copyToClipboard);

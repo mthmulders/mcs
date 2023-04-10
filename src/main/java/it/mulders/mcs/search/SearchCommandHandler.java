@@ -3,7 +3,7 @@ package it.mulders.mcs.search;
 import it.mulders.mcs.common.Result;
 import it.mulders.mcs.search.printer.DelegatingOutputPrinter;
 import it.mulders.mcs.search.printer.OutputPrinter;
-import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfiguration;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfig;
 
 import static it.mulders.mcs.search.Constants.MAX_LIMIT;
 
@@ -25,7 +25,7 @@ public class SearchCommandHandler {
         this.outputPrinter = outputPrinter;
     }
 
-    public void search(final SearchQuery query, final CopyToClipboardConfiguration configuration) {
+    public void search(final SearchQuery query, final CopyToClipboardConfig configuration) {
         performSearch(query)
                 .map(response -> performAdditionalSearch(query, response))
                 .ifPresent(response -> printResponse(query, response, configuration));
@@ -66,7 +66,7 @@ public class SearchCommandHandler {
     }
 
     private void printResponse(final SearchQuery query, final SearchResponse.Response response,
-                               final CopyToClipboardConfiguration configuration) {
+                               final CopyToClipboardConfig configuration) {
         outputPrinter.print(query, response, System.out, configuration);
     }
 }

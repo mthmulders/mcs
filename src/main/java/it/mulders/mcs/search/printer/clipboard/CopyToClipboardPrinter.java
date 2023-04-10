@@ -7,5 +7,5 @@ import java.io.PrintStream;
 
 public interface CopyToClipboardPrinter {
     void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream,
-               final CopyToClipboardConfiguration copyToClipboardConfiguration);
+               final CopyToClipboardConfig copyToClipboardConfig);
 }

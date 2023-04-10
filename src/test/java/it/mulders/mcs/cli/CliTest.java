@@ -3,7 +3,7 @@ package it.mulders.mcs.cli;
 import it.mulders.mcs.search.Constants;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
-import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfiguration;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfig;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -74,7 +74,7 @@ class CliTest implements WithAssertions {
     }
 
     private void verifySearchExecution(SearchQuery query, String... args) {
-        var dontCopyToClipboard = new CopyToClipboardConfiguration(Cli.COPY_SHORT_FLAG_NAME, Cli.COPY_LONG_FLAG_NAME,
+        var dontCopyToClipboard = new CopyToClipboardConfig(Cli.COPY_SHORT_FLAG_NAME, Cli.COPY_LONG_FLAG_NAME,
                 false);
 
         try (MockedConstruction<SearchCommandHandler> mocked = Mockito.mockConstruction(SearchCommandHandler.class)) {

@@ -2,7 +2,7 @@ package it.mulders.mcs.search.printer;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
-import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfiguration;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfig;
 
 import java.io.PrintStream;
 
@@ -27,10 +27,10 @@ public class DelegatingOutputPrinter implements OutputPrinter {
 
     @Override
     public void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream,
-                      final CopyToClipboardConfiguration copyToClipboardConfiguration) {
+                      final CopyToClipboardConfig copyToClipboardConfig) {
         switch (response.numFound()) {
             case 0 -> noOutput.print(query, response, stream, null);
-            case 1 -> coordinateOutput.print(query, response, stream, copyToClipboardConfiguration);
+            case 1 -> coordinateOutput.print(query, response, stream, copyToClipboardConfig);
             default -> tabularSearchOutput.print(query, response, stream, null);
         }
     }

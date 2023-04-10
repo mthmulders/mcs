@@ -2,7 +2,7 @@ package it.mulders.mcs.search.printer;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
-import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfiguration;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfig;
 import org.apache.commons.io.output.NullOutputStream;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -38,7 +38,7 @@ class DelegatingOutputPrinterTest implements WithAssertions {
 
     @Test
     void single_result_delegate() {
-        var configuration = new CopyToClipboardConfiguration("-dopt",
+        var configuration = new CopyToClipboardConfig("-dopt",
                 "--delegating-output-printer-test", true);
 
         printer.print(query, responseWithResult(1), outputStream, configuration);

@@ -2,7 +2,7 @@ package it.mulders.mcs.search;
 
 import it.mulders.mcs.common.Result;
 import it.mulders.mcs.search.printer.OutputPrinter;
-import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfiguration;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfig;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SearchCommandHandlerTest implements WithAssertions {
     private final OutputPrinter outputPrinter = mock(OutputPrinter.class);
-    private final CopyToClipboardConfiguration dontCopyToClipboard = new CopyToClipboardConfiguration(
+    private final CopyToClipboardConfig dontCopyToClipboard = new CopyToClipboardConfig(
             "-scht", "--search-command-handler-test", false);
     private final SearchResponse.Response wildcardResponse = new SearchResponse.Response(
             0,
@@ -57,7 +57,7 @@ class SearchCommandHandlerTest implements WithAssertions {
         void should_invoke_search_client() {
             handler.search(SearchQuery.search("plexus-utils").build(), dontCopyToClipboard);
             verify(outputPrinter).print(any(WildcardSearchQuery.class), eq(wildcardResponse), any(),
-                    any(CopyToClipboardConfiguration.class));
+                    any(CopyToClipboardConfig.class));
         }
     }
 
@@ -74,7 +74,7 @@ class SearchCommandHandlerTest implements WithAssertions {
         void should_invoke_search_client_with_groupId_and_artifactId() {
             handler.search(SearchQuery.search("org.codehaus.plexus:plexus-utils").build(), dontCopyToClipboard);
             verify(outputPrinter).print(any(CoordinateQuery.class), eq(twoPartCoordinateResponse), any(),
-                    any(CopyToClipboardConfiguration.class));
+                    any(CopyToClipboardConfig.class));
         }
 
         @Test
@@ -82,7 +82,7 @@ class SearchCommandHandlerTest implements WithAssertions {
             handler.search(SearchQuery.search("org.codehaus.plexus:plexus-utils:3.4.1").build(),
                     dontCopyToClipboard);
             verify(outputPrinter).print(any(CoordinateQuery.class), eq(threePartCoordinateResponse), any(),
-                    any(CopyToClipboardConfiguration.class));
+                    any(CopyToClipboardConfig.class));
         }
     }
 }
