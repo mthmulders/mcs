@@ -9,6 +9,8 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import javax.net.ssl.SSLHandshakeException;
+
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
@@ -35,6 +37,9 @@ class SearchCommandHandlerTest implements WithAssertions {
     private final SearchClient searchClient = new SearchClient() {
         @Override
         public Result<SearchResponse> search(final SearchQuery query) {
+            if (query.toSolrQuery().contains("tls-error")) {
+                return new Result.Failure<>(new SSLHandshakeException("PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target"));
+            }
             if (query instanceof WildcardSearchQuery) {
                 return new Result.Success<>(new SearchResponse(null, wildcardResponse));
             } else if (query instanceof CoordinateQuery cq && cq.version().isBlank()) {
@@ -54,6 +59,12 @@ class SearchCommandHandlerTest implements WithAssertions {
         void should_invoke_search_client() {
             handler.search(SearchQuery.search("plexus-utils").build());
             verify(outputPrinter).print(any(WildcardSearchQuery.class), eq(wildcardResponse), any());
+        }
+
+        @Test
+        void should_propagate_tls_exception_to_runtime_exception() {
+            assertThatThrownBy(() -> handler.search(SearchQuery.search("tls-error").build()))
+                    .isInstanceOf(RuntimeException.class);
         }
     }
 
@@ -76,6 +87,12 @@ class SearchCommandHandlerTest implements WithAssertions {
         void should_invoke_search_client_with_groupId_and_artifactId_and_version() {
             handler.search(SearchQuery.search("org.codehaus.plexus:plexus-utils:3.4.1").build());
             verify(outputPrinter).print(any(CoordinateQuery.class), eq(threePartCoordinateResponse), any());
+        }
+
+        @Test
+        void should_propagate_tls_exception_to_runtime_exception() {
+            assertThatThrownBy(() -> handler.search(SearchQuery.search("org.codehaus.plexus:tls-error:3.4.1").build()))
+                    .isInstanceOf(RuntimeException.class);
         }
     }
 }
