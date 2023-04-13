@@ -27,7 +27,10 @@ public class SearchCommandHandler {
     public void search(final SearchQuery query) {
         performSearch(query)
                 .map(response -> performAdditionalSearch(query, response))
-                .ifPresent(response -> printResponse(query, response));
+                .ifPresentOrElse(
+                        response -> printResponse(query, response),
+                        failure -> { throw new RuntimeException(failure); }
+                );
     }
 
     private SearchResponse.Response performAdditionalSearch(final SearchQuery query,
