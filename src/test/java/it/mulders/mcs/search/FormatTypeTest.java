@@ -10,6 +10,8 @@ import it.mulders.mcs.search.printer.IvyXmlOutput;
 import it.mulders.mcs.search.printer.LeiningenOutput;
 import it.mulders.mcs.search.printer.PomXmlOutput;
 import it.mulders.mcs.search.printer.SbtOutput;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,6 +25,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class FormatTypeTest {
 
     @ParameterizedTest
