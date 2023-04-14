@@ -15,7 +15,6 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -35,7 +34,6 @@ class FormatTypeTest {
     }
 
     @ParameterizedTest
-    @EmptySource
     @ValueSource(strings = {" ", "nuget"})
     void throw_exception_when_format_type_is_blank_or_unknown(String parameter) {
         assertThatThrownBy(() -> FormatType.providePrinter(parameter)).isInstanceOf(UnsupportedFormatException.class);
