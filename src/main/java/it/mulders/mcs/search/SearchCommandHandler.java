@@ -1,5 +1,6 @@
 package it.mulders.mcs.search;
 
+import it.mulders.mcs.common.McsRuntimeException;
 import it.mulders.mcs.common.Result;
 import it.mulders.mcs.search.printer.DelegatingOutputPrinter;
 import it.mulders.mcs.search.printer.OutputPrinter;
@@ -29,7 +30,7 @@ public class SearchCommandHandler {
                 .map(response -> performAdditionalSearch(query, response))
                 .ifPresentOrElse(
                         response -> printResponse(query, response),
-                        failure -> { throw new RuntimeException(failure); }
+                        failure -> { throw new McsRuntimeException(failure); }
                 );
     }
 
