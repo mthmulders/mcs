@@ -5,23 +5,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
 
 class AppIT implements WithAssertions  {
-    private final ByteArrayOutputStream output = new ByteArrayOutputStream();
-    private PrintStream originalOutput;
-
-    @BeforeEach
-    void capture_output() {
-        originalOutput = System.out;
-        System.setOut(new PrintStream(output));
-    }
-
     @Test
-    void should_show_version() {
-        App.doMain("-V");
-        assertThat(output.toString()).contains("mcs v");
+    void should_show_version() throws Exception {
+        var output = tapSystemOut(() -> App.doMain("-V"));
+        assertThat(output).contains("mcs v");
     }
 
     @Test
@@ -32,10 +22,5 @@ class AppIT implements WithAssertions  {
     @Test
     void should_exit_nonzero_on_wrong_invocation() {
         assertThat(App.doMain("--does-not-exist")).isNotEqualTo(0);
-    }
-
-    @AfterEach
-    void restore_original_output() {
-        System.setOut(originalOutput);
     }
 }
