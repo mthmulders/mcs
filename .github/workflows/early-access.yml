@@ -6,6 +6,8 @@ name: Publish Early Access builds
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   # Build native executable per runner
@@ -89,6 +91,7 @@ jobs:
     needs: [ build ]
     runs-on: ubuntu-latest
     permissions: write-all
+    if: github.event_name != 'pull_request'
 
     steps:
       - name: Check out repository
