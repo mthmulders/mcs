@@ -62,7 +62,7 @@ jobs:
           TOOLCHAIN_DIR=/usr/include/x86_64-linux-musl
           ./configure --prefix=$TOOLCHAIN_DIR --static
           make
-          make install
+          sudo make install
         if: matrix.os == 'ubuntu-latest'
 
       - name: Cache Maven packages
