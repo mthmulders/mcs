@@ -30,6 +30,7 @@
 
         <artifactsDir>target/distributions</artifactsDir>
         <executable-suffix></executable-suffix>
+        <native-image-arguments></native-image-arguments>
     </properties>
 
     <licenses>
@@ -126,6 +127,9 @@
                     <groupId>org.graalvm.buildtools</groupId>
                     <artifactId>native-maven-plugin</artifactId>
                     <version>0.9.21</version>
+                    <configuration>
+                        <buildArgs>${native-image-arguments}</buildArgs>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.jreleaser</groupId>
@@ -321,7 +325,7 @@
                         <configuration>
                             <agentResourceDirectory>${project.basedir}/src/main/graalvm-native</agentResourceDirectory>
                             <imageName>${project.artifactId}-${project.version}</imageName>
-                            <buildArgs>-H:+DashboardAll</buildArgs>
+                            <buildArgs>${native-image-arguments}</buildArgs>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -346,6 +350,17 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>dist-linux</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                </os>
+            </activation>
+            <properties>
+                <native-image-arguments>--static --libc=musl</native-image-arguments>
+            </properties>
         </profile>
         <profile>
             <id>dist-windows</id>
