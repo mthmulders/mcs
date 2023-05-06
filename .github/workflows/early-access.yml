@@ -53,7 +53,7 @@ jobs:
       - name: Add musl toolchain and compile libz against it
         run: |
           sudo apt update -y
-          sudo apt install -y musl-tools musl-dev
+          sudo apt install -y musl-tools musl-dev zlib1g-dev
 
           CC=/usr/bin/x86_64-linux-musl-gcc
           curl -LOJ https://zlib.net/zlib-1.2.13.tar.gz
