@@ -48,6 +48,21 @@ jobs:
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Add musl toolchain and compile libz against it
+        run: |
+          sudo apt update -y
+          sudo apt install -y musl-tools musl-dev
+
+          CC=/usr/bin/x86_64-linux-musl-gcc
+          curl -LOJ https://zlib.net/zlib-1.2.13.tar.gz
+          tar -xzf zlib-1.2.13.tar.gz
+          cd zlib-1.2.13
+          TOOLCHAIN_DIR=/usr/include/x86_64-linux-musl
+          ./configure --prefix=$TOOLCHAIN_DIR --static
+          make
+          make install
+        if: matrix.os == 'ubuntu-latest'
+
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
