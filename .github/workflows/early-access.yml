@@ -139,6 +139,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: jreleaser-release-output
+          retention-days: 7
           path: |
             target/jreleaser/trace.log
             target/jreleaser/output.properties
