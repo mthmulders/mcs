@@ -198,7 +198,6 @@ jobs:
           fetch-depth: 0
 
       - name: Check out correct Git ref
-        uses: actions/checkout@v3
         run: git checkout ${{ steps.head.outputs.content }}
 
       # checkout will clobber downloaded artifacts; we have to download them again
