@@ -12,6 +12,7 @@ on:
 jobs:
   # Build native executable per runner
   build:
+    if: contains(github.event.head_commit.message, 'Releasing version') != true && contains(github.event.head_commit.message, 'Prepare next version') != true
     name: build-${{ matrix.os }}
     strategy:
       fail-fast: true
