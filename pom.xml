@@ -107,7 +107,7 @@
                         <dependency>
                             <groupId>it.mulders.stryker</groupId>
                             <artifactId>pit-dashboard-reporter</artifactId>
-                            <version>0.1.4</version>
+                            <version>0.1.5</version>
                         </dependency>
                     </dependencies>
                     <configuration>
