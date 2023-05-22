@@ -67,7 +67,7 @@ class SearchCommandHandlerTest implements WithAssertions {
 
         @Test
         void should_propagate_tls_exception_to_runtime_exception() {
-            assertThatThrownBy(() -> handler.search(SearchQuery.search("tls-error").build()))
+            assertThatThrownBy(() -> handler.search(SearchQuery.search("tls-error").build(), dontCopyToClipboard))
                     .isInstanceOf(RuntimeException.class);
         }
     }
@@ -98,7 +98,7 @@ class SearchCommandHandlerTest implements WithAssertions {
 
         @Test
         void should_propagate_tls_exception_to_runtime_exception() {
-            assertThatThrownBy(() -> handler.search(SearchQuery.search("org.codehaus.plexus:tls-error:3.4.1").build()))
+            assertThatThrownBy(() -> handler.search(SearchQuery.search("org.codehaus.plexus:tls-error:3.4.1").build(), dontCopyToClipboard))
                     .isInstanceOf(RuntimeException.class);
         }
     }
