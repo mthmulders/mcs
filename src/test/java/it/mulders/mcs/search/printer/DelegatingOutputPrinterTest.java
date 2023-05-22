@@ -2,6 +2,7 @@ package it.mulders.mcs.search.printer;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfig;
 import org.apache.commons.io.output.NullOutputStream;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -29,26 +30,29 @@ class DelegatingOutputPrinterTest implements WithAssertions {
 
     @Test
     void no_results_delegate() {
-        printer.print(query, responseWithResult(0), outputStream);
-        verify(noOutput).print(eq(query), any(), eq(outputStream));
-        verify(coordinateOutput, never()).print(any(), any(), any());
-        verify(tabularSearchOutput, never()).print(any(), any(), any());
+        printer.print(query, responseWithResult(0), outputStream, null);
+        verify(noOutput).print(eq(query), any(), eq(outputStream), any());
+        verify(coordinateOutput, never()).print(any(), any(), any(), any());
+        verify(tabularSearchOutput, never()).print(any(), any(), any(), any());
     }
 
     @Test
-    void one_result_delegate() {
-        printer.print(query, responseWithResult(1), outputStream);
-        verify(noOutput, never()).print(any(), any(), any());
-        verify(coordinateOutput).print(eq(query), any(), eq(outputStream));
-        verify(tabularSearchOutput, never()).print(any(), any(), any());
+    void single_result_delegate() {
+        var configuration = new CopyToClipboardConfig("-dopt",
+                "--delegating-output-printer-test", true);
+
+        printer.print(query, responseWithResult(1), outputStream, configuration);
+        verify(noOutput, never()).print(any(), any(), any(), any());
+        verify(coordinateOutput).print(eq(query), any(), eq(outputStream), eq(configuration));
+        verify(tabularSearchOutput, never()).print(any(), any(), any(), any());
     }
 
     @Test
     void multiple_results_delegate() {
-        printer.print(query, responseWithResult(2), outputStream);
-        verify(noOutput, never()).print(any(), any(), any());
-        verify(coordinateOutput, never()).print(any(), any(), any());
-        verify(tabularSearchOutput).print(eq(query), any(), eq(outputStream));
+        printer.print(query, responseWithResult(2), outputStream, null);
+        verify(noOutput, never()).print(any(), any(), any(), any());
+        verify(coordinateOutput, never()).print(any(), any(), any(), any());
+        verify(tabularSearchOutput).print(eq(query), any(), eq(outputStream), any());
     }
 
     private SearchResponse.Response responseWithResult(int count) {

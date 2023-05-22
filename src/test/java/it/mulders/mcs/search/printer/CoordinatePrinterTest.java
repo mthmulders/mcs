@@ -2,6 +2,9 @@ package it.mulders.mcs.search.printer;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.printer.clipboard.Clipboard;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfig;
+import it.mulders.mcs.search.printer.clipboard.SystemClipboard;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -51,6 +54,7 @@ class CoordinatePrinterTest implements WithAssertions {
     private static final String BUILDR_OUTPUT = "'org.codehaus.plexus:plexus-utils:jar:3.4.1'";
 
     private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+    private final Clipboard clipboard = new SystemClipboard();
 
     private static Stream<Arguments> coordinatePrinters() {
         return Stream.of(
@@ -69,9 +73,40 @@ class CoordinatePrinterTest implements WithAssertions {
     @ParameterizedTest
     @MethodSource("coordinatePrinters")
     void should_print_snippet(CoordinatePrinter printer, String expected) {
-        printer.print(QUERY, RESPONSE, new PrintStream(buffer));
+        var dontCopyToClipboard = new CopyToClipboardConfig(
+                "-cpt", "--coordinate-printer-test", false);
+        printer.print(QUERY, RESPONSE, new PrintStream(buffer), dontCopyToClipboard);
         var xml = buffer.toString();
 
-        assertThat(xml).isEqualToIgnoringWhitespace(expected);
+        assertThat(xml).containsIgnoringWhitespaces(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("coordinatePrinters")
+    void should_print_clipboard_hint(CoordinatePrinter printer, String expected) {
+        var dontCopyToClipboard = new CopyToClipboardConfig(
+                "-cpt", "--coordinate-printer-test", false);
+        printer.print(QUERY, RESPONSE, new PrintStream(buffer), dontCopyToClipboard);
+        var output = buffer.toString();
+
+        assertThat(output).containsIgnoringWhitespaces("To directly copy this snippet to the clipboard");
+        assertThat(output).containsIgnoringWhitespaces("-cpt");
+        assertThat(output).containsIgnoringWhitespaces("--coordinate-printer-test");
+
+        assertThat(output).doesNotContain("Snippet copied to clipboard.");
+    }
+
+    @ParameterizedTest
+    @MethodSource("coordinatePrinters")
+    void should_copy_to_clipboard_and_not_print_clipboard_hint(CoordinatePrinter printer, String expected) {
+        var copyToClipboard = new CopyToClipboardConfig(
+                "-cpt", "--coordinate-printer-test", true);
+        printer.print(QUERY, RESPONSE, new PrintStream(buffer), copyToClipboard);
+        var output = buffer.toString();
+
+        assertThat(clipboard.paste()).isEqualToIgnoringWhitespace(expected);
+
+        assertThat(output).contains("Snippet copied to clipboard.");
+        assertThat(output).doesNotContain("To directly copy this snippet to the clipboard");
     }
 }

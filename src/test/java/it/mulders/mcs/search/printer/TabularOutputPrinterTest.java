@@ -2,6 +2,7 @@ package it.mulders.mcs.search.printer;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfig;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -17,6 +18,8 @@ import java.time.format.DateTimeFormatter;
 class TabularOutputPrinterTest implements WithAssertions {
     private final TabularOutputPrinter output = new TabularOutputPrinter();
     private final SearchQuery query = SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
+    private final CopyToClipboardConfig dontCopyToClipboard = new CopyToClipboardConfig(
+            "-topt", "--tabular-output-printer-test", false);
 
     @Test
     void should_print_gav() {
@@ -36,7 +39,7 @@ class TabularOutputPrinterTest implements WithAssertions {
 
 
         // Act
-        output.print(query, response, new PrintStream(buffer));
+        output.print(query, response, new PrintStream(buffer), dontCopyToClipboard);
 
 
         // Assert
@@ -62,7 +65,7 @@ class TabularOutputPrinterTest implements WithAssertions {
 
 
         // Act
-        output.print(query, response, new PrintStream(buffer));
+        output.print(query, response, new PrintStream(buffer), dontCopyToClipboard);
 
 
         // Assert
@@ -90,7 +93,7 @@ class TabularOutputPrinterTest implements WithAssertions {
 
 
         // Act
-        output.print(query, response, new PrintStream(buffer));
+        output.print(query, response, new PrintStream(buffer), dontCopyToClipboard);
 
 
         // Assert
@@ -126,7 +129,7 @@ class TabularOutputPrinterTest implements WithAssertions {
 
         // Act
         var query = SearchQuery.search("org.codehaus.plexus:plexus-utils").withLimit(2).build();
-        output.print(query, response, new PrintStream(buffer));
+        output.print(query, response, new PrintStream(buffer), dontCopyToClipboard);
 
 
         // Assert
@@ -162,7 +165,7 @@ class TabularOutputPrinterTest implements WithAssertions {
 
         // Act
         var query = SearchQuery.search("org.codehaus.plexus:plexus-utils").withLimit(2).build();
-        output.print(query, response, new PrintStream(buffer));
+        output.print(query, response, new PrintStream(buffer), dontCopyToClipboard);
 
 
         // Assert
@@ -189,7 +192,7 @@ class TabularOutputPrinterTest implements WithAssertions {
 
         // Act
         var query = SearchQuery.search("org.codehaus.plexus:plexus-utils").withLimit(2).build();
-        output.print(query, response, new PrintStream(buffer));
+        output.print(query, response, new PrintStream(buffer), dontCopyToClipboard);
 
 
         // Assert

@@ -4,6 +4,7 @@ import it.mulders.mcs.common.McsRuntimeException;
 import it.mulders.mcs.common.Result;
 import it.mulders.mcs.search.printer.DelegatingOutputPrinter;
 import it.mulders.mcs.search.printer.OutputPrinter;
+import it.mulders.mcs.search.printer.clipboard.CopyToClipboardConfig;
 
 import static it.mulders.mcs.search.Constants.MAX_LIMIT;
 
@@ -25,11 +26,11 @@ public class SearchCommandHandler {
         this.outputPrinter = outputPrinter;
     }
 
-    public void search(final SearchQuery query) {
+    public void search(final SearchQuery query, final CopyToClipboardConfig configuration) {
         performSearch(query)
                 .map(response -> performAdditionalSearch(query, response))
                 .ifPresentOrElse(
-                        response -> printResponse(query, response),
+                        response -> printResponse(query, response, configuration),
                         failure -> { throw new McsRuntimeException(failure); }
                 );
     }
@@ -68,7 +69,8 @@ public class SearchCommandHandler {
                 .map(SearchResponse::response);
     }
 
-    private void printResponse(final SearchQuery query, final SearchResponse.Response response) {
-        outputPrinter.print(query, response, System.out);
+    private void printResponse(final SearchQuery query, final SearchResponse.Response response,
+                               final CopyToClipboardConfig configuration) {
+        outputPrinter.print(query, response, System.out, configuration);
     }
 }
