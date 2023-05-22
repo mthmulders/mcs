@@ -132,6 +132,10 @@ jobs:
           echo "TOOLCHAIN_DIR=$TOOLCHAIN_DIR" >> $GITHUB_OUTPUT
         if: matrix.os == 'ubuntu-latest'
 
+      - name: Install xvfb for headless unit tests
+        run: sudo apt install xvfb
+        if: matrix.os == 'ubuntu-latest'
+
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
@@ -141,16 +145,16 @@ jobs:
 
       - name: Build static native image for Linux
         run: |
-          # Yikes, skipTests?! Well, we run those tests on the Ubuntu runner, which should be enough.
-          # Setting up a macOS runner and a Windows runner that have a GUI is probably going to take ages.
-          PATH=${TOOLCHAIN_DIR}/bin:$PATH; mvn -B -Pnative package -DskipTests
+          PATH=${TOOLCHAIN_DIR}/bin:$PATH; xvfb-run mvn -B -Pnative package
         env:
           TOOLCHAIN_DIR: ${{ steps.prepare-musl.outputs.TOOLCHAIN_DIR }}
         if: matrix.os == 'ubuntu-latest'
 
       - name: Build static native image for Windows / macOS
         run: |
-          mvn -B -Pnative package
+          # Yikes, skipTests?! Well, we run those tests on the Ubuntu runner, which should be enough.
+          # Setting up a macOS runner and a Windows runner that have a GUI is probably going to take ages.
+          mvn -B -Pnative package -DskipTests
         if: matrix.os != 'ubuntu-latest'
 
       - name: Create distribution
