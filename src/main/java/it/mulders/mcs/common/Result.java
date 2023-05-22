@@ -21,6 +21,11 @@ public sealed interface Result<T> permits Result.Success, Result.Failure {
         }
 
         @Override
+        public void ifPresentOrElse(Consumer<T> successConsumer, Consumer<Throwable> failureConsumer) {
+            successConsumer.accept(value);
+        }
+
+        @Override
         public Throwable cause() {
             throw new NoSuchElementException("success: " + this.value);
         }
@@ -37,6 +42,11 @@ public sealed interface Result<T> permits Result.Success, Result.Failure {
         }
 
         @Override
+        public void ifPresentOrElse(Consumer<T> successConsumer, Consumer<Throwable> failureConsumer) {
+            failureConsumer.accept(cause);
+        }
+
+        @Override
         public T value() {
             throw new NoSuchElementException("failure: " + this.cause.getLocalizedMessage());
         }
@@ -45,6 +55,8 @@ public sealed interface Result<T> permits Result.Success, Result.Failure {
     <U> Result<U> map(final Function<T, U> mapping);
 
     void ifPresent(final Consumer<T> consumer);
+
+    void ifPresentOrElse(final Consumer<T> successConsumer, final Consumer<Throwable> failureConsumer);
 
     T value();
 

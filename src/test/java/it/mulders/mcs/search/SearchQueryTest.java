@@ -1,6 +1,8 @@
 package it.mulders.mcs.search;
 
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,6 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SearchQueryTest implements WithAssertions {
     @Nested
     class CoordinateQueryTest {

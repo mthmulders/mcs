@@ -49,6 +49,8 @@ distributions:
       bucket:
         active: RELEASE
       remoteBuild: true
+      iconUrl: https://maarten.mulders.it/img/mcs-icon.png
+      title: Maven Central Search
     sdkman:
       active: RELEASE
     snap:
