@@ -141,7 +141,9 @@ jobs:
 
       - name: Build static native image for Linux
         run: |
-          PATH=${TOOLCHAIN_DIR}/bin:$PATH; mvn -B -Pnative package
+          # Yikes, skipTests?! Well, we run those tests on the Ubuntu runner, which should be enough.
+          # Setting up a macOS runner and a Windows runner that have a GUI is probably going to take ages.
+          PATH=${TOOLCHAIN_DIR}/bin:$PATH; mvn -B -Pnative package -DskipTests
         env:
           TOOLCHAIN_DIR: ${{ steps.prepare-musl.outputs.TOOLCHAIN_DIR }}
         if: matrix.os == 'ubuntu-latest'
