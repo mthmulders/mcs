@@ -73,9 +73,5 @@ Probably the easiest way to get a working development environment is to use Gitp
 It will configure a workspace in your browser and show that everything works as expected by running `mvn verify`.
 This setup does not touch your computer - as soon as you close your browser tab, it's gone.
 
-## Ideas for future development
-* [ ] Proper support for multiple classifiers at a particular coordinate.
-* [ ] Immediately copy the pom.xml snippet to the clipboard.
-* [x] Show the coordinates in a different form (Ivy, Gradle, SBT).
-
-
+Checkout the [issues](https://github.com/mthmulders/mcs/issues) if you're looking for something to work on.
+If you have a new idea, feel free to bring it up using the [discussions](https://github.com/mthmulders/mcs/discussions).
