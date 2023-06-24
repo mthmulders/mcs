@@ -49,6 +49,22 @@ You can install mcs using the package manager of your choice:
 1. The Linux binaries only work on x86_64 CPU's.
    There Apple binaries for both x86_64 and Apple Silicon, so you don't need Rosetta.
 
+### Usage with custom trust store
+In certain situations, such as when you work behind a TLS-intercepting (corporate) firewall, MCS may fail with
+
+> PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+In layman's speak: the default, built-in trust store (the set of trusted X.509 certificates) does not contain anything that allows to trust the certificate(s) presented by the server.
+Maven Central uses a certificate that would've been trusted, but the culprit here is the TLS-intercepting (corporate) firewall that presents an internal certificate.
+
+The solution is to create a trust store that has the "highest" certificate in the certificate chain, e.g. that of the (internal) certificate authority.
+You can use a tool like [Portecle](https://portecle.sourceforge.net/) to create such a trust store.
+Next, point MCS to that trust store like so
+
+```
+mcs -Djavax.net.ssl.trustStore=/path/to/keystore search something
+```
+
 ## Contributing
 Probably the easiest way to get a working development environment is to use Gitpod:
 
