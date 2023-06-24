@@ -46,8 +46,8 @@ You can install mcs using the package manager of your choice:
 | **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                   |         |
 | **Chocolatey**  | 🪟       | `choco install mcs`                 |         |
 
-1. The macOS and Linux binaries only work on x86_64 CPU's.
-   If you have a Mac with Apple Silicon, you can use **mcs** through Rosetta.
+1. The Linux binaries only work on x86_64 CPU's.
+   There Apple binaries for both x86_64 and Apple Silicon, so you don't need Rosetta.
 
 ## Contributing
 Probably the easiest way to get a working development environment is to use Gitpod:
