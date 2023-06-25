@@ -3,13 +3,14 @@ package it.mulders.mcs.search.printer;
 public final class PomXmlOutput implements CoordinatePrinter {
 
     @Override
-    public String provideCoordinates(final String group, final String artifact, final String version) {
+    public String provideCoordinates(final String group, final String artifact, final String version, String packaging) {
+        String element = "maven-plugin".equals(packaging) ? "plugin" : "dependency";
         return """
-                    <dependency>
+                    <%4$s>
                         <groupId>%s</groupId>
                         <artifactId>%s</artifactId>
                         <version>%s</version>
-                    </dependency>
-                """.formatted(group, artifact, version);
+                    </%4$s>
+                """.formatted(group, artifact, version, element);
     }
 }

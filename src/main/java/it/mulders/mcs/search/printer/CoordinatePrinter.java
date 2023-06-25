@@ -9,7 +9,7 @@ public sealed interface CoordinatePrinter extends OutputPrinter
         permits BuildrOutput, GradleGroovyOutput, GradleGroovyShortOutput, GradleKotlinOutput, GrapeOutput,
         IvyXmlOutput, LeiningenOutput, PomXmlOutput, SbtOutput {
 
-    String provideCoordinates(final String group, final String artifact, final String version);
+    String provideCoordinates(final String group, final String artifact, final String version, final String packaging);
 
     @Override
     default void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream) {
@@ -19,7 +19,7 @@ public sealed interface CoordinatePrinter extends OutputPrinter
 
         var doc = response.docs()[0];
         stream.println();
-        stream.println(provideCoordinates(doc.g(), doc.a(), first(doc.v(), doc.latestVersion())));
+        stream.println(provideCoordinates(doc.g(), doc.a(), first(doc.v(), doc.latestVersion()), doc.p()));
         stream.println();
     }
 
