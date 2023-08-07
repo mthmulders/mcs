@@ -61,6 +61,16 @@ public class TabularOutputPrinter implements OutputPrinter {
                 Instant.ofEpochMilli(doc.timestamp()).atZone(ZoneId.systemDefault())
         );
 
-        table.addRowValues(doc.id() + ":" + doc.latestVersion(), lastUpdated);
+        var entry = displayEntry(doc);
+
+        table.addRowValues(entry, lastUpdated);
+    }
+
+    private String displayEntry(final SearchResponse.Response.Doc doc) {
+        if (doc.latestVersion() != null) {
+            return doc.id() + ":" + doc.latestVersion();
+        } else {
+            return doc.id();
+        }
     }
 }

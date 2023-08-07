@@ -99,6 +99,42 @@ class TabularOutputPrinterTest implements WithAssertions {
     }
 
     @Test
+    void should_not_mention_latest_version_when_not_present() {
+        // Arrange
+        var response = new SearchResponse.Response(4, 0, new SearchResponse.Response.Doc[] {
+                new SearchResponse.Response.Doc(
+                        "org.codehaus.plexus:plexus-utils",
+                        "org.codehaus.plexus",
+                        "plexus-utils",
+                        null,
+                        null,
+                        "jar",
+                        1630022910000L
+                ),
+                new SearchResponse.Response.Doc(
+                        "org.codehaus.plexus:plexus-archiver",
+                        "org.codehaus.plexus",
+                        "plexus-archiver",
+                        null,
+                        null,
+                        "jar",
+                        1630022910000L
+                )
+        });
+        var buffer = new ByteArrayOutputStream();
+
+
+        // Act
+        var query = SearchQuery.search("org.codehaus.plexus:plexus-utils").withLimit(2).build();
+        output.print(query, response, new PrintStream(buffer));
+
+
+        // Assert
+        var table = buffer.toString();
+        assertThat(table).doesNotContain("null");
+    }
+
+    @Test
     void should_mention_when_number_of_results_is_larger_than_the_search_limit() {
         // Arrange
         var response = new SearchResponse.Response(4, 0, new SearchResponse.Response.Doc[] {
