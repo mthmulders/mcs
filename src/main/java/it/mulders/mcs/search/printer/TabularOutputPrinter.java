@@ -50,7 +50,7 @@ public class TabularOutputPrinter implements OutputPrinter {
 
     private int calculateCoordinateColumnWidth(final SearchResponse.Response.Doc[] results) {
         return Arrays.stream(results)
-                .map(SearchResponse.Response.Doc::id)
+                .map(this::displayEntry)
                 .mapToInt(String::length)
                 .max()
                 .orElseThrow(() -> new IllegalStateException("Used TabularOutputPrinter without any output"));
