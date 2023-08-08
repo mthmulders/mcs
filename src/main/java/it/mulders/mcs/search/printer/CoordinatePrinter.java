@@ -1,7 +1,11 @@
 package it.mulders.mcs.search.printer;
 
+import java.util.Arrays;
+
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.vulnerability.ComponentReportResponse;
+import it.mulders.mcs.search.vulnerability.ComponentReportVulnerabilitySeverity;
 
 import java.io.PrintStream;
 
@@ -21,6 +25,7 @@ public sealed interface CoordinatePrinter extends OutputPrinter
         stream.println();
         stream.println(provideCoordinates(doc.g(), doc.a(), first(doc.v(), doc.latestVersion()), doc.p()));
         stream.println();
+        printVulnerabilities(doc.componentReport(), stream);
     }
 
     private String first(final String... values) {
@@ -30,5 +35,20 @@ public sealed interface CoordinatePrinter extends OutputPrinter
             }
         }
         return null;
+    }
+
+    private void printVulnerabilities(final ComponentReportResponse.ComponentReport componentReport,
+                                      final PrintStream stream) {
+        if (componentReport != null) { // will be null if --show-vulnerabilities cli arg is false
+            if (componentReport.vulnerabilities().length == 0) {
+                stream.println("No vulnerabilities reported");
+            } else {
+                stream.println("Vulnerabilities:");
+                Arrays.stream(componentReport.vulnerabilitiesSortedByCvssScore())
+                    .forEachOrdered(vul ->
+                        stream.println(vul.id() + " ("+ ComponentReportVulnerabilitySeverity.getText(vul.cvssScore()) +")" + " - " + vul.reference())
+                    );
+            }
+        }
     }
 }

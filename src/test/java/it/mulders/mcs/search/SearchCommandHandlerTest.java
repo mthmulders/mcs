@@ -50,7 +50,7 @@ class SearchCommandHandlerTest implements WithAssertions {
         }
     };
 
-    private final SearchCommandHandler handler = new SearchCommandHandler(outputPrinter, searchClient);
+    private final SearchCommandHandler handler = new SearchCommandHandler(outputPrinter, false, searchClient, null);
 
     @Nested
     @DisplayName("Wildcard search")

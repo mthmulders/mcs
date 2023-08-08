@@ -2,6 +2,8 @@ package it.mulders.mcs.search.printer;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport;
+import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport.ComponentReportVulnerability;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -231,5 +233,41 @@ class TabularOutputPrinterTest implements WithAssertions {
         // Assert
         var table = buffer.toString();
         assertThat(table).doesNotContain("showing 1");
+    }
+
+    @Test
+    void should_print_vulnerability_text() {
+        // Arrange
+        var output = new TabularOutputPrinter(true);
+        var query = SearchQuery.search("org.apache.shiro:shiro-web").build();
+
+        var response = new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[]{
+            new SearchResponse.Response.Doc(
+                "org.apache.shiro:shiro-web:1.10.0",
+                "org.apache.shiro",
+                "shiro-web",
+                "1.10.0",
+                null,
+                "jar",
+                1630022910000L,
+                new ComponentReport(
+                    "pkg:maven/org.apache.shiro/shiro-web@1.10.0",
+                    "https://ossindex.sonatype.org/component/pkg:maven/org.apache.shiro/shiro-web@1.10.0",
+                    new ComponentReportVulnerability[] {
+                        new ComponentReportVulnerability("CVE-2023-34478", "CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')", 9.8, "https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web"),
+                        new ComponentReportVulnerability("CVE-2020-13933", "[CVE-2020-13933] CWE-287: Improper Authentication", 7.5, "https://ossindex.sonatype.org/vulnerability/CVE-2020-13933?component-type=maven&component-name=org.apache.shiro%2Fshiro-web")
+                    }
+                )
+            )
+        });
+
+        // Act
+        var buffer = new ByteArrayOutputStream();
+        output.print(query, response, new PrintStream(buffer));
+
+        // Assert
+        var table = buffer.toString();
+        assertThat(table).contains("Vulnerabilities");
+        assertThat(table).contains("1 Critical, 1 High");
     }
 }

@@ -73,6 +73,13 @@ public class Cli {
         )
         private String responseFormat;
 
+        @CommandLine.Option(
+                names = { "-s", "--show-vulnerabilities" },
+                description = "Show reported security vulnerabilities",
+                paramLabel = "<vulnerabilities>"
+        )
+        private boolean showVulnerabilities;
+
         @Override
         public Integer call() {
             var combinedQuery = String.join(" ", query);
@@ -82,7 +89,7 @@ public class Cli {
                     .build();
 
             CoordinatePrinter coordinatePrinter = FormatType.providePrinter(responseFormat);
-            var searchCommandHandler = new SearchCommandHandler(coordinatePrinter);
+            var searchCommandHandler = new SearchCommandHandler(coordinatePrinter, showVulnerabilities);
             searchCommandHandler.search(searchQuery);
             return 0;
         }

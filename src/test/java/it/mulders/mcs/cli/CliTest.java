@@ -49,6 +49,13 @@ class CliTest implements WithAssertions {
 
             verifySearchExecution(query, "search", "--format", "gradle-short", "test");
         }
+
+        @Test
+        void accepts_show_vulnerabilities_parameter() {
+            var query = SearchQuery.search("test").build();
+
+            verifySearchExecution(query, "search", "--show-vulnerabilities", "test");
+        }
     }
 
     @Nested

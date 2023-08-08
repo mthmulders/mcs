@@ -1,0 +1,8 @@
+[
+  {
+    "coordinates": "pkg:maven/org.codehaus.plexus/plexus-utils@3.4.1",
+    "description": "A collection of various utility classes to ease working with strings, files, command lines, XML and more.",
+    "reference": "https://ossindex.sonatype.org/component/pkg:maven/org.codehaus.plexus/plexus-utils@3.4.1",
+    "vulnerabilities": []
+  }
+]
