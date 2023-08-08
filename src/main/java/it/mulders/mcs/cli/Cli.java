@@ -73,6 +73,13 @@ public class Cli {
         )
         private String responseFormat;
 
+        @CommandLine.Option(
+                names = { "-s", "--show-vulnerabilities" },
+                description = "Show any vulnerabilities for returned components",
+                paramLabel = "<vulnerabilities>"
+        )
+        private boolean showVulnerabilities;
+
         @Override
         public Integer call() {
             var combinedQuery = String.join(" ", query);
