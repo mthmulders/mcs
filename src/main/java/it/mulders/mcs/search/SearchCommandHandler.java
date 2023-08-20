@@ -1,35 +1,42 @@
 package it.mulders.mcs.search;
 
+import java.util.stream.Stream;
+
 import it.mulders.mcs.common.McsRuntimeException;
 import it.mulders.mcs.common.Result;
 import it.mulders.mcs.search.printer.DelegatingOutputPrinter;
 import it.mulders.mcs.search.printer.OutputPrinter;
+import it.mulders.mcs.search.vulnerability.ComponentReportClient;
 
 import static it.mulders.mcs.search.Constants.MAX_LIMIT;
 
 public class SearchCommandHandler {
     private final SearchClient searchClient;
+    private final ComponentReportClient reportClient;
     private final OutputPrinter outputPrinter;
+    private final boolean showVulnerabilities;
 
     public SearchCommandHandler() {
-        this(Constants.DEFAULT_PRINTER);
+        this(Constants.DEFAULT_PRINTER, false);
     }
 
-    public SearchCommandHandler(final OutputPrinter coordinateOutput) {
-        this(new DelegatingOutputPrinter(coordinateOutput), new SearchClient());
+    public SearchCommandHandler(final OutputPrinter coordinateOutput, final boolean showVulnerabilities) {
+        this(new DelegatingOutputPrinter(coordinateOutput), showVulnerabilities, new SearchClient(), new ComponentReportClient());
     }
 
     // Visible for testing
-    SearchCommandHandler(final OutputPrinter outputPrinter, final SearchClient searchClient) {
+    SearchCommandHandler(final OutputPrinter outputPrinter, final boolean showVulnerabilities, final SearchClient searchClient, final ComponentReportClient reportClient) {
         this.searchClient = searchClient;
         this.outputPrinter = outputPrinter;
+        this.reportClient = reportClient;
+        this.showVulnerabilities = showVulnerabilities;
     }
 
     public void search(final SearchQuery query) {
         performSearch(query)
                 .map(response -> performAdditionalSearch(query, response))
                 .ifPresentOrElse(
-                        response -> printResponse(query, response),
+                        response -> processResponse(query, response),
                         failure -> { throw new McsRuntimeException(failure); }
                 );
     }
@@ -66,6 +73,17 @@ public class SearchCommandHandler {
     private Result<SearchResponse.Response> performSearch(final SearchQuery query) {
         return searchClient.search(query)
                 .map(SearchResponse::response);
+    }
+
+    private void processResponse(final SearchQuery query, final SearchResponse.Response searchResponse) {
+        if (showVulnerabilities) {
+            reportClient.search(searchResponse.docs())
+                .ifPresentOrElse(
+                    componentResponse -> Stream.of(componentResponse.componentReports()).forEach(componentReport ->
+                        reportClient.assignComponentReport(componentReport, searchResponse.docs())),
+                    failure -> { throw new RuntimeException(failure); });
+        }
+        printResponse(query, searchResponse);
     }
 
     private void printResponse(final SearchQuery query, final SearchResponse.Response response) {

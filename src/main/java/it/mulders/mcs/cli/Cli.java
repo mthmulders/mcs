@@ -89,7 +89,7 @@ public class Cli {
                     .build();
 
             CoordinatePrinter coordinatePrinter = FormatType.providePrinter(responseFormat);
-            var searchCommandHandler = new SearchCommandHandler(coordinatePrinter);
+            var searchCommandHandler = new SearchCommandHandler(coordinatePrinter, showVulnerabilities);
             searchCommandHandler.search(searchQuery);
             return 0;
         }
