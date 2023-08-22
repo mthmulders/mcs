@@ -1,13 +1,10 @@
 package it.mulders.mcs.search.printer;
 
+import java.io.PrintStream;
+
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse;
-import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport.ComponentReportVulnerability;
-
-import java.io.PrintStream;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public sealed interface CoordinatePrinter extends OutputPrinter
         permits BuildrOutput, GradleGroovyOutput, GradleGroovyShortOutput, GradleKotlinOutput, GrapeOutput,
@@ -39,16 +36,13 @@ public sealed interface CoordinatePrinter extends OutputPrinter
 
     private void printVulnerabilities(final ComponentReportResponse.ComponentReport componentReport,
                                       final PrintStream stream) {
-        if (componentReport != null && componentReport.vulnerabilities().length > 0) {
-            var text = "Found %s vulnerabilities %s"
-                .formatted(
-                    componentReport.vulnerabilities().length,
-                    Stream.of(componentReport.vulnerabilities())
-                        .map(ComponentReportVulnerability::id)
-                        .collect(Collectors.joining(", ", "(", ")"))
-                );
-            stream.println(text);
-            stream.println("Reference: " + componentReport.reference());
+        if (componentReport != null) {
+            String vulnerabilityText =  switch(componentReport.vulnerabilities().length) {
+                case 0 -> "";
+                case 1 -> "Found 1 vulnerability";
+                default -> "Found %s vulnerabilities".formatted(componentReport.vulnerabilities().length);
+            };
+            stream.println(vulnerabilityText);
         }
     }
 }
