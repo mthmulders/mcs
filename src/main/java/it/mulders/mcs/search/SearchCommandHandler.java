@@ -7,6 +7,7 @@ import it.mulders.mcs.common.Result;
 import it.mulders.mcs.search.printer.DelegatingOutputPrinter;
 import it.mulders.mcs.search.printer.OutputPrinter;
 import it.mulders.mcs.search.vulnerability.ComponentReportClient;
+import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport;
 
 import static it.mulders.mcs.search.Constants.MAX_LIMIT;
 
@@ -79,11 +80,17 @@ public class SearchCommandHandler {
         if (showVulnerabilities) {
             reportClient.search(searchResponse.docs())
                 .ifPresentOrElse(
-                    componentResponse -> Stream.of(componentResponse.componentReports()).forEach(componentReport ->
-                        reportClient.assignComponentReport(componentReport, searchResponse.docs())),
+                    componentResponse -> processComponentReports(componentResponse.componentReports(), searchResponse.docs()),
                     failure -> { throw new RuntimeException(failure); });
         }
         printResponse(query, searchResponse);
+    }
+
+    private void processComponentReports(final ComponentReport[] componentReports,
+                                         final SearchResponse.Response.Doc[] docs) {
+        Stream.of(componentReports)
+            .forEach(componentReport ->
+                reportClient.assignComponentReport(componentReport, docs));
     }
 
     private void printResponse(final SearchQuery query, final SearchResponse.Response response) {
