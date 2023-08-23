@@ -22,7 +22,7 @@ public class SearchCommandHandler {
     }
 
     public SearchCommandHandler(final OutputPrinter coordinateOutput, final boolean showVulnerabilities) {
-        this(new DelegatingOutputPrinter(coordinateOutput), showVulnerabilities, new SearchClient(), new ComponentReportClient());
+        this(new DelegatingOutputPrinter(coordinateOutput, showVulnerabilities), showVulnerabilities, new SearchClient(), new ComponentReportClient());
     }
 
     // Visible for testing

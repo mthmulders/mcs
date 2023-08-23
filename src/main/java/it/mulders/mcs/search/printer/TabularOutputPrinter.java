@@ -5,12 +5,9 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
-import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport.ComponentReportVulnerability;
 import picocli.CommandLine;
 import picocli.CommandLine.Help;
 import picocli.CommandLine.Help.Ansi;
@@ -22,6 +19,16 @@ public class TabularOutputPrinter implements OutputPrinter {
     );
     private static final int INDENT = 2;
     private static final int SPACING = 3;
+
+    private final boolean showVulnerabilities;
+
+    public TabularOutputPrinter() {
+      this(false);
+    }
+
+    public TabularOutputPrinter(final boolean showVulnerabilities) {
+      this.showVulnerabilities = showVulnerabilities;
+    }
 
     private String header(final SearchQuery query, final SearchResponse.Response response) {
         var numFound = response.numFound();
@@ -45,8 +52,14 @@ public class TabularOutputPrinter implements OutputPrinter {
                 new CommandLine.Help.Column(300, INDENT, Overflow.SPAN)
         );
 
-        table.addRowValues("Coordinates", "Last updated", "Vulnerabilities");
-        table.addRowValues("===========", "============", "===============");
+        if (showVulnerabilities) {
+          table.addRowValues("Coordinates", "Last updated", "Vulnerabilities");
+          table.addRowValues("===========", "============", "===============");
+        } else {
+          table.addRowValues("Coordinates", "Last updated");
+          table.addRowValues("===========", "============");
+        }
+
         Arrays.stream(response.docs()).forEach(doc -> printRow(table, doc));
 
         stream.println(table);
@@ -61,29 +74,24 @@ public class TabularOutputPrinter implements OutputPrinter {
     }
 
     private void printRow(final Help.TextTable table, final SearchResponse.Response.Doc doc) {
-       var vulnerabilities = "";
-       if (doc.componentReport() != null) {
-            var numVuls = doc.componentReport().vulnerabilities().length;
-            if (numVuls > 0) {
-              vulnerabilities += "Found " + numVuls + " vulnerabilities ";
-              //vulnerabilities += doc.componentReport().reference();
-              vulnerabilities += Stream.of(doc.componentReport().vulnerabilities())
-                  .map(ComponentReportVulnerability::id).collect(Collectors.joining(", ", "(", ")"));
-            }
+      var vulnerabilityText = "";
+      if (showVulnerabilities && doc.componentReport() != null) {
+        vulnerabilityText =  switch(doc.componentReport().vulnerabilities().length) {
+          case 0 -> "";
+          case 1 -> "Found 1 vulnerability";
+          default -> "Found %s vulnerabilities".formatted(doc.componentReport().vulnerabilities().length);
+        };
+      }
 
-       }
+      var lastUpdated = DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(doc.timestamp()).atZone(ZoneId.systemDefault()));
 
-        var lastUpdated = DATE_TIME_FORMATTER.format(
-                Instant.ofEpochMilli(doc.timestamp()).atZone(ZoneId.systemDefault())
-        );
+      var entry = displayEntry(doc);
 
-        var entry = displayEntry(doc);
-
-        if (vulnerabilities != "") {
-            table.addRowValues(entry, lastUpdated, vulnerabilities);
-        } else {
-            table.addRowValues(entry, lastUpdated);
-        }
+      if (showVulnerabilities) {
+        table.addRowValues(entry, lastUpdated, vulnerabilityText);
+      } else {
+        table.addRowValues(entry, lastUpdated);
+      }
     }
 
     private String displayEntry(final SearchResponse.Response.Doc doc) {
