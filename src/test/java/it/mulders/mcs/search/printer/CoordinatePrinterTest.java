@@ -99,54 +99,12 @@ class CoordinatePrinterTest implements WithAssertions {
         assertThat(xml).isEqualToIgnoringWhitespace(expected);
     }
 
-
     @Nested
-    @DisplayName("CoordinatePrinter with one vulnerabilities")
-    class CoordinatePrinterWithOneVulnerabilityTest {
-        private static final SearchQuery QUERY_DEPENDENCY_WITH_ONE_VULNERABILITY = SearchQuery.search("org.apache.shiro:shiro-web").build();
-        private static final SearchResponse.Response RESPONSE_WITH_ONE_VULNERABILITY =
-            new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[]{
-                new SearchResponse.Response.Doc(
-                    "org.apache.shiro:shiro-web:1.10.0",
-                    "org.apache.shiro",
-                    "shiro-web",
-                    "1.10.0",
-                    null,
-                    "jar",
-                    1630022910000L,
-                    new ComponentReport(
-                        "pkg:maven/org.apache.shiro/shiro-web@1.10.0",
-                        "https://ossindex.sonatype.org/component/pkg:maven/org.apache.shiro/shiro-web@1.10.0?utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3",
-                        new ComponentReportVulnerability[] {
-                            new ComponentReportVulnerability("CVE-2023-34478", "CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')", 9.8)
-                        }
-                    )
-                )
-            });
-        private static final String POM_XML_DEPENDENCY_OUTPUT_WITH_ONE_VULNERABILITY = """
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-web</artifactId>
-                <version>1.10.0</version>
-            </dependency>
-            
-            Found 1 vulnerability
-            """;
-
-        @Test
-        void should_print_vulnerability_text() {
-            CoordinatePrinter printer = new PomXmlOutput();
-            printer.print(QUERY_DEPENDENCY_WITH_ONE_VULNERABILITY, RESPONSE_WITH_ONE_VULNERABILITY, new PrintStream(buffer));
-            var xml = buffer.toString();
-            assertThat(xml).isEqualToIgnoringWhitespace(POM_XML_DEPENDENCY_OUTPUT_WITH_ONE_VULNERABILITY);
-        }
-    }
-
-    @Nested
-    @DisplayName("CoordinatePrinter with multiple vulnerabilities")
+    @DisplayName("CoordinatePrinter with vulnerabilities")
     class CoordinatePrinterWithMultipleVulnerabilitiesTest {
-        private static final SearchQuery QUERY_DEPENDENCY_WITH_MULTIPLE_VULNERABILITIES = SearchQuery.search("org.apache.shiro:shiro-web").build();
-        private static final SearchResponse.Response RESPONSE_WITH_MULTIPLE_VULNERABILITIES =
+        private static final SearchQuery QUERY_DEPENDENCY_WITH_VULNERABILITIES =
+            SearchQuery.search("org.apache.shiro:shiro-web").build();
+        private static final SearchResponse.Response RESPONSE_WITH_VULNERABILITIES =
             new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[]{
                 new SearchResponse.Response.Doc(
                     "org.apache.shiro:shiro-web:1.9.0",
@@ -160,28 +118,30 @@ class CoordinatePrinterTest implements WithAssertions {
                         "pkg:maven/org.apache.shiro/shiro-web@1.9.0",
                         "https://ossindex.sonatype.org/component/pkg:maven/org.apache.shiro/shiro-web@1.9.0?utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3",
                         new ComponentReportVulnerability[] {
-                            new ComponentReportVulnerability("CVE-2023-34478", "CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')", 9.8),
-                            new ComponentReportVulnerability("CVE-2022-40664", "CWE-287: Improper Authentication", 9.8)
+                            new ComponentReportVulnerability("CVE-2023-34478", "CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')", 9.8, "https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web&utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3"),
+                            new ComponentReportVulnerability("CVE-2022-40664", "CWE-287: Improper Authentication", 9.8, "https://ossindex.sonatype.org/vulnerability/CVE-2022-40664?component-type=maven&component-name=org.apache.shiro%2Fshiro-web&utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3")
                         }
                     )
                 )
             });
-        private static final String POM_XML_DEPENDENCY_OUTPUT_WITH_MULTIPLE_VULNERABILITY = """
+        private static final String POM_XML_DEPENDENCY_OUTPUT_WITH_VULNERABILITIES = """
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-web</artifactId>
                 <version>1.9.0</version>
             </dependency>
             
-            Found 2 vulnerabilities
+            Vulnerabilities:
+            CVE-2023-34478 (Critical) - https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web&utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3
+            CVE-2022-40664 (Critical) - https://ossindex.sonatype.org/vulnerability/CVE-2022-40664?component-type=maven&component-name=org.apache.shiro%2Fshiro-web&utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3
             """;
 
         @Test
         void should_print_vulnerability_text() {
             CoordinatePrinter printer = new PomXmlOutput();
-            printer.print(QUERY_DEPENDENCY_WITH_MULTIPLE_VULNERABILITIES, RESPONSE_WITH_MULTIPLE_VULNERABILITIES, new PrintStream(buffer));
+            printer.print(QUERY_DEPENDENCY_WITH_VULNERABILITIES, RESPONSE_WITH_VULNERABILITIES, new PrintStream(buffer));
             var xml = buffer.toString();
-            assertThat(xml).isEqualToIgnoringWhitespace(POM_XML_DEPENDENCY_OUTPUT_WITH_MULTIPLE_VULNERABILITY);
+            assertThat(xml).isEqualToIgnoringWhitespace(POM_XML_DEPENDENCY_OUTPUT_WITH_VULNERABILITIES);
         }
     }
 }
