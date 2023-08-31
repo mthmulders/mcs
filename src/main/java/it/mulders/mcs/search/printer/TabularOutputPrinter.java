@@ -5,9 +5,16 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport;
+import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport.ComponentReportVulnerability;
+import it.mulders.mcs.search.vulnerability.ComponentReportVulnerabilitySeverity;
 import picocli.CommandLine;
 import picocli.CommandLine.Help;
 import picocli.CommandLine.Help.Ansi;
@@ -76,11 +83,7 @@ public class TabularOutputPrinter implements OutputPrinter {
     private void printRow(final Help.TextTable table, final SearchResponse.Response.Doc doc) {
       var vulnerabilityText = "";
       if (showVulnerabilities && doc.componentReport() != null) {
-        vulnerabilityText =  switch(doc.componentReport().vulnerabilities().length) {
-          case 0 -> "";
-          case 1 -> "Found 1 vulnerability";
-          default -> "Found %s vulnerabilities".formatted(doc.componentReport().vulnerabilities().length);
-        };
+        vulnerabilityText = getVulnerabilityText(doc.componentReport());
       }
 
       var lastUpdated = DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(doc.timestamp()).atZone(ZoneId.systemDefault()));
@@ -92,6 +95,18 @@ public class TabularOutputPrinter implements OutputPrinter {
       } else {
         table.addRowValues(entry, lastUpdated);
       }
+    }
+
+    private String getVulnerabilityText(ComponentReport componentReport) {
+      ComponentReportVulnerability[] sorted = componentReport.vulnerabilitiesSortedByCvssScore();
+
+      Map<String, Long> counts = Arrays.stream(sorted)
+          .map(vulnerability -> ComponentReportVulnerabilitySeverity.getText(vulnerability.cvssScore()))
+          .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+
+      return counts.entrySet().stream()
+          .map(entry -> entry.getValue() + " " + entry.getKey())
+          .collect(Collectors.joining(", "));
     }
 
     private String displayEntry(final SearchResponse.Response.Doc doc) {
