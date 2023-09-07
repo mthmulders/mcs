@@ -21,7 +21,7 @@ public class SystemPropertyLoader {
             "mcs.config"
     );
 
-    private Properties properties;
+    private final Properties properties;
 
     public SystemPropertyLoader() {
         this(MCS_PROPERTIES_FILE);
