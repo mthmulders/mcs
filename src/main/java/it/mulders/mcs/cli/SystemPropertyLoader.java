@@ -54,7 +54,7 @@ public class SystemPropertyLoader {
             if (matcher.find()) {
                 var property = matcher.group(1);
                 var propertyName = property.substring(2, property.length() - 1);
-                var interimValue = input.getProperty(propertyName, System.getProperty(property));
+                var interimValue = input.getProperty(propertyName, System.getProperty(propertyName));
 
                 var newValue = originalValue.replaceAll("\\$\\{" + propertyName + "}", interimValue);
 
