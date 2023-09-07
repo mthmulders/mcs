@@ -45,23 +45,23 @@ public class SystemPropertyLoader {
         properties.putAll(interpolatedProperties);
     }
 
-    private static final Pattern INTERPOLATABLE_PROPERTY = Pattern.compile(".*(\\$\\{.*}).*");
+    private static final Pattern INTERPOLATABLE_PROPERTY = Pattern.compile("(\\$\\{.*?})");
     private Properties interpolate(final Properties input) {
         var result = new Properties();
         input.forEach((key, value) -> {
             var originalValue = value.toString();
             var matcher = INTERPOLATABLE_PROPERTY.matcher(originalValue);
-            if (matcher.find()) {
+            var newValue = originalValue;
+
+            while (matcher.find()) {
                 var property = matcher.group(1);
                 var propertyName = property.substring(2, property.length() - 1);
                 var interimValue = input.getProperty(propertyName, System.getProperty(propertyName));
 
-                var newValue = originalValue.replaceAll("\\$\\{" + propertyName + "}", interimValue);
-
-                result.put(key, newValue);
-            } else {
-                result.put(key, value);
+                newValue = newValue.replace(property, interimValue);
             }
+
+            result.put(key, newValue);
         });
         return result;
     }

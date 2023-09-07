@@ -19,11 +19,19 @@ class SystemPropertyLoaderTest implements WithAssertions {
     }
 
     @Test
-    void should_interpolate_properties() {
+    void should_interpolate_single_property() {
         var loader = new SystemPropertyLoader(SAMPLE);
 
         assertThat(loader.getProperties())
                 .containsEntry("example.b", "foo bar");
+    }
+
+    @Test
+    void should_interpolate_multiple_properties() {
+        var loader = new SystemPropertyLoader(SAMPLE);
+
+        assertThat(loader.getProperties())
+                .containsEntry("example.c", "foo foo baz");
     }
 
     @Test
