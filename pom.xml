@@ -26,7 +26,7 @@
         <jackson-jr.version>2.15.2</jackson-jr.version>
         <junit-jupiter.version>5.10.0</junit-jupiter.version>
         <picocli.version>4.7.4</picocli.version>
-        <wiremock.version>2.35.0</wiremock.version>
+        <wiremock.version>2.35.1</wiremock.version>
 
         <artifactsDir>target/distributions</artifactsDir>
         <executable-suffix></executable-suffix>
