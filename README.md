@@ -65,6 +65,15 @@ Next, point MCS to that trust store like so
 mcs -Djavax.net.ssl.trustStore=/path/to/keystore search something
 ```
 
+Or, even easier: create a directory **.mcs** in your user directory (typically **C:\Users\<your-user-name>** on 🪟, **/home/<your-user-name>** on 🐧 or **/Users/<your-user-name>** on 🍎).
+Inside that folder, create a file **mcs.config** and write the following line in it:
+
+```
+javax.net.ssl.trustStore=/path/to/keystore
+```
+
+This way, you don't have to remember passing the `-Djavax.net.ssl.trustStore=`.
+
 ## Contributing
 Probably the easiest way to get a working development environment is to use Gitpod:
 
