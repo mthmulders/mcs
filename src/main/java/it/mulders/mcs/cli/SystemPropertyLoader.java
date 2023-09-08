@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
-import java.util.regex.Pattern;
 
 /**
  * Loads additional system properties from a predefined file on disk.
@@ -38,32 +37,9 @@ public class SystemPropertyLoader {
             }
         }
 
-        var interpolatedProperties = interpolate(input);
-
         this.properties = new Properties();
         properties.putAll(System.getProperties());
-        properties.putAll(interpolatedProperties);
-    }
-
-    private static final Pattern INTERPOLATABLE_PROPERTY = Pattern.compile("(\\$\\{.*?})");
-    private Properties interpolate(final Properties input) {
-        var result = new Properties();
-        input.forEach((key, value) -> {
-            var originalValue = value.toString();
-            var matcher = INTERPOLATABLE_PROPERTY.matcher(originalValue);
-            var newValue = originalValue;
-
-            while (matcher.find()) {
-                var property = matcher.group(1);
-                var propertyName = property.substring(2, property.length() - 1);
-                var interimValue = input.getProperty(propertyName, System.getProperty(propertyName));
-
-                newValue = newValue.replace(property, interimValue);
-            }
-
-            result.put(key, newValue);
-        });
-        return result;
+        properties.putAll(input);
     }
 
     public Properties getProperties() {

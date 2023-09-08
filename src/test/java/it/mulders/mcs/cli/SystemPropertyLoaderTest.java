@@ -19,22 +19,6 @@ class SystemPropertyLoaderTest implements WithAssertions {
     }
 
     @Test
-    void should_interpolate_single_property() {
-        var loader = new SystemPropertyLoader(SAMPLE);
-
-        assertThat(loader.getProperties())
-                .containsEntry("example.b", "foo bar");
-    }
-
-    @Test
-    void should_interpolate_multiple_properties() {
-        var loader = new SystemPropertyLoader(SAMPLE);
-
-        assertThat(loader.getProperties())
-                .containsEntry("example.c", "foo foo baz");
-    }
-
-    @Test
     void should_not_fail_if_file_does_not_exist() {
         var loader = new SystemPropertyLoader(Paths.get("src", "test", "resources", "non-existing-mcs.config"));
 
