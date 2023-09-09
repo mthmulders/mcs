@@ -81,7 +81,7 @@ public class SearchCommandHandler {
             reportClient.search(searchResponse.docs())
                 .ifPresentOrElse(
                     componentResponse -> processComponentReports(componentResponse.componentReports(), searchResponse.docs()),
-                    failure -> { throw new RuntimeException(failure); });
+                    failure -> { throw new McsRuntimeException(failure); });
         }
         printResponse(query, searchResponse);
     }
