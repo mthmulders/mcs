@@ -81,20 +81,22 @@ public class TabularOutputPrinter implements OutputPrinter {
     }
 
     private void printRow(final Help.TextTable table, final SearchResponse.Response.Doc doc) {
-      var vulnerabilityText = "";
-      if (showVulnerabilities && doc.componentReport() != null) {
-        vulnerabilityText = getVulnerabilityText(doc.componentReport());
-      }
+        var lastUpdated = DATE_TIME_FORMATTER.format(
+                Instant.ofEpochMilli(doc.timestamp()).atZone(ZoneId.systemDefault())
+        );
 
-      var lastUpdated = DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(doc.timestamp()).atZone(ZoneId.systemDefault()));
+        var entry = displayEntry(doc);
 
-      var entry = displayEntry(doc);
+        var vulnerabilityText = "";
+        if (showVulnerabilities && doc.componentReport() != null) {
+            vulnerabilityText = getVulnerabilityText(doc.componentReport());
+        }
 
-      if (showVulnerabilities) {
-        table.addRowValues(entry, lastUpdated, vulnerabilityText);
-      } else {
-        table.addRowValues(entry, lastUpdated);
-      }
+        if (showVulnerabilities) {
+            table.addRowValues(entry, lastUpdated, vulnerabilityText);
+        } else {
+            table.addRowValues(entry, lastUpdated);
+        }
     }
 
     private String getVulnerabilityText(ComponentReport componentReport) {
