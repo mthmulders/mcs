@@ -75,7 +75,7 @@ public class Cli {
 
         @CommandLine.Option(
                 names = { "-s", "--show-vulnerabilities" },
-                description = "Show any vulnerabilities for returned components",
+                description = "Show reported security vulnerabilities",
                 paramLabel = "<vulnerabilities>"
         )
         private boolean showVulnerabilities;
