@@ -1,15 +1,5 @@
 package it.mulders.mcs.search.printer;
 
-import java.io.PrintStream;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport;
@@ -19,6 +9,16 @@ import picocli.CommandLine;
 import picocli.CommandLine.Help;
 import picocli.CommandLine.Help.Ansi;
 import picocli.CommandLine.Help.Column.Overflow;
+
+import java.io.PrintStream;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class TabularOutputPrinter implements OutputPrinter {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(

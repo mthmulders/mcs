@@ -1,9 +1,5 @@
 package it.mulders.mcs.search.printer;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.stream.Stream;
-
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport;
@@ -15,6 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.stream.Stream;
 
 class CoordinatePrinterTest implements WithAssertions {
 

@@ -1,12 +1,13 @@
 package it.mulders.mcs.search.printer;
 
-import java.io.PrintStream;
 import java.util.Arrays;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse;
 import it.mulders.mcs.search.vulnerability.ComponentReportVulnerabilitySeverity;
+
+import java.io.PrintStream;
 
 public sealed interface CoordinatePrinter extends OutputPrinter
         permits BuildrOutput, GradleGroovyOutput, GradleGroovyShortOutput, GradleKotlinOutput, GrapeOutput,

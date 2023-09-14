@@ -1,9 +1,9 @@
 package it.mulders.mcs.search.printer;
 
-import java.io.PrintStream;
-
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
+
+import java.io.PrintStream;
 
 /**
  * Output printer that delegates to a different printer, depending on the number of search results.
