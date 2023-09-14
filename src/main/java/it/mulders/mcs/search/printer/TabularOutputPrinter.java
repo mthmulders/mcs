@@ -87,15 +87,14 @@ public class TabularOutputPrinter implements OutputPrinter {
 
         var entry = displayEntry(doc);
 
-        var vulnerabilityText = "";
-        if (showVulnerabilities && doc.componentReport() != null) {
-            vulnerabilityText = getVulnerabilityText(doc.componentReport());
-        }
-
-        if (showVulnerabilities) {
-            table.addRowValues(entry, lastUpdated, vulnerabilityText);
-        } else {
+        if (!showVulnerabilities) {
             table.addRowValues(entry, lastUpdated);
+        } else {
+            var vulnerabilityText = "";
+            if (doc.componentReport() != null) {
+                vulnerabilityText = getVulnerabilityText(doc.componentReport());
+            }
+            table.addRowValues(entry, lastUpdated, vulnerabilityText);
         }
     }
 
