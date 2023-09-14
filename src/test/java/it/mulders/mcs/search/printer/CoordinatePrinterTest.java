@@ -116,10 +116,10 @@ class CoordinatePrinterTest implements WithAssertions {
                     1630022910000L,
                     new ComponentReport(
                         "pkg:maven/org.apache.shiro/shiro-web@1.9.0",
-                        "https://ossindex.sonatype.org/component/pkg:maven/org.apache.shiro/shiro-web@1.9.0?utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3",
+                        "https://ossindex.sonatype.org/component/pkg:maven/org.apache.shiro/shiro-web@1.9.0",
                         new ComponentReportVulnerability[] {
-                            new ComponentReportVulnerability("CVE-2023-34478", "CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')", 9.8, "https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web&utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3"),
-                            new ComponentReportVulnerability("CVE-2022-40664", "CWE-287: Improper Authentication", 9.8, "https://ossindex.sonatype.org/vulnerability/CVE-2022-40664?component-type=maven&component-name=org.apache.shiro%2Fshiro-web&utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3")
+                            new ComponentReportVulnerability("CVE-2023-34478", "CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')", 9.8, "https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web"),
+                            new ComponentReportVulnerability("CVE-2022-40664", "CWE-287: Improper Authentication", 9.8, "https://ossindex.sonatype.org/vulnerability/CVE-2022-40664?component-type=maven&component-name=org.apache.shiro%2Fshiro-web")
                         }
                     )
                 )
@@ -132,8 +132,8 @@ class CoordinatePrinterTest implements WithAssertions {
             </dependency>
             
             Vulnerabilities:
-            CVE-2023-34478 (Critical) - https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web&utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3
-            CVE-2022-40664 (Critical) - https://ossindex.sonatype.org/vulnerability/CVE-2022-40664?component-type=maven&component-name=org.apache.shiro%2Fshiro-web&utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3
+            CVE-2023-34478 (Critical) - https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web
+            CVE-2022-40664 (Critical) - https://ossindex.sonatype.org/vulnerability/CVE-2022-40664?component-type=maven&component-name=org.apache.shiro%2Fshiro-web
             """;
 
         @Test

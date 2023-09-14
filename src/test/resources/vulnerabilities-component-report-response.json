@@ -2,7 +2,7 @@
   {
     "coordinates": "pkg:maven/org.apache.shiro/shiro-web@1.9.0",
     "description": "",
-    "reference": "https://ossindex.sonatype.org/component/pkg:maven/org.apache.shiro/shiro-web@1.9.0?utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3",
+    "reference": "https://ossindex.sonatype.org/component/pkg:maven/org.apache.shiro/shiro-web@1.9.0",
     "vulnerabilities": [
       {
         "id": "CVE-2022-40664",
@@ -13,7 +13,7 @@
         "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "cwe": "CWE-287",
         "cve": "CVE-2022-40664",
-        "reference": "https://ossindex.sonatype.org/vulnerability/CVE-2022-40664?component-type=maven&component-name=org.apache.shiro%2Fshiro-web&utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3",
+        "reference": "https://ossindex.sonatype.org/vulnerability/CVE-2022-40664?component-type=maven&component-name=org.apache.shiro%2Fshiro-web",
         "externalReferences": [
           "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2022-40664",
           "https://shiro.apache.org/blog/2022/10/10/2022/apache-shiro-1101-released.html",
@@ -31,7 +31,7 @@
         "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "cwe": "CWE-22",
         "cve": "CVE-2023-34478",
-        "reference": "https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web&utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3",
+        "reference": "https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web",
         "externalReferences": [
           "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2023-34478",
           "https://lists.apache.org/thread/jowcs5nd4tz5fxwl1mqkqnvyrwwx59qo"

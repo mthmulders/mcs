@@ -252,10 +252,10 @@ class TabularOutputPrinterTest implements WithAssertions {
                 1630022910000L,
                 new ComponentReport(
                     "pkg:maven/org.apache.shiro/shiro-web@1.10.0",
-                    "https://ossindex.sonatype.org/component/pkg:maven/org.apache.shiro/shiro-web@1.10.0?utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3",
+                    "https://ossindex.sonatype.org/component/pkg:maven/org.apache.shiro/shiro-web@1.10.0",
                     new ComponentReportVulnerability[] {
-                        new ComponentReportVulnerability("CVE-2023-34478", "CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')", 9.8, "https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web&utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3"),
-                        new ComponentReportVulnerability("CVE-2020-13933", "[CVE-2020-13933] CWE-287: Improper Authentication", 7.5, "https://ossindex.sonatype.org/vulnerability/CVE-2020-13933?component-type=maven&component-name=org.apache.shiro%2Fshiro-web&utm_source=postmanruntime&utm_medium=integration&utm_content=7.32.3")
+                        new ComponentReportVulnerability("CVE-2023-34478", "CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')", 9.8, "https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web"),
+                        new ComponentReportVulnerability("CVE-2020-13933", "[CVE-2020-13933] CWE-287: Improper Authentication", 7.5, "https://ossindex.sonatype.org/vulnerability/CVE-2020-13933?component-type=maven&component-name=org.apache.shiro%2Fshiro-web")
                     }
                 )
             )
