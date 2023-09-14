@@ -8,12 +8,14 @@ import it.mulders.mcs.search.vulnerability.ComponentReportVulnerabilitySeverity;
 import picocli.CommandLine;
 import picocli.CommandLine.Help;
 import picocli.CommandLine.Help.Ansi;
+import picocli.CommandLine.Help.Column;
 import picocli.CommandLine.Help.Column.Overflow;
 
 import java.io.PrintStream;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -51,13 +53,7 @@ public class TabularOutputPrinter implements OutputPrinter {
 
         var colorScheme = Help.defaultColorScheme(Ansi.AUTO);
 
-        var maxKeyLength = calculateCoordinateColumnWidth(response.docs());
-
-        var table = CommandLine.Help.TextTable.forColumns(colorScheme,
-                new CommandLine.Help.Column(maxKeyLength + SPACING, INDENT, Overflow.SPAN),
-                new CommandLine.Help.Column(30, INDENT, Overflow.WRAP),
-                new CommandLine.Help.Column(300, INDENT, Overflow.SPAN)
-        );
+        var table = CommandLine.Help.TextTable.forColumns(colorScheme, constructColumns(response));
 
         if (showVulnerabilities) {
           table.addRowValues("Coordinates", "Last updated", "Vulnerabilities");
@@ -70,6 +66,16 @@ public class TabularOutputPrinter implements OutputPrinter {
         Arrays.stream(response.docs()).forEach(doc -> printRow(table, doc));
 
         stream.println(table);
+    }
+
+    private Column[] constructColumns(final SearchResponse.Response response) {
+        var cols = new ArrayList<Column>();
+        cols.add(new CommandLine.Help.Column(calculateCoordinateColumnWidth(response.docs()) + SPACING, INDENT, Overflow.SPAN));
+        cols.add(new CommandLine.Help.Column(30, INDENT, Overflow.WRAP));
+        if (showVulnerabilities) {
+            cols.add(new CommandLine.Help.Column(50, INDENT, Overflow.SPAN));
+        }
+        return cols.toArray(Column[]::new);
     }
 
     private int calculateCoordinateColumnWidth(final SearchResponse.Response.Doc[] results) {
