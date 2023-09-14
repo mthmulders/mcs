@@ -28,6 +28,7 @@
         <picocli.version>4.7.4</picocli.version>
         <wiremock.version>2.35.0</wiremock.version>
         <packageurl.version>1.4.1</packageurl.version>
+        <junit-pioneer.version>2.1.0</junit-pioneer.version>
 
         <artifactsDir>target/distributions</artifactsDir>
         <executable-suffix></executable-suffix>
@@ -308,7 +309,12 @@
             <version>1.2.1</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.junit-pioneer</groupId>
+            <artifactId>junit-pioneer</artifactId>
+            <version>${junit-pioneer.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <profiles>
