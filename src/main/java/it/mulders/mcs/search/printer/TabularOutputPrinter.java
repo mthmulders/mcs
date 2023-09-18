@@ -96,15 +96,16 @@ public class TabularOutputPrinter implements OutputPrinter {
         if (!showVulnerabilities) {
             table.addRowValues(entry, lastUpdated);
         } else {
-            var vulnerabilityText = "";
-            if (doc.componentReport() != null) {
-                vulnerabilityText = getVulnerabilityText(doc.componentReport());
-            }
+            var vulnerabilityText = getVulnerabilityText(doc.componentReport());
             table.addRowValues(entry, lastUpdated, vulnerabilityText);
         }
     }
 
     private String getVulnerabilityText(ComponentReport componentReport) {
+      if (componentReport == null || componentReport.vulnerabilities().length == 0) {
+        return "-";
+      }
+
       ComponentReportVulnerability[] sorted = componentReport.vulnerabilitiesSortedByCvssScore();
 
       Map<String, Long> counts = Arrays.stream(sorted)
