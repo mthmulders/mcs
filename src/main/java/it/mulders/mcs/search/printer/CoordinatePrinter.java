@@ -41,7 +41,7 @@ public sealed interface CoordinatePrinter extends OutputPrinter
                                       final PrintStream stream) {
         if (componentReport != null) { // will be null if --show-vulnerabilities cli arg is false
             if (componentReport.vulnerabilities().length == 0) {
-                stream.println("No vulnerabilities found");
+                stream.println("No vulnerabilities reported");
             } else {
                 stream.println("Vulnerabilities:");
                 Arrays.stream(componentReport.vulnerabilitiesSortedByCvssScore())
