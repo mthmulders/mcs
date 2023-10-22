@@ -34,7 +34,14 @@ This tool supports the following modes of searching:
    This will give you all artifacts in Maven Central that contain a particular class.
    If you set the `-f` flag, the search term is considered a "fully classified" class name, so including the package name.
 
-All modes recognise the `-l <number>` switch, which lets you specify how many results you want to see _at most_.
+## Flags
+* All modes recognise the `-l <number>` switch, which lets you specify how many results you want to see _at most_.
+* In **Wildcard sarch** and **Coordinate search**, you can pass along the `-s` (or `--show-vulnerabilities`) flag.
+  It will cause MCS to show a summary of reported security vulnerabilities against each result.
+  If there is only one search result, it will display the CVE numbers reported against that result.
+  **Note** that this feature will probably soon hit the API limits for the Sonatype OSS Index. See [their documentation](https://ossindex.sonatype.org) for details on how this may impact your usage.
+  You can specify your credentials using the system properties `ossindex.username` and `ossindex.password`.
+  See under "Configuring MCS" on how to do this in the most convenient way.
 
 ## Installation
 You can install mcs using the package manager of your choice:
@@ -65,14 +72,21 @@ Next, point MCS to that trust store like so
 mcs -Djavax.net.ssl.trustStore=/path/to/keystore search something
 ```
 
-Or, even easier: create a directory **.mcs** in your user directory (typically **C:\Users\<your-user-name>** on 🪟, **/home/<your-user-name>** on 🐧 or **/Users/<your-user-name>** on 🍎).
+## Configuring MCS
+Some configuration for MCS is passed through system properties.
+You can do this every time you invoke MCS by adding `-Dxxx=yyy`.
+To make it more conveniently, you can create a configuration file that will automatically be read by MCS and interpreted as configuration settings.
+
+To do so, create a directory **.mcs** in your user directory (typically **C:\Users\<your-user-name>** on 🪟, **/home/<your-user-name>** on 🐧 or **/Users/<your-user-name>** on 🍎).
 Inside that folder, create a file **mcs.config** and write the following line in it:
 
 ```
 javax.net.ssl.trustStore=/path/to/keystore
+ossindex.username=xxx
+ossindex.password=yyy
 ```
 
-This way, you don't have to remember passing the `-Djavax.net.ssl.trustStore=`.
+This way, you don't have to remember passing the `-D`.
 
 ## Contributing
 Probably the easiest way to get a working development environment is to use Gitpod:
