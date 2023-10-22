@@ -67,6 +67,11 @@ distributions:
         owner: mthmulders
       packageName: maven-central-search
       remoteBuild: true
+    scoop:
+      active: RELEASE
+      repository:
+        active: RELEASE
+        name: scoop-mcs
     artifacts:
       - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-linux-x86_64.zip
         platform: linux-x86_64
