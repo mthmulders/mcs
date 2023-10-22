@@ -42,11 +42,11 @@ distributions:
     brew:
       active: RELEASE
       multiPlatform: true
-      tap:
-        active: release
+      repository:
+        active: RELEASE
     chocolatey:
       active: RELEASE
-      bucket:
+      repository:
         active: RELEASE
       remoteBuild: true
       iconUrl: https://maarten.mulders.it/img/mcs-icon.png
@@ -61,7 +61,7 @@ distributions:
       architectures:
         - buildOn: [amd64]
           runOn: [amd64]
-      snap:
+      repository:
         active: RELEASE
         name: mcs-snap
         owner: mthmulders
