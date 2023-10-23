@@ -39,15 +39,15 @@ announce:
   mastodon:
     active: RELEASE
     host: https://mastodon.online/
-    status: 🚀 {{projectNameCapitalized}} {{projectVersion}} has just been released! Check {{releaseNotesUrl}} for the details.
+    status: 🚀 {{projectName}} {{projectVersion}} has just been released! Check {{releaseNotesUrl}} for the details.
   bluesky:
     active: RELEASE
     host: https://bsky.social
     handle: mthmulders.bsky.social
-    status: 🚀 {{projectNameCapitalized}} {{projectVersion}} has just been released! Check {{releaseNotesUrl}} for the details.
+    status: 🚀 {{projectName}} {{projectVersion}} has just been released! Check {{releaseNotesUrl}} for the details.
   twitter:
     active: RELEASE
-    status: 🚀 {{projectNameCapitalized}} {{projectVersion}} has just been released! Check {{releaseNotesUrl}} for the details.
+    status: 🚀 {{projectName}} {{projectVersion}} has just been released! Check {{releaseNotesUrl}} for the details.
 
 distributions:
   mcs:
