@@ -36,7 +36,6 @@ release:
           - 'GitHub'
 
 announce:
-  active: RELEASE
   mastodon:
     active: RELEASE
     host: https://mastodon.online/
