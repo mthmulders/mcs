@@ -129,9 +129,6 @@
                     <groupId>org.graalvm.buildtools</groupId>
                     <artifactId>native-maven-plugin</artifactId>
                     <version>0.9.28</version>
-                    <configuration>
-                        <buildArgs>${native-image-arguments}</buildArgs>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.jreleaser</groupId>
@@ -337,7 +334,7 @@
                         <configuration>
                             <agentResourceDirectory>${project.basedir}/src/main/graalvm-native</agentResourceDirectory>
                             <imageName>${project.artifactId}-${project.version}</imageName>
-                            <buildArgs>${native-image-arguments}</buildArgs>
+                            <buildArgs>${native-image-arguments} -march=compatibility</buildArgs>
                         </configuration>
                     </plugin>
                 </plugins>
