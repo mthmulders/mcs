@@ -334,7 +334,7 @@
                         <configuration>
                             <agentResourceDirectory>${project.basedir}/src/main/graalvm-native</agentResourceDirectory>
                             <imageName>${project.artifactId}-${project.version}</imageName>
-                            <buildArgs>${native-image-arguments} -march=compatibility</buildArgs>
+                            <buildArgs>-march=compatibility ${native-image-arguments}</buildArgs>
                         </configuration>
                     </plugin>
                 </plugins>
