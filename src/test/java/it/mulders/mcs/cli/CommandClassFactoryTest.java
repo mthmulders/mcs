@@ -11,8 +11,8 @@ class CommandClassFactoryTest implements WithAssertions {
     private final CommandClassFactory factory = new CommandClassFactory(cli);
 
     @Test
-    void can_construct_search_command_instance() throws Exception {
-        assertThat(factory.create(Cli.SearchCommand.class)).isNotNull();
+    void can_construct_class_search_command_instance() throws Exception {
+        assertThat(factory.create(Cli.ClassSearchCommand.class)).isNotNull();
     }
 
     @Test
