@@ -5,7 +5,10 @@ import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.printer.CoordinatePrinter;
 import picocli.CommandLine;
+import picocli.CommandLine.Model.CommandSpec;
+import picocli.CommandLine.Spec;
 
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(
@@ -71,8 +74,17 @@ public class Cli implements Callable<Integer> {
     )
     private boolean showVulnerabilities;
 
+
+    @Spec
+    CommandSpec spec;
+
     @Override
     public Integer call() {
+        if (Objects.isNull(query)) {
+            spec.commandLine().usage(System.err);
+            System.exit(1);
+        }
+
         var combinedQuery = String.join(" ", query);
         System.out.printf("Searching for %s...%n", combinedQuery);
         var searchQuery = SearchQuery.search(combinedQuery)
