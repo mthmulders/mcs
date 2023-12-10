@@ -26,35 +26,35 @@ class CliTest implements WithAssertions {
         void delegates_to_handler() {
             var query = SearchQuery.search("test").build();
 
-            verifySearchExecution(query, "search", "test");
+            verifySearchExecution(query, "test");
         }
 
         @Test
         void accepts_space_separated_terms() {
             SearchQuery query = SearchQuery.search("jakarta rs").build();
 
-            verifySearchExecution(query, "search", "jakarta", "rs");
+            verifySearchExecution(query, "jakarta", "rs");
         }
 
         @Test
         void accepts_limit_results_parameter() {
             var query = SearchQuery.search("test").withLimit(3).build();
 
-            verifySearchExecution(query, "search", "--limit", "3", "test");
+            verifySearchExecution(query, "--limit", "3", "test");
         }
 
         @Test
         void accepts_output_type_parameter() {
             var query = SearchQuery.search("test").build();
 
-            verifySearchExecution(query, "search", "--format", "gradle-short", "test");
+            verifySearchExecution(query, "--format", "gradle-short", "test");
         }
 
         @Test
         void accepts_show_vulnerabilities_parameter() {
             var query = SearchQuery.search("test").build();
 
-            verifySearchExecution(query, "search", "--show-vulnerabilities", "test");
+            verifySearchExecution(query, "--show-vulnerabilities", "test");
         }
     }
 

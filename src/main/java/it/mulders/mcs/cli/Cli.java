@@ -37,7 +37,7 @@ public class Cli implements Callable<Integer> {
     }
 
     @CommandLine.Parameters(
-        arity = "1..n",
+        arity = "0..n",
         description = {
             "What to search for.",
             "If the search term contains a colon ( : ), it is considered a literal groupId and artifactId",
