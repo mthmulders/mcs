@@ -27,7 +27,7 @@
         <junit-jupiter.version>5.10.1</junit-jupiter.version>
         <picocli.version>4.7.5</picocli.version>
         <wiremock.version>2.35.1</wiremock.version>
-        <packageurl.version>1.4.2</packageurl.version>
+        <packageurl.version>1.5.0</packageurl.version>
         <junit-pioneer.version>2.2.0</junit-pioneer.version>
 
         <artifactsDir>target/distributions</artifactsDir>
