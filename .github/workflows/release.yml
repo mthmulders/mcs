@@ -56,7 +56,7 @@ jobs:
           echo $NEXT_VERSION > NEXT_VERSION
 
       - name: Upload version files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: artifacts
           path: |
@@ -155,7 +155,7 @@ jobs:
         run: mvn -B -Pdist package -DskipTests
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: artifacts
           path: |
@@ -236,7 +236,7 @@ jobs:
 
       - name: Capture JReleaser output
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: jreleaser-release-output
           retention-days: 7
