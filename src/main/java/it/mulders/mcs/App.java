@@ -13,6 +13,10 @@ public class App {
 
     // Visible for testing
     static int doMain(final String... originalArgs) {
+        return doMain(new Cli(), originalArgs);
+    }
+
+    static int doMain(final Cli cli, final String... originalArgs) {
         System.setProperties(new SystemPropertyLoader().getProperties());
         var program = new CommandLine(cli, new CommandClassFactory(cli))
                 .setExecutionExceptionHandler(new McsExecutionExceptionHandler());
