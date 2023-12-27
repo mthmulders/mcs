@@ -20,26 +20,24 @@ public class SystemPropertyLoader {
             "mcs.config"
     );
 
-    private final Properties properties;
+    private final Properties properties = new Properties();;
 
     public SystemPropertyLoader() {
         this(MCS_PROPERTIES_FILE);
     }
 
     protected SystemPropertyLoader(final Path source) {
-        var input = new Properties();
+        properties.putAll(System.getProperties());
 
         if (Files.exists(source) && Files.isRegularFile(source)) {
+            var input = new Properties();
             try (var reader = Files.newBufferedReader(source)) {
                 input.load(reader);
+                properties.putAll(input);
             } catch (IOException ioe) {
                 System.err.printf("Failed to load %s: %s%n", source, ioe.getLocalizedMessage());
             }
         }
-
-        this.properties = new Properties();
-        properties.putAll(System.getProperties());
-        properties.putAll(input);
     }
 
     public Properties getProperties() {
