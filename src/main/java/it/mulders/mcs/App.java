@@ -12,11 +12,37 @@ public class App {
     }
 
     // Visible for testing
-    static int doMain(final String... args) {
+    static int doMain(final String... originalArgs) {
         System.setProperties(new SystemPropertyLoader().getProperties());
-        var cli = new Cli();
         var program = new CommandLine(cli, new CommandClassFactory(cli))
                 .setExecutionExceptionHandler(new McsExecutionExceptionHandler());
+
+        var args = isInvocationWithoutSearchCommand(program, originalArgs)
+            ? prependSearchCommandToArgs(originalArgs)
+            : originalArgs;
+
         return program.execute(args);
+    }
+
+    static boolean isInvocationWithoutSearchCommand(CommandLine program, String... args) {
+        try {
+            program.parseArgs(args);
+            return false;
+        } catch (CommandLine.ParameterException pe1) {
+            try {
+                program.parseArgs(prependSearchCommandToArgs(args));
+                return true;
+            } catch (CommandLine.ParameterException pe2) {
+                return false;
+            }
+        }
+    }
+
+    static String[] prependSearchCommandToArgs(String... originalArgs) {
+        var args = new String[originalArgs.length + 1];
+        args[0] = "search";
+        System.arraycopy(originalArgs, 0, args, 1, originalArgs.length);
+
+        return args;
     }
 }
