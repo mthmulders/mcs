@@ -210,9 +210,9 @@ jobs:
         run: |
           targets=("ubuntu-latest" "macOS-latest" "macOS-arm64-latest" "windows-latest")
           
-          mkdir -p target/distributions
+          mkdir -p artifacts
           
-          find /tmp/artifacts/ -name "mcs*" -exec mv -v {} target/distributions/ \;
+          find /tmp/artifacts/ -name "mcs*" -exec mv -v {} artifacts/ \;
 
       - name: Set up Java
         uses: actions/setup-java@v3.13.0
