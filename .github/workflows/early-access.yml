@@ -121,6 +121,16 @@ jobs:
 
       - name: Download all build artifacts
         uses: actions/download-artifact@v4.1.0
+        with:
+          path: /tmp/artifacts
+
+      - name: Move build artifacts to correct folder
+        run: |
+          targets=("ubuntu-latest" "macOS-latest" "macOS-arm64-latest" "windows-latest")
+          
+          mkdir -p target/distributions
+          
+          find /tmp/artifacts/ -name "mcs*" -exec mv -v {} target/distributions/ \;
 
       - name: Cache Maven packages
         uses: actions/cache@v3.3.2
