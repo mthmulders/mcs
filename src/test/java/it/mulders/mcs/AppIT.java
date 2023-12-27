@@ -1,10 +1,13 @@
 package it.mulders.mcs;
 
 import it.mulders.mcs.cli.Cli;
+import it.mulders.mcs.cli.SystemPropertyLoader;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
+
+import java.util.Properties;
 
 import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
 
@@ -47,6 +50,22 @@ class AppIT implements WithAssertions  {
 
     @Test
     void runs_without_search_command_specified() {
-        assertThat(App.doMain(command, "info.picocli:picocli")).isEqualTo(0);
+        assertThat(App.doMain(command, new SystemPropertyLoader(), "info.picocli:picocli")).isEqualTo(0);
+    }
+
+    @Test
+    void should_load_additional_system_properties() {
+        var loader = new SystemPropertyLoader() {
+            @Override
+            public Properties getProperties() {
+                var tmp = super.getProperties();
+                tmp.put("example", "value");
+                return tmp;
+            }
+        };
+
+        App.doMain(command, loader, "info.picocli:picocli");
+
+        assertThat(System.getProperty("example")).isEqualTo("value");
     }
 }
