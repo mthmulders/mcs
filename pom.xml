@@ -133,7 +133,7 @@
                 <plugin>
                     <groupId>org.jreleaser</groupId>
                     <artifactId>jreleaser-maven-plugin</artifactId>
-                    <version>1.9.0</version>
+                    <version>1.10.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
