@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>it.mulders</groupId>
     <artifactId>mcs</artifactId>
-    <version>0.6.1</version>
+    <version>0.6.1-SNAPSHOT</version>
 
     <description>Use Maven Central Repository Search from your command line!</description>
     <inceptionYear>2021</inceptionYear>
@@ -135,6 +135,11 @@
                     <artifactId>jreleaser-maven-plugin</artifactId>
                     <version>1.10.0</version>
                 </plugin>
+                <plugin>
+                    <groupId>com.diffplug.spotless</groupId>
+                    <artifactId>spotless-maven-plugin</artifactId>
+                    <version>2.41.1</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -231,6 +236,46 @@
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <configuration>
+                    <java>
+                        <palantirJavaFormat>
+                            <version>2.40.0</version>
+                        </palantirJavaFormat>
+                        <toggleOffOn />
+                    </java>
+                    <markdown>
+                        <excludes>
+                            <exclude>**/node_modules/**/*.md</exclude>
+                        </excludes>
+                        <includes>
+                            <include>/*.md</include>
+                        </includes>
+                        <flexmark />
+                        <toggleOffOn />
+                    </markdown>
+                    <pom>
+                        <sortPom>
+                            <expandEmptyElements>false</expandEmptyElements>
+                            <indentSchemaLocation>true</indentSchemaLocation>
+                            <keepBlankLines>true</keepBlankLines>
+                            <nrOfIndentSpace>4</nrOfIndentSpace>
+                            <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
+                        </sortPom>
+                        <toggleOffOn />
+                    </pom>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>
