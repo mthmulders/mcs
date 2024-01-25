@@ -59,7 +59,7 @@ jobs:
           curl -LOJ http://more.musl.cc/10/x86_64-linux-musl/x86_64-linux-musl-native.tgz
           tar -xvf x86_64-linux-musl-native.tgz
           
-          curl -LOJ https://zlib.net/zlib-1.3.tar.gz
+          curl -LOJ https://zlib.net/fossils/zlib-1.3.tar.gz
           tar -xzf zlib-1.3.tar.gz
           cd zlib-1.3
           
