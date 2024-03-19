@@ -99,3 +99,9 @@ This setup does not touch your computer - as soon as you close your browser tab,
 
 Checkout the [issues](https://github.com/mthmulders/mcs/issues) if you're looking for something to work on.
 If you have a new idea, feel free to bring it up using the [discussions](https://github.com/mthmulders/mcs/discussions).
+
+## Acknowledgements
+* [Andres Almiray](https://andresalmiray.com/) did a great job helping me set up [JReleaser](https://jreleaser.org/) to make releasing **mcs** a real breeze!
+* [Martin Goldhahn](https://github.com/maddingo) shared the idea of searching on class name, and provided some initial API and design ideas for this great feature.
+* [Willem van Lent](https://github.com/Ocirina) contributed a fix for a parameter whose name didn't match it's behavior.
+* [Hanno Embregts](https://hanno.codes/) contributed a fix that makes it more clear why the results are truncated.
