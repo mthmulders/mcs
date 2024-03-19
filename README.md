@@ -52,6 +52,7 @@ You can install mcs using the package manager of your choice:
 | **Snap**        | 🐧       | `snap install maven-central-search` |         |
 | **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                   |         |
 | **Chocolatey**  | 🪟       | `choco install mcs`                 |         |
+| **Scoop**       | 🪟       | `scoop install mthmulders/mcs`      |         |
 
 1. The Linux binaries only work on x86_64 CPU's.
    There Apple binaries for both x86_64 and Apple Silicon, so you don't need Rosetta.
