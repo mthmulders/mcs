@@ -26,7 +26,7 @@
         <jackson-jr.version>2.17.0</jackson-jr.version>
         <junit-jupiter.version>5.10.2</junit-jupiter.version>
         <picocli.version>4.7.5</picocli.version>
-        <wiremock.version>2.35.1</wiremock.version>
+        <wiremock.version>2.35.2</wiremock.version>
         <packageurl.version>1.5.0</packageurl.version>
         <junit-pioneer.version>2.2.0</junit-pioneer.version>
 
