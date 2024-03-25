@@ -130,7 +130,7 @@
                 <plugin>
                     <groupId>org.graalvm.buildtools</groupId>
                     <artifactId>native-maven-plugin</artifactId>
-                    <version>0.9.28</version>
+                    <version>0.10.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jreleaser</groupId>
