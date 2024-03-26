@@ -1,12 +1,12 @@
 package it.mulders.mcs.cli;
 
+import java.util.concurrent.Callable;
+
 import it.mulders.mcs.search.FormatType;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.printer.CoordinatePrinter;
 import picocli.CommandLine;
-
-import java.util.concurrent.Callable;
 
 @CommandLine.Command(
         name = "mcs",
@@ -67,7 +67,7 @@ public class Cli {
                 description = """
                         Show result in <type> format
                         Supported types are:
-                          maven, gradle, gradle-short, gradle-kotlin, sbt, ivy, grape, leiningen, buildr
+                          maven, gradle, gradle-short, gradle-kotlin, sbt, ivy, grape, leiningen, buildr, jbang, gav
                         """,
                 paramLabel = "<type>"
         )

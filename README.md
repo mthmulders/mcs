@@ -25,7 +25,7 @@ This tool supports the following modes of searching:
    But if there's only one hit, this will give you by default a pom.xml snippet for the artifact you searched for.
    Ready for copy & paste in your favourite IDE!  
    If you require snippet in different format, use `-f <type>` or `--format=<type>`.
-   Supported types are: `maven`, `gradle`, `gradle-short`, `gradle-kotlin`, `sbt`, `ivy`, `grape`, `leiningen`, `buildr`.
+   Supported types are: `maven`, `gradle`, `gradle-short`, `gradle-kotlin`, `sbt`, `ivy`, `grape`, `leiningen`, `buildr`, `jbang`, `gav`.
 3. **Class-name search**
    ```console
    mcs class-search CommandLine
