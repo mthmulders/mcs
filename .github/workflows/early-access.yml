@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ ubuntu-latest, macOS-latest, macOS-arm64-latest, windows-latest ]
+        os: [ ubuntu-latest, macOS-12, macOS-arm64-latest, windows-latest ]
         gu-binary: [ gu, gu.cmd ]
         exclude:
           - os: ubuntu-latest
