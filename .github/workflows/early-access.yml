@@ -22,7 +22,7 @@ jobs:
         exclude:
           - os: ubuntu-latest
             gu-binary: gu.cmd
-          - os: macos-latest
+          - os: macOS-12
             gu-binary: gu.cmd
           - os: macos-arm64-latest
             gu-binary: gu.cmd
