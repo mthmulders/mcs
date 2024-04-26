@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4.1.2
+        uses: actions/checkout@v4.1.4
 
       - name: Set up Java
         uses: actions/setup-java@v4.2.1
@@ -94,7 +94,7 @@ jobs:
           path: artifacts/HEAD
 
       - name: Check out repository
-        uses: actions/checkout@v4.1.2
+        uses: actions/checkout@v4.1.4
         with:
           ref: ${{ steps.head.outputs.content }}
 
@@ -193,7 +193,7 @@ jobs:
           echo "NEXT_VERSION=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Check out repository
-        uses: actions/checkout@v4.1.2
+        uses: actions/checkout@v4.1.4
         with:
           fetch-depth: 0
 
