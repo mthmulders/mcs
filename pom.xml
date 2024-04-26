@@ -6,7 +6,7 @@
     <artifactId>mcs</artifactId>
     <version>0.6.3</version>
 
-    <description>Use Maven Central Repository Search from your command line!</description>
+    <description>Search Maven Central from your command line!</description>
     <inceptionYear>2021</inceptionYear>
     <name>Maven Central Search</name>
     <url>https://maarten.mulders.it/projects/mcs/</url>

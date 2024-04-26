@@ -1,7 +1,7 @@
 project:
   name: mcs
   description: Maven Central Search
-  longDescription: Use Maven Central Repository Search from your command line!
+  longDescription: Search Maven Central from your command line!
   links:
     bugTracker: https://github.com/mthmulders/mcs/issues
     homepage: https://maarten.mulders.it/projects/mcs/
