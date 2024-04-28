@@ -72,6 +72,8 @@ class CoordinatePrinterTest implements WithAssertions {
             """;
     private static final String LEININGEN_OUTPUT = "[org.codehaus.plexus/plexus-utils \"3.4.1\"]";
     private static final String BUILDR_OUTPUT = "'org.codehaus.plexus:plexus-utils:jar:3.4.1'";
+    private static final String JBANG_OUTPUT = "//DEPS org.codehaus.plexus:plexus-utils:3.4.1";
+    private static final String GAV_OUTPUT = "org.codehaus.plexus:plexus-utils:3.4.1";
 
     private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
@@ -86,7 +88,9 @@ class CoordinatePrinterTest implements WithAssertions {
                 Arguments.of(new IvyXmlOutput(), IVY_XML_OUTPUT, RESPONSE),
                 Arguments.of(new GrapeOutput(), GRAPE_OUTPUT, RESPONSE),
                 Arguments.of(new LeiningenOutput(), LEININGEN_OUTPUT, RESPONSE),
-                Arguments.of(new BuildrOutput(), BUILDR_OUTPUT, RESPONSE)
+                Arguments.of(new BuildrOutput(), BUILDR_OUTPUT, RESPONSE),
+                Arguments.of(new JBangOutput(), JBANG_OUTPUT, RESPONSE),
+                Arguments.of(new GavOutput(), GAV_OUTPUT, RESPONSE)
         );
     }
 

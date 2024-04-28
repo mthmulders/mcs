@@ -67,7 +67,7 @@ public class Cli {
                 description = """
                         Show result in <type> format
                         Supported types are:
-                          maven, gradle, gradle-short, gradle-kotlin, sbt, ivy, grape, leiningen, buildr
+                          maven, gradle, gradle-short, gradle-kotlin, sbt, ivy, grape, leiningen, buildr, jbang, gav
                         """,
                 paramLabel = "<type>"
         )

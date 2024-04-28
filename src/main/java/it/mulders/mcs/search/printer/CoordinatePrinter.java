@@ -11,7 +11,7 @@ import java.io.PrintStream;
 
 public sealed interface CoordinatePrinter extends OutputPrinter
         permits BuildrOutput, GradleGroovyOutput, GradleGroovyShortOutput, GradleKotlinOutput, GrapeOutput,
-        IvyXmlOutput, LeiningenOutput, PomXmlOutput, SbtOutput {
+        IvyXmlOutput, LeiningenOutput, PomXmlOutput, SbtOutput, JBangOutput, GavOutput {
 
     String provideCoordinates(final String group, final String artifact, final String version, final String packaging);
 
