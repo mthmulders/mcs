@@ -129,6 +129,7 @@ class SearchClientIT implements WithAssertions {
 
             assertThat(result).isInstanceOf(Result.Failure.class);
             assertThat(result.cause()).isInstanceOf(ConnectException.class);
+            assertThat(result.cause().getLocalizedMessage()).contains("localhost:21");
         }
     }
 }
