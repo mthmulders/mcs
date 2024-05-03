@@ -107,7 +107,7 @@ If you have a new idea, feel free to bring it up using the [discussions](https:/
 ## Acknowledgements
 * [Andres Almiray](https://andresalmiray.com/) did a great job helping me set up [JReleaser](https://jreleaser.org/) to make releasing **mcs** a real breeze!
 * [Martin Goldhahn](https://github.com/maddingo) shared the idea of searching on class name, and provided some initial API and design ideas for this great feature.
-* [Willem van Lent](https://github.com/Ocirina) contributed a fix for a parameter whose name didn't match it's behavior.
+* [Willem van Lent](https://github.com/Ocirina) contributed a fix for a parameter whose name didn't match its behavior.
 * [Hanno Embregts](https://hanno.codes/) contributed a fix that makes it more clear why the results are truncated.
 * [Jan Wedel](https://github.com/jwedel) contributed an improvement that lets MCS pick up the HTTP proxy environment variables.
 * 
