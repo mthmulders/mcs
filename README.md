@@ -73,6 +73,10 @@ Next, point MCS to that trust store like so
 mcs -Djavax.net.ssl.trustStore=/path/to/keystore search something
 ```
 
+### Usage Behind a Proxy
+
+If you are running behind a proxy, MCS will respect the `HTTP_PROXY` and `HTTPS_PROXY` environment variables.
+
 ## Configuring MCS
 Some configuration for MCS is passed through system properties.
 You can do this every time you invoke MCS by adding `-Dxxx=yyy`.

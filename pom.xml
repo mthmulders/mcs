@@ -177,6 +177,13 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <!-- This is necessary to change environment variables in tests in JDK 17 -->
+                    <argLine>
+                        --add-opens java.base/java.util=ALL-UNNAMED
+                        --add-opens java.base/java.lang=ALL-UNNAMED
+                    </argLine>
+                </configuration>
             </plugin>
 
             <plugin>
