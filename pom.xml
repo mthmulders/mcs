@@ -120,7 +120,6 @@
                         <outputFormats>
                             <format>stryker-dashboard</format>
                         </outputFormats>
-                        <testPlugin>junit5</testPlugin>
                     </configuration>
                 </plugin>
                 <plugin>
