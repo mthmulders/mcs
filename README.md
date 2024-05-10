@@ -110,4 +110,3 @@ If you have a new idea, feel free to bring it up using the [discussions](https:/
 * [Willem van Lent](https://github.com/Ocirina) contributed a fix for a parameter whose name didn't match its behavior.
 * [Hanno Embregts](https://hanno.codes/) contributed a fix that makes it more clear why the results are truncated.
 * [Jan Wedel](https://github.com/jwedel) contributed an improvement that lets MCS pick up the HTTP proxy environment variables.
-* 
