@@ -1,13 +1,12 @@
 package it.mulders.mcs.common;
 
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicReference;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import java.util.NoSuchElementException;
-import java.util.concurrent.atomic.AtomicReference;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ResultTest implements WithAssertions {
@@ -47,7 +46,9 @@ class ResultTest implements WithAssertions {
             var input = new Result.Success<>("foo");
 
             // Act
-            var result = input.map(a -> { throw new NullPointerException(); });
+            var result = input.map(a -> {
+                throw new NullPointerException();
+            });
 
             // Assert
             assertThatThrownBy(result::value).isInstanceOf(NoSuchElementException.class);

@@ -1,5 +1,7 @@
 package it.mulders.mcs.cli;
 
+import static org.mockito.Mockito.verify;
+
 import it.mulders.mcs.search.Constants;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
@@ -11,8 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
 import org.mockito.Mockito;
 import picocli.CommandLine;
-
-import static org.mockito.Mockito.verify;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CliTest implements WithAssertions {

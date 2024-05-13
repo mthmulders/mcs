@@ -1,20 +1,15 @@
 package it.mulders.mcs.search;
 
+import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
+import static it.mulders.mcs.search.Constants.DEFAULT_START;
+
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 
-import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
-import static it.mulders.mcs.search.Constants.DEFAULT_START;
-
-public record CoordinateQuery(
-        String groupId,
-        String artifactId,
-        String version,
-        int searchLimit,
-        int start
-) implements SearchQuery {
+public record CoordinateQuery(String groupId, String artifactId, String version, int searchLimit, int start)
+        implements SearchQuery {
     @Override
     public String toSolrQuery() {
         final List<String> parts = new LinkedList<>();
@@ -23,7 +18,8 @@ public record CoordinateQuery(
         if (!version.isBlank()) parts.add("v:%s".formatted(version));
         var query = String.join(" AND ", parts);
 
-        return String.format("q=%s&core=gav&start=%d&rows=%d",
+        return String.format(
+                "q=%s&core=gav&start=%d&rows=%d",
                 URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit());
     }
 

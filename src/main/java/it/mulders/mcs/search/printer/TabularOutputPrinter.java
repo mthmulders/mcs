@@ -5,12 +5,6 @@ import it.mulders.mcs.search.SearchResponse;
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport;
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport.ComponentReportVulnerability;
 import it.mulders.mcs.search.vulnerability.ComponentReportVulnerabilitySeverity;
-import picocli.CommandLine;
-import picocli.CommandLine.Help;
-import picocli.CommandLine.Help.Ansi;
-import picocli.CommandLine.Help.Column;
-import picocli.CommandLine.Help.Column.Overflow;
-
 import java.io.PrintStream;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -21,31 +15,33 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import picocli.CommandLine;
+import picocli.CommandLine.Help;
+import picocli.CommandLine.Help.Ansi;
+import picocli.CommandLine.Help.Column;
+import picocli.CommandLine.Help.Column.Overflow;
 
 public class TabularOutputPrinter implements OutputPrinter {
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(
-            "dd MMM yyyy 'at' HH:mm (zzz)"
-    );
+    private static final DateTimeFormatter DATE_TIME_FORMATTER =
+            DateTimeFormatter.ofPattern("dd MMM yyyy 'at' HH:mm (zzz)");
     private static final int INDENT = 2;
     private static final int SPACING = 3;
 
     private final boolean showVulnerabilities;
 
     public TabularOutputPrinter() {
-      this(false);
+        this(false);
     }
 
     public TabularOutputPrinter(final boolean showVulnerabilities) {
-      this.showVulnerabilities = showVulnerabilities;
+        this.showVulnerabilities = showVulnerabilities;
     }
 
     private String header(final SearchQuery query, final SearchResponse.Response response) {
         var numFound = response.numFound();
-        var additionalMessage = numFound > query.searchLimit()
-                ? String.format(" (showing %d)", response.docs().length)
-                : "";
-        return String.format("Found @|bold %d|@ results%s%n",
-                response.numFound(), additionalMessage);
+        var additionalMessage =
+                numFound > query.searchLimit() ? String.format(" (showing %d)", response.docs().length) : "";
+        return String.format("Found @|bold %d|@ results%s%n", response.numFound(), additionalMessage);
     }
 
     public void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream) {
@@ -56,11 +52,11 @@ public class TabularOutputPrinter implements OutputPrinter {
         var table = CommandLine.Help.TextTable.forColumns(colorScheme, constructColumns(response));
 
         if (showVulnerabilities) {
-          table.addRowValues("Coordinates", "Last updated", "Vulnerabilities");
-          table.addRowValues("===========", "============", "===============");
+            table.addRowValues("Coordinates", "Last updated", "Vulnerabilities");
+            table.addRowValues("===========", "============", "===============");
         } else {
-          table.addRowValues("Coordinates", "Last updated");
-          table.addRowValues("===========", "============");
+            table.addRowValues("Coordinates", "Last updated");
+            table.addRowValues("===========", "============");
         }
 
         Arrays.stream(response.docs()).forEach(doc -> printRow(table, doc));
@@ -70,7 +66,8 @@ public class TabularOutputPrinter implements OutputPrinter {
 
     private Column[] constructColumns(final SearchResponse.Response response) {
         var cols = new ArrayList<Column>();
-        cols.add(new CommandLine.Help.Column(calculateCoordinateColumnWidth(response.docs()) + SPACING, INDENT, Overflow.SPAN));
+        cols.add(new CommandLine.Help.Column(
+                calculateCoordinateColumnWidth(response.docs()) + SPACING, INDENT, Overflow.SPAN));
         cols.add(new CommandLine.Help.Column(30, INDENT, Overflow.WRAP));
         if (showVulnerabilities) {
             cols.add(new CommandLine.Help.Column(50, INDENT, Overflow.SPAN));
@@ -87,9 +84,8 @@ public class TabularOutputPrinter implements OutputPrinter {
     }
 
     private void printRow(final Help.TextTable table, final SearchResponse.Response.Doc doc) {
-        var lastUpdated = DATE_TIME_FORMATTER.format(
-                Instant.ofEpochMilli(doc.timestamp()).atZone(ZoneId.systemDefault())
-        );
+        var lastUpdated =
+                DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(doc.timestamp()).atZone(ZoneId.systemDefault()));
 
         var entry = displayEntry(doc);
 
@@ -102,19 +98,19 @@ public class TabularOutputPrinter implements OutputPrinter {
     }
 
     private String getVulnerabilityText(ComponentReport componentReport) {
-      if (componentReport == null || componentReport.vulnerabilities().length == 0) {
-        return "-";
-      }
+        if (componentReport == null || componentReport.vulnerabilities().length == 0) {
+            return "-";
+        }
 
-      ComponentReportVulnerability[] sorted = componentReport.vulnerabilitiesSortedByCvssScore();
+        ComponentReportVulnerability[] sorted = componentReport.vulnerabilitiesSortedByCvssScore();
 
-      Map<String, Long> counts = Arrays.stream(sorted)
-          .map(vulnerability -> ComponentReportVulnerabilitySeverity.getText(vulnerability.cvssScore()))
-          .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+        Map<String, Long> counts = Arrays.stream(sorted)
+                .map(vulnerability -> ComponentReportVulnerabilitySeverity.getText(vulnerability.cvssScore()))
+                .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
 
-      return counts.entrySet().stream()
-          .map(entry -> entry.getValue() + " " + entry.getKey())
-          .collect(Collectors.joining(", "));
+        return counts.entrySet().stream()
+                .map(entry -> entry.getValue() + " " + entry.getKey())
+                .collect(Collectors.joining(", "));
     }
 
     private String displayEntry(final SearchResponse.Response.Doc doc) {

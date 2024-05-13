@@ -1,27 +1,21 @@
 package it.mulders.mcs.search;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
 import static it.mulders.mcs.search.Constants.DEFAULT_START;
 
-public record WildcardSearchQuery(
-        String term,
-        int searchLimit,
-        int start
-) implements SearchQuery {
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+public record WildcardSearchQuery(String term, int searchLimit, int start) implements SearchQuery {
     @Override
     public String toSolrQuery() {
-        return String.format("q=%s&start=%d&rows=%d",
-                URLEncoder.encode(term, StandardCharsets.UTF_8), start(), searchLimit());
+        return String.format(
+                "q=%s&start=%d&rows=%d", URLEncoder.encode(term, StandardCharsets.UTF_8), start(), searchLimit());
     }
 
     @Override
     public WildcardSearchQuery.Builder toBuilder() {
-        return new WildcardSearchQuery.Builder(term())
-                .withLimit(searchLimit())
-                .withStart(start());
+        return new WildcardSearchQuery.Builder(term()).withLimit(searchLimit()).withStart(start());
     }
 
     public static class Builder implements SearchQuery.Builder<WildcardSearchQuery> {

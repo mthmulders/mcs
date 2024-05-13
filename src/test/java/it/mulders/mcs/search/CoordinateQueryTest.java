@@ -1,5 +1,10 @@
 package it.mulders.mcs.search;
 
+import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
+import static it.mulders.mcs.search.Constants.DEFAULT_START;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -7,12 +12,6 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
-import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
-import static it.mulders.mcs.search.Constants.DEFAULT_START;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CoordinateQueryTest implements WithAssertions {

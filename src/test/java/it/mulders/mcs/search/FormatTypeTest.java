@@ -1,5 +1,8 @@
 package it.mulders.mcs.search;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import it.mulders.mcs.search.printer.BuildrOutput;
 import it.mulders.mcs.search.printer.CoordinatePrinter;
 import it.mulders.mcs.search.printer.GradleGroovyOutput;
@@ -10,6 +13,7 @@ import it.mulders.mcs.search.printer.IvyXmlOutput;
 import it.mulders.mcs.search.printer.LeiningenOutput;
 import it.mulders.mcs.search.printer.PomXmlOutput;
 import it.mulders.mcs.search.printer.SbtOutput;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -18,11 +22,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class FormatTypeTest {
@@ -47,7 +46,8 @@ class FormatTypeTest {
 
     @ParameterizedTest
     @MethodSource("formatPrinters")
-    <T extends CoordinatePrinter> void return_expected_printer_when_format_type_is_valid(String actual, Class<T> expected) {
+    <T extends CoordinatePrinter> void return_expected_printer_when_format_type_is_valid(
+            String actual, Class<T> expected) {
         CoordinatePrinter printer = FormatType.providePrinter(actual);
         assertThat(printer.getClass()).isEqualTo(expected);
     }
@@ -62,7 +62,6 @@ class FormatTypeTest {
                 Arguments.of("ivy", IvyXmlOutput.class),
                 Arguments.of("grape", GrapeOutput.class),
                 Arguments.of("leiningen", LeiningenOutput.class),
-                Arguments.of("buildr", BuildrOutput.class)
-        );
+                Arguments.of("buildr", BuildrOutput.class));
     }
 }

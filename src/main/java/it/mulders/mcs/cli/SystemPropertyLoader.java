@@ -14,13 +14,10 @@ import java.util.Properties;
  * This class does not modify the System properties itself.
  */
 public class SystemPropertyLoader {
-    private static final Path MCS_PROPERTIES_FILE = Paths.get(
-            System.getProperty("user.home"),
-            ".mcs",
-            "mcs.config"
-    );
+    private static final Path MCS_PROPERTIES_FILE = Paths.get(System.getProperty("user.home"), ".mcs", "mcs.config");
 
-    private final Properties properties = new Properties();;
+    private final Properties properties = new Properties();
+    ;
 
     public SystemPropertyLoader() {
         this(MCS_PROPERTIES_FILE);

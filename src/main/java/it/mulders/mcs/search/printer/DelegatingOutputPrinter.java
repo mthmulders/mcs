@@ -2,7 +2,6 @@ package it.mulders.mcs.search.printer;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
-
 import java.io.PrintStream;
 
 /**
@@ -22,7 +21,10 @@ public class DelegatingOutputPrinter implements OutputPrinter {
     }
 
     // Visible for testing
-    DelegatingOutputPrinter(final OutputPrinter noOutput, final OutputPrinter coordinateOutput, final OutputPrinter tabularSearchOutput) {
+    DelegatingOutputPrinter(
+            final OutputPrinter noOutput,
+            final OutputPrinter coordinateOutput,
+            final OutputPrinter tabularSearchOutput) {
         this.noOutput = noOutput;
         this.coordinateOutput = coordinateOutput;
         this.tabularSearchOutput = tabularSearchOutput;

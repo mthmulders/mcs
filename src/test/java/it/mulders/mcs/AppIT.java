@@ -1,19 +1,18 @@
 package it.mulders.mcs;
 
-import it.mulders.mcs.cli.Cli;
-import it.mulders.mcs.cli.SystemPropertyLoader;
-import org.assertj.core.api.WithAssertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Properties;
-
 import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
 import static com.github.stefanbirkner.systemlambda.SystemLambda.withEnvironmentVariable;
 import static java.util.Arrays.asList;
+
+import it.mulders.mcs.cli.Cli;
+import it.mulders.mcs.cli.SystemPropertyLoader;
+import java.util.List;
+import java.util.Properties;
+import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AppIT implements WithAssertions {
@@ -63,7 +62,8 @@ class AppIT implements WithAssertions {
 
     @Test
     void runs_without_search_command_specified() {
-        assertThat(App.doMain(command, new SystemPropertyLoader(), "info.picocli:picocli")).isEqualTo(0);
+        assertThat(App.doMain(command, new SystemPropertyLoader(), "info.picocli:picocli"))
+                .isEqualTo(0);
     }
 
     @Test
@@ -89,7 +89,8 @@ class AppIT implements WithAssertions {
                 .execute(() -> {
                     App.doMain(command, new SystemPropertyLoader(), "info.picocli:picocli");
 
-                    return asList(System.getProperty("http.proxyHost"),
+                    return asList(
+                            System.getProperty("http.proxyHost"),
                             System.getProperty("http.proxyPort"),
                             System.getProperty("https.proxyHost"),
                             System.getProperty("https.proxyPort"));
@@ -105,7 +106,8 @@ class AppIT implements WithAssertions {
                 .execute(() -> {
                     App.doMain(command, new SystemPropertyLoader(), "info.picocli:picocli");
 
-                    return asList(System.getProperty("http.proxyHost"),
+                    return asList(
+                            System.getProperty("http.proxyHost"),
                             System.getProperty("http.proxyPort"),
                             System.getProperty("https.proxyHost"),
                             System.getProperty("https.proxyPort"));

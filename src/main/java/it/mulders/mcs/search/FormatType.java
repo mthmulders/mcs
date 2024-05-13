@@ -12,7 +12,6 @@ import it.mulders.mcs.search.printer.JBangOutput;
 import it.mulders.mcs.search.printer.LeiningenOutput;
 import it.mulders.mcs.search.printer.PomXmlOutput;
 import it.mulders.mcs.search.printer.SbtOutput;
-
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -42,9 +41,7 @@ public enum FormatType {
     }
 
     static String commaSeparatedLabels() {
-        return Arrays.stream(values())
-                .map(type -> type.label)
-                .collect(Collectors.joining(", "));
+        return Arrays.stream(values()).map(type -> type.label).collect(Collectors.joining(", "));
     }
 
     public static CoordinatePrinter providePrinter(final String text) {
@@ -52,15 +49,15 @@ public enum FormatType {
             return Constants.DEFAULT_PRINTER;
         }
         if (text.isBlank()) {
-            throw new UnsupportedFormatException("Empty format type is not allowed. Use on of %s"
-                    .formatted(commaSeparatedLabels()));
+            throw new UnsupportedFormatException(
+                    "Empty format type is not allowed. Use on of %s".formatted(commaSeparatedLabels()));
         }
 
         return Arrays.stream(values())
                 .filter(type -> type.label.equals(text.trim()))
                 .map(FormatType::getPrinter)
                 .findFirst()
-                .orElseThrow(() -> new UnsupportedFormatException("Format type '%s' is not supported. Use one of %s"
-                        .formatted(text, commaSeparatedLabels())));
+                .orElseThrow(() -> new UnsupportedFormatException(
+                        "Format type '%s' is not supported. Use one of %s".formatted(text, commaSeparatedLabels())));
     }
 }

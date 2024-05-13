@@ -1,5 +1,7 @@
 package it.mulders.mcs.search;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -7,9 +9,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SearchQueryTest implements WithAssertions {
@@ -27,7 +26,8 @@ class SearchQueryTest implements WithAssertions {
 
         @Test
         void should_build_query_with_groupId_and_artifactId_and_version() {
-            var query = SearchQuery.search("org.codehaus.plexus:plexus-utils:3.4.1").build();
+            var query =
+                    SearchQuery.search("org.codehaus.plexus:plexus-utils:3.4.1").build();
             assertThat(query).isInstanceOf(CoordinateQuery.class).satisfies(q -> {
                 assertThat(((CoordinateQuery) q).groupId()).isEqualTo("org.codehaus.plexus");
                 assertThat(((CoordinateQuery) q).artifactId()).isEqualTo("plexus-utils");
@@ -56,15 +56,16 @@ class SearchQueryTest implements WithAssertions {
         }
 
         @ParameterizedTest
-        @CsvSource(textBlock = """
+        @CsvSource(
+                textBlock =
+                        """
                 org.codehaus.plexus:plexus-utils,g:org.codehaus.plexus AND a:plexus-utils
                 org.codehaus.plexus:plexus-utils:3.4.1,g:org.codehaus.plexus AND a:plexus-utils AND v:3.4.1
                 org.codehaus.plexus:,g:org.codehaus.plexus
                 :plexus-utils,a:plexus-utils
                 """)
         void should_construct_valid_solr_query(String input, String solrQuery) {
-            var result = SearchQuery.search(input).build()
-                    .toSolrQuery();
+            var result = SearchQuery.search(input).build().toSolrQuery();
 
             assertThat(result).contains("q=" + URLEncoder.encode(solrQuery, StandardCharsets.UTF_8));
         }

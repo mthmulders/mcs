@@ -4,6 +4,9 @@ import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport;
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport.ComponentReportVulnerability;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.stream.Stream;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,60 +15,62 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.stream.Stream;
-
 class CoordinatePrinterTest implements WithAssertions {
 
-    private static final SearchQuery QUERY = SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
-    private static final SearchResponse.Response PLUGIN_RESPONSE = new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[]{
-        new SearchResponse.Response.Doc(
-            "org.apache.maven.plugins:maven-jar-plugin:3.3.0",
-            "org.apache.maven.plugins",
-            "maven-jar-plugin",
-            "3.3.0",
-            null,
-            "maven-plugin",
-            1630022910000L
-        )
-    });
-    private static final SearchResponse.Response RESPONSE =
-            new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[]{
-                    new SearchResponse.Response.Doc(
-                            "org.codehaus.plexus:plexus-utils:3.4.1",
-                            "org.codehaus.plexus",
-                            "plexus-utils",
-                            "3.4.1",
-                            null,
-                            "jar",
-                            1630022910000L
-                    )
+    private static final SearchQuery QUERY =
+            SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
+    private static final SearchResponse.Response PLUGIN_RESPONSE =
+            new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[] {
+                new SearchResponse.Response.Doc(
+                        "org.apache.maven.plugins:maven-jar-plugin:3.3.0",
+                        "org.apache.maven.plugins",
+                        "maven-jar-plugin",
+                        "3.3.0",
+                        null,
+                        "maven-plugin",
+                        1630022910000L)
             });
-    private static final String POM_XML_DEPENDENCY_OUTPUT = """
+    private static final SearchResponse.Response RESPONSE =
+            new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[] {
+                new SearchResponse.Response.Doc(
+                        "org.codehaus.plexus:plexus-utils:3.4.1",
+                        "org.codehaus.plexus",
+                        "plexus-utils",
+                        "3.4.1",
+                        null,
+                        "jar",
+                        1630022910000L)
+            });
+    private static final String POM_XML_DEPENDENCY_OUTPUT =
+            """
             <dependency>
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-utils</artifactId>
                 <version>3.4.1</version>
             </dependency>
             """;
-    private static final String POM_XML_PLUGIN_OUTPUT = """
+    private static final String POM_XML_PLUGIN_OUTPUT =
+            """
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.3.0</version>
             </plugin>
             """;
-    private static final String GRADLE_GROOVY_OUTPUT = "implementation group: 'org.codehaus.plexus', name: 'plexus-utils', version: '3.4.1'";
+    private static final String GRADLE_GROOVY_OUTPUT =
+            "implementation group: 'org.codehaus.plexus', name: 'plexus-utils', version: '3.4.1'";
     private static final String GRADLE_GROOVY_SHORT_OUTPUT = "implementation 'org.codehaus.plexus:plexus-utils:3.4.1'";
     private static final String GRADLE_KOTLIN_OUTPUT = "implementation(\"org.codehaus.plexus:plexus-utils:3.4.1\")";
-    private static final String SBT_OUTPUT = """
+    private static final String SBT_OUTPUT =
+            """
             libraryDependencies += "org.codehaus.plexus" % "plexus-utils" % "3.4.1"
             """;
-    private static final String IVY_XML_OUTPUT = """
+    private static final String IVY_XML_OUTPUT =
+            """
             <dependency org="org.codehaus.plexus" name="plexus-utils" rev="3.4.1"/>
             """;
-    private static final String GRAPE_OUTPUT = """
+    private static final String GRAPE_OUTPUT =
+            """
             @Grapes(
                 @Grab(group='org.codehaus.plexus', module='plexus-utils', version='3.4.1')
             )
@@ -90,8 +95,7 @@ class CoordinatePrinterTest implements WithAssertions {
                 Arguments.of(new LeiningenOutput(), LEININGEN_OUTPUT, RESPONSE),
                 Arguments.of(new BuildrOutput(), BUILDR_OUTPUT, RESPONSE),
                 Arguments.of(new JBangOutput(), JBANG_OUTPUT, RESPONSE),
-                Arguments.of(new GavOutput(), GAV_OUTPUT, RESPONSE)
-        );
+                Arguments.of(new GavOutput(), GAV_OUTPUT, RESPONSE));
     }
 
     @ParameterizedTest
@@ -107,34 +111,41 @@ class CoordinatePrinterTest implements WithAssertions {
     @DisplayName("CoordinatePrinter with vulnerabilities")
     class CoordinatePrinterWithMultipleVulnerabilitiesTest {
         private static final SearchQuery QUERY_DEPENDENCY_WITH_VULNERABILITIES =
-            SearchQuery.search("org.apache.shiro:shiro-web").build();
+                SearchQuery.search("org.apache.shiro:shiro-web").build();
         private static final SearchResponse.Response RESPONSE_WITH_VULNERABILITIES =
-            new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[]{
-                new SearchResponse.Response.Doc(
-                    "org.apache.shiro:shiro-web:1.9.0",
-                    "org.apache.shiro",
-                    "shiro-web",
-                    "1.9.0",
-                    null,
-                    "jar",
-                    1630022910000L,
-                    new ComponentReport(
-                        "pkg:maven/org.apache.shiro/shiro-web@1.9.0",
-                        "https://ossindex.sonatype.org/component/pkg:maven/org.apache.shiro/shiro-web@1.9.0",
-                        new ComponentReportVulnerability[] {
-                            new ComponentReportVulnerability("CVE-2023-34478", "CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')", 9.8, "https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web"),
-                            new ComponentReportVulnerability("CVE-2022-40664", "CWE-287: Improper Authentication", 9.8, "https://ossindex.sonatype.org/vulnerability/CVE-2022-40664?component-type=maven&component-name=org.apache.shiro%2Fshiro-web")
-                        }
-                    )
-                )
-            });
-        private static final String POM_XML_DEPENDENCY_OUTPUT_WITH_VULNERABILITIES = """
+                new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[] {
+                    new SearchResponse.Response.Doc(
+                            "org.apache.shiro:shiro-web:1.9.0",
+                            "org.apache.shiro",
+                            "shiro-web",
+                            "1.9.0",
+                            null,
+                            "jar",
+                            1630022910000L,
+                            new ComponentReport(
+                                    "pkg:maven/org.apache.shiro/shiro-web@1.9.0",
+                                    "https://ossindex.sonatype.org/component/pkg:maven/org.apache.shiro/shiro-web@1.9.0",
+                                    new ComponentReportVulnerability[] {
+                                        new ComponentReportVulnerability(
+                                                "CVE-2023-34478",
+                                                "CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+                                                9.8,
+                                                "https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web"),
+                                        new ComponentReportVulnerability(
+                                                "CVE-2022-40664",
+                                                "CWE-287: Improper Authentication",
+                                                9.8,
+                                                "https://ossindex.sonatype.org/vulnerability/CVE-2022-40664?component-type=maven&component-name=org.apache.shiro%2Fshiro-web")
+                                    }))
+                });
+        private static final String POM_XML_DEPENDENCY_OUTPUT_WITH_VULNERABILITIES =
+                """
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-web</artifactId>
                 <version>1.9.0</version>
             </dependency>
-            
+
             Vulnerabilities:
             CVE-2023-34478 (Critical) - https://ossindex.sonatype.org/vulnerability/CVE-2023-34478?component-type=maven&component-name=org.apache.shiro%2Fshiro-web
             CVE-2022-40664 (Critical) - https://ossindex.sonatype.org/vulnerability/CVE-2022-40664?component-type=maven&component-name=org.apache.shiro%2Fshiro-web
@@ -143,7 +154,8 @@ class CoordinatePrinterTest implements WithAssertions {
         @Test
         void should_print_vulnerability_text() {
             CoordinatePrinter printer = new PomXmlOutput();
-            printer.print(QUERY_DEPENDENCY_WITH_VULNERABILITIES, RESPONSE_WITH_VULNERABILITIES, new PrintStream(buffer));
+            printer.print(
+                    QUERY_DEPENDENCY_WITH_VULNERABILITIES, RESPONSE_WITH_VULNERABILITIES, new PrintStream(buffer));
             var xml = buffer.toString();
             assertThat(xml).isEqualToIgnoringWhitespace(POM_XML_DEPENDENCY_OUTPUT_WITH_VULNERABILITIES);
         }

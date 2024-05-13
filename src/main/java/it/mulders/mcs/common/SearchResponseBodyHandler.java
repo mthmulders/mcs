@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.jr.ob.JSON;
 import com.fasterxml.jackson.jr.ob.JSONObjectException;
 import it.mulders.mcs.search.SearchResponse;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.http.HttpResponse;
@@ -20,10 +19,7 @@ public class SearchResponseBodyHandler implements HttpResponse.BodyHandler<Resul
     static HttpResponse.BodySubscriber<Result<SearchResponse>> asObject() {
         var upstream = HttpResponse.BodySubscribers.ofInputStream();
 
-        return HttpResponse.BodySubscribers.mapping(
-                upstream,
-                SearchResponseBodyHandler::toSearchResponse
-        );
+        return HttpResponse.BodySubscribers.mapping(upstream, SearchResponseBodyHandler::toSearchResponse);
     }
 
     static Result<SearchResponse> toSearchResponse(final InputStream inputStream) {
@@ -34,42 +30,32 @@ public class SearchResponseBodyHandler implements HttpResponse.BodyHandler<Resul
             return new Result.Failure<>(
                     new IllegalStateException(
                             """
-                            
+
                             Error parsing the search result. This may be a temporary failure from search.maven.org.
                             If the problem persists, please open a conversation at
-                            
+
                                 https://github.com/mthmulders/mcs/discussions
-                            
+
                             Make sure to at least provide your invocation of mcs and the version of mcs you're using.
-                            """
-                    )
-            );
+                            """));
         } catch (final IOException ioe) {
             return new Result.Failure<>(
-                    new IllegalStateException("Error processing response: %s%n".formatted(ioe.getLocalizedMessage()))
-            );
+                    new IllegalStateException("Error processing response: %s%n".formatted(ioe.getLocalizedMessage())));
         }
     }
 
     static SearchResponse constructSearchResponse(final Map<String, Object> input) {
-        return new SearchResponse(
-                null,
-                constructResponse((Map<String, Object>) input.get("response"))
-        );
+        return new SearchResponse(null, constructResponse((Map<String, Object>) input.get("response")));
     }
 
     private static SearchResponse.Response constructResponse(final Map<String, Object> input) {
         return new SearchResponse.Response(
-                (int) input.get("numFound"),
-                (int) input.get("start"),
-                constructDocs((List<Map<String, Object>>) input.get("docs"))
-        );
+                (int) input.get("numFound"), (int) input.get("start"), constructDocs((List<Map<String, Object>>)
+                        input.get("docs")));
     }
 
     private static SearchResponse.Response.Doc[] constructDocs(List<Map<String, Object>> input) {
-        return input.stream()
-                .map(SearchResponseBodyHandler::constructDoc)
-                .toArray(SearchResponse.Response.Doc[]::new);
+        return input.stream().map(SearchResponseBodyHandler::constructDoc).toArray(SearchResponse.Response.Doc[]::new);
     }
 
     private static SearchResponse.Response.Doc constructDoc(final Map<String, Object> input) {
@@ -80,7 +66,6 @@ public class SearchResponseBodyHandler implements HttpResponse.BodyHandler<Resul
                 (String) input.get("v"),
                 (String) input.get("latestVersion"),
                 (String) input.get("p"),
-                (long) input.get("timestamp")
-        );
+                (long) input.get("timestamp"));
     }
 }

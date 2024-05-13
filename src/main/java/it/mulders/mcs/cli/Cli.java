@@ -4,31 +4,27 @@ import it.mulders.mcs.search.FormatType;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.printer.CoordinatePrinter;
-import picocli.CommandLine;
-
 import java.util.concurrent.Callable;
+import picocli.CommandLine;
 
 @CommandLine.Command(
         name = "mcs",
-        subcommands = { Cli.SearchCommand.class, Cli.ClassSearchCommand.class },
+        subcommands = {Cli.SearchCommand.class, Cli.ClassSearchCommand.class},
         usageHelpAutoWidth = true,
-        versionProvider = ClasspathVersionProvider.class
-)
+        versionProvider = ClasspathVersionProvider.class)
 public class Cli {
 
     @CommandLine.Option(
-            names = { "-V", "--version" },
+            names = {"-V", "--version"},
             description = "Show version number",
-            versionHelp = true
-    )
+            versionHelp = true)
     private boolean showVersion;
 
     @CommandLine.Option(
-            names = { "-h", "--help" },
+            names = {"-h", "--help"},
             description = "Display this help message and exits",
             scope = CommandLine.ScopeType.INHERIT,
-            usageHelp = true
-    )
+            usageHelp = true)
     private boolean usageHelpRequested;
 
     public SearchCommand createSearchCommand() {
@@ -42,51 +38,46 @@ public class Cli {
     @CommandLine.Command(
             name = "search",
             description = "Search artifacts in Maven Central by coordinates",
-            usageHelpAutoWidth = true
-    )
+            usageHelpAutoWidth = true)
     public class SearchCommand implements Callable<Integer> {
         @CommandLine.Parameters(
                 arity = "1..n",
                 description = {
-                        "What to search for.",
-                        "If the search term contains a colon ( : ), it is considered a literal groupId and artifactId",
-                        "Otherwise, the search term is considered a wildcard search"
-                }
-        )
+                    "What to search for.",
+                    "If the search term contains a colon ( : ), it is considered a literal groupId and artifactId",
+                    "Otherwise, the search term is considered a wildcard search"
+                })
         private String[] query;
 
         @CommandLine.Option(
-                names = { "-l", "--limit" },
+                names = {"-l", "--limit"},
                 description = "Show <count> results",
-                paramLabel = "<count>"
-        )
+                paramLabel = "<count>")
         private Integer limit;
 
         @CommandLine.Option(
-                names = { "-f", "--format" },
-                description = """
+                names = {"-f", "--format"},
+                description =
+                        """
                         Show result in <type> format
                         Supported types are:
                           maven, gradle, gradle-short, gradle-kotlin, sbt, ivy, grape, leiningen, buildr, jbang, gav
                         """,
-                paramLabel = "<type>"
-        )
+                paramLabel = "<type>")
         private String responseFormat;
 
         @CommandLine.Option(
-                names = { "-s", "--show-vulnerabilities" },
+                names = {"-s", "--show-vulnerabilities"},
                 description = "Show reported security vulnerabilities",
-                paramLabel = "<vulnerabilities>"
-        )
+                paramLabel = "<vulnerabilities>")
         private boolean showVulnerabilities;
 
         @Override
         public Integer call() {
             var combinedQuery = String.join(" ", query);
             System.out.printf("Searching for %s...%n", combinedQuery);
-            var searchQuery = SearchQuery.search(combinedQuery)
-                    .withLimit(this.limit)
-                    .build();
+            var searchQuery =
+                    SearchQuery.search(combinedQuery).withLimit(this.limit).build();
 
             CoordinatePrinter coordinatePrinter = FormatType.providePrinter(responseFormat);
             var searchCommandHandler = new SearchCommandHandler(coordinatePrinter, showVulnerabilities);
@@ -98,30 +89,26 @@ public class Cli {
     @CommandLine.Command(
             name = "class-search",
             description = "Search artifacts in Maven Central by class name",
-            usageHelpAutoWidth = true
-    )
+            usageHelpAutoWidth = true)
     public class ClassSearchCommand implements Callable<Integer> {
         @CommandLine.Parameters(
                 arity = "1",
                 description = {
-                        "The class name to search for.",
-                }
-        )
+                    "The class name to search for.",
+                })
         private String query;
 
         @CommandLine.Option(
-                names = { "-f", "--full-name" },
+                names = {"-f", "--full-name"},
                 negatable = true,
                 arity = "0",
-                description = "Class name includes package"
-        )
+                description = "Class name includes package")
         private boolean fullName;
 
         @CommandLine.Option(
-                names = { "-l", "--limit" },
+                names = {"-l", "--limit"},
                 description = "Show <count> results",
-                paramLabel = "<count>"
-        )
+                paramLabel = "<count>")
         private Integer limit;
 
         @Override

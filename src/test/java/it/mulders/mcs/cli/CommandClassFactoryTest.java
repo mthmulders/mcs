@@ -20,6 +20,5 @@ class CommandClassFactoryTest implements WithAssertions {
         assertThat(factory.create(Dummy.class)).isNotNull();
     }
 
-    static class Dummy {
-    }
+    static class Dummy {}
 }

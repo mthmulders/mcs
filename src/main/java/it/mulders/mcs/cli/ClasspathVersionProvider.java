@@ -1,8 +1,7 @@
 package it.mulders.mcs.cli;
 
-import picocli.CommandLine;
-
 import java.util.Properties;
+import picocli.CommandLine;
 
 /**
  * {@link CommandLine.IVersionProvider} implementation that returns version information from a
@@ -15,7 +14,7 @@ public class ClasspathVersionProvider implements CommandLine.IVersionProvider {
         try (var stream = getClass().getResourceAsStream("/mcs.properties")) {
             properties.load(stream);
             var version = String.format("mcs v%s", properties.getProperty("mcs.version"));
-            return new String[] { version };
+            return new String[] {version};
         }
     }
 }

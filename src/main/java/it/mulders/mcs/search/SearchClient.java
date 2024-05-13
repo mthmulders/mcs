@@ -2,7 +2,6 @@ package it.mulders.mcs.search;
 
 import it.mulders.mcs.common.Result;
 import it.mulders.mcs.common.SearchResponseBodyHandler;
-
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.URI;
@@ -31,8 +30,7 @@ public class SearchClient {
                 .build();
 
         try {
-            return client.send(request, new SearchResponseBodyHandler())
-                    .body();
+            return client.send(request, new SearchResponseBodyHandler()).body();
         } catch (ConnectException e) {
             // The JDK HTTP client throws a ConnectException without a message, we can do better.
             return new Result.Failure<>(new ConnectException("Can't resolve " + hostname));

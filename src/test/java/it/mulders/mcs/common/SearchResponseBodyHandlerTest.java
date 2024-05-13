@@ -28,29 +28,19 @@ class SearchResponseBodyHandlerTest implements WithAssertions {
         assertThat(response.response().start()).isEqualTo(0);
         assertThat(response.response().docs()).hasSize(2);
 
-        assertThat(response.response().docs()).contains(
-                new SearchResponse.Response.Doc(
+        assertThat(response.response().docs())
+                .contains(new SearchResponse.Response.Doc(
                         "org.codehaus.plexus:plexus-utils",
                         "org.codehaus.plexus",
                         "plexus-utils",
                         null,
                         "3.4.1",
                         "jar",
-                1630022910000L
-                )
-        );
+                        1630022910000L));
 
-        assertThat(response.response().docs()).contains(
-                new SearchResponse.Response.Doc(
-                    "plexus:plexus-utils",
-                    "plexus",
-                    "plexus-utils",
-                    null,
-                    "1.0.3",
-                    "jar",
-                    1131487245000L
-                )
-        );
+        assertThat(response.response().docs())
+                .contains(new SearchResponse.Response.Doc(
+                        "plexus:plexus-utils", "plexus", "plexus-utils", null, "1.0.3", "jar", 1131487245000L));
     }
 
     /**
@@ -73,17 +63,15 @@ class SearchResponseBodyHandlerTest implements WithAssertions {
         assertThat(response.response().start()).isEqualTo(0);
         assertThat(response.response().docs()).hasSize(1);
 
-        assertThat(response.response().docs()).contains(
-                new SearchResponse.Response.Doc(
+        assertThat(response.response().docs())
+                .contains(new SearchResponse.Response.Doc(
                         "org.codehaus.plexus:plexus-utils:3.4.1",
                         "org.codehaus.plexus",
                         "plexus-utils",
                         "3.4.1",
                         null,
                         "jar",
-                        1630022910000L
-                )
-        );
+                        1630022910000L));
     }
 
     /**
@@ -106,16 +94,14 @@ class SearchResponseBodyHandlerTest implements WithAssertions {
         assertThat(response.response().start()).isEqualTo(0);
         assertThat(response.response().docs()).hasSize(1);
 
-        assertThat(response.response().docs()).contains(
-                new SearchResponse.Response.Doc(
+        assertThat(response.response().docs())
+                .contains(new SearchResponse.Response.Doc(
                         "org.codehaus.plexus:plexus-utils",
                         "org.codehaus.plexus",
                         "plexus-utils",
                         null,
                         "3.4.1",
                         "jar",
-                        1630022910000L
-                )
-        );
+                        1630022910000L));
     }
 }

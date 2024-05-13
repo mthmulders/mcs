@@ -1,4 +1,5 @@
 # Maven Central Search
+
 [![Build status](https://github.com/mthmulders/mcs/actions/workflows/build.yml/badge.svg)](https://github.com/mthmulders/mcs/actions/workflows/build.yml)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fmthmulders%2Fmcs%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/mthmulders/mcs/main)
 [![Snapcraft.io status](https://snapcraft.io/maven-central-search/badge.svg)](https://snapcraft.io/maven-central-search)
@@ -8,33 +9,43 @@
 Use `mcs` to quickly lookup dependency coordinates in Maven Central, without having to switch to your browser.
 
 ## Usage
+
 This tool supports the following modes of searching:
 
 1. **Wildcard search**
+
    ```console
    mcs search plexus-utils
    ```
+
    This will give you all artifacts in Maven Central that have "plexus-utils" in their name.
    The output is in a tabular form, showing the exact coordinate of each artifact and the moment when its latest version was deployed.
+
 2. **Coordinate search**
+
    ```console
    mcs search org.codehaus.plexus:plexus-utils
    mcs search org.codehaus.plexus:plexus-utils:3.4.1
-    ```
+   ```
+
    If there are multiple hits, you will get the same table output as above.
    But if there's only one hit, this will give you by default a pom.xml snippet for the artifact you searched for.
    Ready for copy & paste in your favourite IDE!  
    If you require snippet in different format, use `-f <type>` or `--format=<type>`.
    Supported types are: `maven`, `gradle`, `gradle-short`, `gradle-kotlin`, `sbt`, `ivy`, `grape`, `leiningen`, `buildr`, `jbang`, `gav`.
+
 3. **Class-name search**
+
    ```console
    mcs class-search CommandLine
    mcs class-search -f picocli.CommandLine
    ```
+
    This will give you all artifacts in Maven Central that contain a particular class.
    If you set the `-f` flag, the search term is considered a "fully classified" class name, so including the package name.
 
 ## Flags
+
 * All modes recognise the `-l <number>` switch, which lets you specify how many results you want to see _at most_.
 * In **Wildcard sarch** and **Coordinate search**, you can pass along the `-s` (or `--show-vulnerabilities`) flag.
   It will cause MCS to show a summary of reported security vulnerabilities against each result.
@@ -44,9 +55,10 @@ This tool supports the following modes of searching:
   See under "Configuring MCS" on how to do this in the most convenient way.
 
 ## Installation
+
 You can install mcs using the package manager of your choice:
 
-| Package manager | Platform | Installation                        | Remarks |
+| Package manager | Platform |            Installation             | Remarks |
 |-----------------|----------|-------------------------------------|---------|
 | **Homebrew**    | 🍎 🐧    | `brew install mthmulders/tap/mcs`   | ⚠️ 1    |
 | **Snap**        | 🐧       | `snap install maven-central-search` |         |
@@ -58,6 +70,7 @@ You can install mcs using the package manager of your choice:
    There Apple binaries for both x86_64 and Apple Silicon, so you don't need Rosetta.
 
 ### Usage with custom trust store
+
 In certain situations, such as when you work behind a TLS-intercepting (corporate) firewall, MCS may fail with
 
 > PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
@@ -78,6 +91,7 @@ mcs -Djavax.net.ssl.trustStore=/path/to/keystore search something
 If you are running behind a proxy, MCS will respect the `HTTP_PROXY` and `HTTPS_PROXY` environment variables.
 
 ## Configuring MCS
+
 Some configuration for MCS is passed through system properties.
 You can do this every time you invoke MCS by adding `-Dxxx=yyy`.
 To make it more conveniently, you can create a configuration file that will automatically be read by MCS and interpreted as configuration settings.
@@ -94,6 +108,7 @@ ossindex.password=yyy
 This way, you don't have to remember passing the `-D`.
 
 ## Contributing
+
 Probably the easiest way to get a working development environment is to use Gitpod:
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/mthmulders/mcs)
@@ -105,8 +120,10 @@ Checkout the [issues](https://github.com/mthmulders/mcs/issues) if you're lookin
 If you have a new idea, feel free to bring it up using the [discussions](https://github.com/mthmulders/mcs/discussions).
 
 ## Acknowledgements
+
 * [Andres Almiray](https://andresalmiray.com/) did a great job helping me set up [JReleaser](https://jreleaser.org/) to make releasing **mcs** a real breeze!
 * [Martin Goldhahn](https://github.com/maddingo) shared the idea of searching on class name, and provided some initial API and design ideas for this great feature.
 * [Willem van Lent](https://github.com/Ocirina) contributed a fix for a parameter whose name didn't match its behavior.
 * [Hanno Embregts](https://hanno.codes/) contributed a fix that makes it more clear why the results are truncated.
 * [Jan Wedel](https://github.com/jwedel) contributed an improvement that lets MCS pick up the HTTP proxy environment variables.
+

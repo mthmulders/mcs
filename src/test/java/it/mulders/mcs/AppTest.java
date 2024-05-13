@@ -16,11 +16,9 @@ class AppTest implements WithAssertions {
         @Test
         void should_prepend_search_to_command_line_args() {
             assertThat(App.prependSearchCommandToArgs("info.picocli:picocli"))
-                    .isEqualTo(new String[] { "search", "info.picocli:picocli"});
-            assertThat(App.prependSearchCommandToArgs("-h"))
-                    .isEqualTo(new String[] { "search", "-h"});
-            assertThat(App.prependSearchCommandToArgs())
-                    .isEqualTo(new String[] { "search" });
+                    .isEqualTo(new String[] {"search", "info.picocli:picocli"});
+            assertThat(App.prependSearchCommandToArgs("-h")).isEqualTo(new String[] {"search", "-h"});
+            assertThat(App.prependSearchCommandToArgs()).isEqualTo(new String[] {"search"});
         }
     }
 
@@ -31,15 +29,20 @@ class AppTest implements WithAssertions {
 
         @Test
         void should_detect_when_search_command_is_not_present() {
-            assertThat(App.isInvocationWithoutSearchCommand(program, "info.picocli:picocli")).isTrue();
-            assertThat(App.isInvocationWithoutSearchCommand(program, "info.picocli", "picocli")).isTrue();
-            assertThat(App.isInvocationWithoutSearchCommand(program, "info.picocli", "picocli",  "4.7.5")).isTrue();
+            assertThat(App.isInvocationWithoutSearchCommand(program, "info.picocli:picocli"))
+                    .isTrue();
+            assertThat(App.isInvocationWithoutSearchCommand(program, "info.picocli", "picocli"))
+                    .isTrue();
+            assertThat(App.isInvocationWithoutSearchCommand(program, "info.picocli", "picocli", "4.7.5"))
+                    .isTrue();
         }
 
         @Test
         void should_detect_when_search_command_is_present() {
-            assertThat(App.isInvocationWithoutSearchCommand(program, "search", "info.picocli:picocli")).isFalse();
-            assertThat(App.isInvocationWithoutSearchCommand(program, "search", "--help")).isFalse();
+            assertThat(App.isInvocationWithoutSearchCommand(program, "search", "info.picocli:picocli"))
+                    .isFalse();
+            assertThat(App.isInvocationWithoutSearchCommand(program, "search", "--help"))
+                    .isFalse();
         }
 
         @Test

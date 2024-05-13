@@ -2,7 +2,6 @@ package it.mulders.mcs.search.printer;
 
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
-
 import java.io.PrintStream;
 
 public class NoOutputPrinter implements OutputPrinter {

@@ -9,6 +9,5 @@ public class Constants {
     public static final Integer MAX_LIMIT = 200;
     public static final CoordinatePrinter DEFAULT_PRINTER = new PomXmlOutput();
 
-    private Constants() {
-    }
+    private Constants() {}
 }

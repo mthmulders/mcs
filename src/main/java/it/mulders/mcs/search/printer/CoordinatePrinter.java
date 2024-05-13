@@ -1,17 +1,24 @@
 package it.mulders.mcs.search.printer;
 
-import java.util.Arrays;
-
 import it.mulders.mcs.search.SearchQuery;
 import it.mulders.mcs.search.SearchResponse;
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse;
 import it.mulders.mcs.search.vulnerability.ComponentReportVulnerabilitySeverity;
-
 import java.io.PrintStream;
+import java.util.Arrays;
 
 public sealed interface CoordinatePrinter extends OutputPrinter
-        permits BuildrOutput, GradleGroovyOutput, GradleGroovyShortOutput, GradleKotlinOutput, GrapeOutput,
-        IvyXmlOutput, LeiningenOutput, PomXmlOutput, SbtOutput, JBangOutput, GavOutput {
+        permits BuildrOutput,
+                GradleGroovyOutput,
+                GradleGroovyShortOutput,
+                GradleKotlinOutput,
+                GrapeOutput,
+                IvyXmlOutput,
+                LeiningenOutput,
+                PomXmlOutput,
+                SbtOutput,
+                JBangOutput,
+                GavOutput {
 
     String provideCoordinates(final String group, final String artifact, final String version, final String packaging);
 
@@ -37,17 +44,17 @@ public sealed interface CoordinatePrinter extends OutputPrinter
         return null;
     }
 
-    private void printVulnerabilities(final ComponentReportResponse.ComponentReport componentReport,
-                                      final PrintStream stream) {
+    private void printVulnerabilities(
+            final ComponentReportResponse.ComponentReport componentReport, final PrintStream stream) {
         if (componentReport != null) { // will be null if --show-vulnerabilities cli arg is false
             if (componentReport.vulnerabilities().length == 0) {
                 stream.println("No vulnerabilities reported");
             } else {
                 stream.println("Vulnerabilities:");
                 Arrays.stream(componentReport.vulnerabilitiesSortedByCvssScore())
-                    .forEachOrdered(vul ->
-                        stream.println(vul.id() + " ("+ ComponentReportVulnerabilitySeverity.getText(vul.cvssScore()) +")" + " - " + vul.reference())
-                    );
+                        .forEachOrdered(vul -> stream.println(
+                                vul.id() + " (" + ComponentReportVulnerabilitySeverity.getText(vul.cvssScore()) + ")"
+                                        + " - " + vul.reference()));
             }
         }
     }

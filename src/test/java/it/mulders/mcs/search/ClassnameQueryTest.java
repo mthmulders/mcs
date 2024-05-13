@@ -1,12 +1,12 @@
 package it.mulders.mcs.search;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class ClassnameQueryTest {
@@ -19,9 +19,11 @@ public class ClassnameQueryTest {
             SearchQuery query = SearchQuery.classSearch("test").build();
             assertThat(query).isInstanceOf(ClassnameQuery.class);
         }
+
         @Test
         void can_create_classname_query() {
-            SearchQuery query = SearchQuery.classSearch("test").isFullyQualified(false).build();
+            SearchQuery query =
+                    SearchQuery.classSearch("test").isFullyQualified(false).build();
             assertThat(query).isInstanceOf(ClassnameQuery.class);
         }
     }

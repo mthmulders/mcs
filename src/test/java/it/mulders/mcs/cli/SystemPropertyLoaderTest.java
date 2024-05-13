@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SystemPropertyLoaderTest implements WithAssertions {
     private static final Path SAMPLE = Paths.get("src", "test", "resources", "sample-mcs.config");
+
     @Test
     void should_load_if_file_exists() {
         var loader = new SystemPropertyLoader(SAMPLE);
 
-        assertThat(loader.getProperties())
-                .containsEntry("example.a", "foo");
+        assertThat(loader.getProperties()).containsEntry("example.a", "foo");
     }
 
     @Test

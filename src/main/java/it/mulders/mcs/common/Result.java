@@ -38,8 +38,7 @@ public sealed interface Result<T> permits Result.Success, Result.Failure {
         }
 
         @Override
-        public void ifPresent(final Consumer<T> consumer) {
-        }
+        public void ifPresent(final Consumer<T> consumer) {}
 
         @Override
         public void ifPresentOrElse(Consumer<T> successConsumer, Consumer<Throwable> failureConsumer) {

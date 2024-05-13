@@ -1,20 +1,19 @@
 package it.mulders.mcs.search.printer;
 
-import it.mulders.mcs.search.SearchQuery;
-import it.mulders.mcs.search.SearchResponse;
-import org.apache.commons.io.output.NullOutputStream;
-import org.assertj.core.api.WithAssertions;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
-
-import java.io.PrintStream;
-
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+
+import it.mulders.mcs.search.SearchQuery;
+import it.mulders.mcs.search.SearchResponse;
+import java.io.PrintStream;
+import org.apache.commons.io.output.NullOutputStream;
+import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DelegatingOutputPrinterTest implements WithAssertions {
@@ -22,9 +21,11 @@ class DelegatingOutputPrinterTest implements WithAssertions {
     private final OutputPrinter coordinateOutput = mock(OutputPrinter.class);
     private final OutputPrinter tabularSearchOutput = mock(OutputPrinter.class);
 
-    private final DelegatingOutputPrinter printer = new DelegatingOutputPrinter(noOutput, coordinateOutput, tabularSearchOutput);
+    private final DelegatingOutputPrinter printer =
+            new DelegatingOutputPrinter(noOutput, coordinateOutput, tabularSearchOutput);
 
-    private final SearchQuery query = SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
+    private final SearchQuery query =
+            SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
     private final PrintStream outputStream = new PrintStream(NullOutputStream.nullOutputStream());
 
     @Test

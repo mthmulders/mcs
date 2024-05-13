@@ -1,12 +1,11 @@
 package it.mulders.mcs;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import it.mulders.mcs.cli.Cli;
 import it.mulders.mcs.cli.CommandClassFactory;
 import it.mulders.mcs.cli.SystemPropertyLoader;
 import it.mulders.mcs.common.McsExecutionExceptionHandler;
+import java.net.URI;
+import java.net.URISyntaxException;
 import picocli.CommandLine;
 
 public class App {
@@ -26,31 +25,32 @@ public class App {
                 .setExecutionExceptionHandler(new McsExecutionExceptionHandler());
 
         var args = isInvocationWithoutSearchCommand(program, originalArgs)
-            ? prependSearchCommandToArgs(originalArgs)
-            : originalArgs;
+                ? prependSearchCommandToArgs(originalArgs)
+                : originalArgs;
 
         return program.execute(args);
     }
 
     private static void setUpProxy() {
-        var httpProxy = System.getenv( "HTTP_PROXY" );
-        var httpsProxy = System.getenv( "HTTPS_PROXY" );
+        var httpProxy = System.getenv("HTTP_PROXY");
+        var httpsProxy = System.getenv("HTTPS_PROXY");
 
         try {
-            if ( httpProxy != null && !httpProxy.isEmpty() ) {
-                final URI uri = new URI( httpProxy );
+            if (httpProxy != null && !httpProxy.isEmpty()) {
+                final URI uri = new URI(httpProxy);
 
-                System.setProperty( "http.proxyHost", uri.getHost() );
-                System.setProperty( "http.proxyPort", Integer.toString( uri.getPort() ) );
+                System.setProperty("http.proxyHost", uri.getHost());
+                System.setProperty("http.proxyPort", Integer.toString(uri.getPort()));
             }
 
-            if ( httpsProxy != null && !httpsProxy.isEmpty() ) {
-                final URI uri = new URI( httpsProxy );
-                System.setProperty( "https.proxyHost", uri.getHost() );
-                System.setProperty( "https.proxyPort", Integer.toString( uri.getPort() ) );
+            if (httpsProxy != null && !httpsProxy.isEmpty()) {
+                final URI uri = new URI(httpsProxy);
+                System.setProperty("https.proxyHost", uri.getHost());
+                System.setProperty("https.proxyPort", Integer.toString(uri.getPort()));
             }
-        } catch ( URISyntaxException e ) {
-            System.err.println("Error while setting up proxy from environment: HTTP_PROXY=[%s], HTTPS_PROXY=[%s]".formatted( httpProxy, httpsProxy ) );
+        } catch (URISyntaxException e) {
+            System.err.println("Error while setting up proxy from environment: HTTP_PROXY=[%s], HTTPS_PROXY=[%s]"
+                    .formatted(httpProxy, httpsProxy));
         }
     }
 

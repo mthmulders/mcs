@@ -1,24 +1,21 @@
 package it.mulders.mcs.search;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
 import static it.mulders.mcs.search.Constants.DEFAULT_START;
 
-public record ClassnameQuery(
-        String query,
-        boolean fullyQualified,
-        int searchLimit,
-        int start
-) implements SearchQuery {
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+public record ClassnameQuery(String query, boolean fullyQualified, int searchLimit, int start) implements SearchQuery {
     @Override
     public String toSolrQuery() {
         if (fullyQualified) {
-            return String.format("q=fc:%s&start=%d&rows=%d",
+            return String.format(
+                    "q=fc:%s&start=%d&rows=%d",
                     URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit());
         } else {
-            return String.format("q=c:%s&start=%d&rows=%d",
+            return String.format(
+                    "q=c:%s&start=%d&rows=%d",
                     URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit());
         }
     }
@@ -67,5 +64,4 @@ public record ClassnameQuery(
             return new ClassnameQuery(query, fullyQualified, limit, start);
         }
     }
-
 }
