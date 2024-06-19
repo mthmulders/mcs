@@ -103,7 +103,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1.13.0
 
       - name: Setup GraalVM
-        uses: graalvm/setup-graalvm@v1.2.1
+        uses: graalvm/setup-graalvm@v1.2.2
         with:
           distribution: 'graalvm'
           java-version: 17
