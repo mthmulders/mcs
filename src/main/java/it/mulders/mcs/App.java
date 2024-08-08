@@ -49,8 +49,9 @@ public class App {
                 System.setProperty("https.proxyPort", Integer.toString(uri.getPort()));
             }
         } catch (URISyntaxException e) {
-            System.err.println("Error while setting up proxy from environment: HTTP_PROXY=[%s], HTTPS_PROXY=[%s]"
-                    .formatted(httpProxy, httpsProxy));
+            System.err.printf(
+                    "Error while setting up proxy from environment: HTTP_PROXY=[%s], HTTPS_PROXY=[%s]%n",
+                    httpProxy, httpsProxy);
         }
     }
 
