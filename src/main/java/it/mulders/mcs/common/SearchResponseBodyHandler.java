@@ -30,8 +30,8 @@ public class SearchResponseBodyHandler implements HttpResponse.BodyHandler<Resul
             return new Result.Failure<>(
                     new IllegalStateException(
                             """
-
                             Error parsing the search result. This may be a temporary failure from search.maven.org.
+                            It can also be caused by requesting a large number of results. If that is the case, try lowering the -l/--limit parameter.
                             If the problem persists, please open a conversation at
 
                                 https://github.com/mthmulders/mcs/discussions
