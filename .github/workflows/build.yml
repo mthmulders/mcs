@@ -24,10 +24,17 @@ jobs:
         distribution: 'adopt'
         cache: maven
     - name: Cache Maven packages
-      uses: actions/cache@v4.0.2
+      id: restore-maven-package-cache
+      uses: actions/cache/restore@v4.0.2
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     - name: Build with Maven
       run: mvn -B verify
+    - name: Save downloaded Maven packages
+      uses: actions/cache/save@v4.0.2
+      with:
+        path: ~/.m2
+        key: ${{ steps.restore-maven-package-cache.outputs.cache-primary-key }}
+      if: github.event_name != 'pull_request'
