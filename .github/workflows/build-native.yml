@@ -27,6 +27,9 @@ jobs:
           - target: windows-x64
             os: windows-2025
             arch: x64
+          - target: linux-aarch64
+            os: ubuntu-24.04-arm
+            arch: aarch64
           - target: linux-x64
             os: ubuntu-24.04
             arch: x64
