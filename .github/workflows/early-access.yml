@@ -64,20 +64,31 @@ jobs:
         run: |
           mkdir -p ~/.musl-toolchain
           pushd ~/.musl-toolchain
-          if [ ! -f x86_64-linux-musl-native.tgz ]; then
-            curl -u ${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS} -kLOJ ${MUSL_TOOLCHAIN_LOCATION}/10/x86_64-linux-musl/x86_64-linux-musl-native.tgz
+
+          if [ ! -f *-linux-musl-native.tgz ]; then
+            case $MATRIX_OS in
+              ubuntu-latest)
+                curl -u ${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS} -kLOJ ${MUSL_TOOLCHAIN_LOCATION}/10/x86_64-linux-musl/x86_64-linux-musl-native.tgz
+                tar -xvf x86_64-linux-musl-native.tgz
+                TOOLCHAIN_DIR=$TMP_DIR/x86_64-linux-musl-native
+                ;;
+              linux-arm64)
+                curl -u ${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS} -kLOJ ${MUSL_TOOLCHAIN_LOCATION}/10/aarch64-linux-musl/aarch64-linux-musl-native.tgz
+                tar -xvf aarch64-linux-musl-native.tgz
+                TOOLCHAIN_DIR=$TMP_DIR/aarch64-linux-musl-native
+                ;;
+              *)
+                echo 'Unexpected CPU architecture!
+                exit 1
+                ;;
+            esac
           fi
           popd
-          
-          TMP_DIR=$(mktemp -d)
-          pushd $TMP_DIR
-          tar -xvf ~/.musl-toolchain/x86_64-linux-musl-native.tgz
           
           curl -LOJ https://zlib.net/fossils/zlib-1.3.tar.gz
           tar -xzf zlib-1.3.tar.gz
           cd zlib-1.3
           
-          TOOLCHAIN_DIR=$TMP_DIR/x86_64-linux-musl-native
           CC=$TOOLCHAIN_DIR/bin/gcc
           
           ./configure --prefix=$TOOLCHAIN_DIR --static
@@ -87,6 +98,7 @@ jobs:
           echo "TOOLCHAIN_DIR=$TOOLCHAIN_DIR" >> $GITHUB_OUTPUT
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'linux-arm64'
         env:
+          MATRIX_OS: ${{ matrix.os }}
           MUSL_TOOLCHAIN_LOCATION: ${{ secrets.MUSL_TOOLCHAIN_LOCATION }}
           MUSL_TOOLCHAIN_USER: ${{ secrets.MUSL_TOOLCHAIN_USER }}
           MUSL_TOOLCHAIN_PASS: ${{ secrets.MUSL_TOOLCHAIN_PASS }}
