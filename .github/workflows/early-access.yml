@@ -78,7 +78,7 @@ jobs:
                 TOOLCHAIN_DIR=$TMP_DIR/aarch64-linux-musl-native
                 ;;
               *)
-                echo 'Unexpected CPU architecture!
+                echo 'Unexpected CPU architecture!'
                 exit 1
                 ;;
             esac
