@@ -134,7 +134,7 @@ jobs:
 
       - name: Move build artifacts to correct folder
         run: |
-          targets=("ubuntu-latest" "macOS-latest" "macOS-arm64-latest" "windows-latest")
+          targets=("ubuntu-latest" "macOS-latest" "macos-14" "windows-latest")
           
           mkdir -p artifacts
           
