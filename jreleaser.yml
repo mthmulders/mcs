@@ -73,8 +73,8 @@ distributions:
       localPlugs:
         - network
       architectures:
-        - buildOn: [amd64]
-          runOn: [amd64]
+        - buildOn: [amd64, arm64]
+          runOn: [amd64, arm64]
       repository:
         active: RELEASE
         name: mcs-snap
@@ -91,8 +91,16 @@ distributions:
         platform: linux-x86_64
         extraProperties:
           graalVMNativeImage: true
+      - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-linux-arm64.zip
+        platform: linux-arm64
+        extraProperties:
+          graalVMNativeImage: true
       - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-linux-x86_64.tar.gz
         platform: linux-x86_64
+        extraProperties:
+          graalVMNativeImage: true
+      - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-linux-arm64.tar.gz
+        platform: linux-arm64
         extraProperties:
           graalVMNativeImage: true
       - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}-windows-x86_64.zip
