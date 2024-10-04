@@ -138,6 +138,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "bmarwell",
+      "name": "Benjamin Marwell",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1413391?v=4",
+      "profile": "https://blog.bmarwell.de/",
+      "contributions": [
+        "ideas"
+      ]
     }
   ]
 }
