@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-14-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ## Contributors ✨
 
@@ -26,6 +26,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="http://www.evolutionnext.com"><img src="https://avatars.githubusercontent.com/u/410757?v=4?s=100" width="100px;" alt="Daniel Hinojosa"/><br /><sub><b>Daniel Hinojosa</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/issues?q=author%3Adhinojosa" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://gibb.tech"><img src="https://avatars.githubusercontent.com/u/594085?v=4?s=100" width="100px;" alt="Spencer Gibb"/><br /><sub><b>Spencer Gibb</b></sub></a><br /><a href="#ideas-spencergibb" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://riadiscuss.jeffmaury.com"><img src="https://avatars.githubusercontent.com/u/695993?v=4?s=100" width="100px;" alt="Jeff MAURY"/><br /><sub><b>Jeff MAURY</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/issues?q=author%3Ajeffmaury" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jludvice"><img src="https://avatars.githubusercontent.com/u/8707241?v=4?s=100" width="100px;" alt="Josef Ludvicek"/><br /><sub><b>Josef Ludvicek</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/issues?q=author%3Ajludvice" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
