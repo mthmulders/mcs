@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ## Contributors ✨
 
@@ -12,6 +12,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/willemvanlent"><img src="https://avatars.githubusercontent.com/u/4223994?v=4?s=100" width="100px;" alt="Willem van Lent"/><br /><sub><b>Willem van Lent</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/commits?author=willemvanlent" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://hanno.codes"><img src="https://avatars.githubusercontent.com/u/11613148?v=4?s=100" width="100px;" alt="Hanno Embregts"/><br /><sub><b>Hanno Embregts</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/commits?author=hannotify" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
