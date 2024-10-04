@@ -8,5 +8,18 @@
   ],
   "imageSize": 100,
   "contributorsPerLine": 7,
-  "skipCi": true
+  "skipCi": true,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "jwedel",
+      "name": "Jan Wedel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4849728?v=4",
+      "profile": "http://return.co.de",
+      "contributions": [
+        "bug"
+      ]
+    }
+  ]
 }
