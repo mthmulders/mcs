@@ -29,6 +29,24 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "aalmiray",
+      "name": "Andres Almiray",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13969?v=4",
+      "profile": "https://andresalmiray.com/",
+      "contributions": [
+        "promotion"
+      ]
+    },
+    {
+      "login": "dhinojosa",
+      "name": "Daniel Hinojosa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/410757?v=4",
+      "profile": "http://www.evolutionnext.com",
+      "contributions": [
+        "ideas"
+      ]
     }
   ]
 }
