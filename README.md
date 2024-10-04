@@ -120,5 +120,6 @@ Checkout the [issues](https://github.com/mthmulders/mcs/issues) if you're lookin
 If you have a new idea, feel free to bring it up using the [discussions](https://github.com/mthmulders/mcs/discussions).
 
 ## Acknowledgements
+
 MCS would not have been possible without the contributions of wonderful people around the globe.
 The full list is in [CONTRIBUTORS.md](./CONTRIBUTORS.md).
