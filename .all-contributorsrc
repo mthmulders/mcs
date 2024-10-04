@@ -20,6 +20,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "jreleaser",
+      "name": "JReleaser",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81020166?v=4",
+      "profile": "https://jreleaser.org",
+      "contributions": [
+        "tool"
+      ]
     }
   ]
 }
