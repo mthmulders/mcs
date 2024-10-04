@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ## Contributors ✨
 
@@ -21,6 +21,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="http://return.co.de"><img src="https://avatars.githubusercontent.com/u/4849728?v=4?s=100" width="100px;" alt="Jan Wedel"/><br /><sub><b>Jan Wedel</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/commits?author=jwedel" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/frimtec"><img src="https://avatars.githubusercontent.com/u/3511114?v=4?s=100" width="100px;" alt="Markus Friedli"/><br /><sub><b>Markus Friedli</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/issues?q=author%3Afrimtec" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
