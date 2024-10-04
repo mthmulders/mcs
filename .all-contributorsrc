@@ -83,6 +83,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "frimtec",
+      "name": "Markus Friedli",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3511114?v=4",
+      "profile": "https://github.com/frimtec",
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
