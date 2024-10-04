@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-16-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ## Contributors ✨
 
@@ -31,6 +31,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://blog.bmarwell.de/"><img src="https://avatars.githubusercontent.com/u/1413391?v=4?s=100" width="100px;" alt="Benjamin Marwell"/><br /><sub><b>Benjamin Marwell</b></sub></a><br /><a href="#ideas-bmarwell" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/AbdelHajou"><img src="https://avatars.githubusercontent.com/u/62144407?v=4?s=100" width="100px;" alt="Abdel Hajou"/><br /><sub><b>Abdel Hajou</b></sub></a><br /><a href="#ideas-AbdelHajou" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.hermanbarrantes.dev/"><img src="https://avatars.githubusercontent.com/u/1646195?v=4?s=100" width="100px;" alt="Herman Barrantes"/><br /><sub><b>Herman Barrantes</b></sub></a><br /><a href="#ideas-barrantesgerman" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
