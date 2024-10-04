@@ -56,6 +56,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "BOTbkcd",
+      "name": "bot_bkcd",
+      "avatar_url": "https://avatars.githubusercontent.com/u/83156045?v=4",
+      "profile": "https://github.com/BOTbkcd",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
