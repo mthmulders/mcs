@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ## Contributors ✨
 
@@ -24,6 +24,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/frimtec"><img src="https://avatars.githubusercontent.com/u/3511114?v=4?s=100" width="100px;" alt="Markus Friedli"/><br /><sub><b>Markus Friedli</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/issues?q=author%3Afrimtec" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/slovdahl"><img src="https://avatars.githubusercontent.com/u/1417619?v=4?s=100" width="100px;" alt="Sebastian Lövdahl"/><br /><sub><b>Sebastian Lövdahl</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/issues?q=author%3Aslovdahl" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://www.evolutionnext.com"><img src="https://avatars.githubusercontent.com/u/410757?v=4?s=100" width="100px;" alt="Daniel Hinojosa"/><br /><sub><b>Daniel Hinojosa</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/issues?q=author%3Adhinojosa" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://gibb.tech"><img src="https://avatars.githubusercontent.com/u/594085?v=4?s=100" width="100px;" alt="Spencer Gibb"/><br /><sub><b>Spencer Gibb</b></sub></a><br /><a href="#ideas-spencergibb" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
