@@ -340,6 +340,9 @@
                         <toggleOffOn></toggleOffOn>
                     </java>
                     <markdown>
+                        <excludes>
+                            <exclude>CONTRIBUTORS.md</exclude>
+                        </excludes>
                         <includes>
                             <include>**/*.md</include>
                         </includes>
