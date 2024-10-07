@@ -35,7 +35,7 @@
         <picocli.version>4.7.6</picocli.version>
         <wiremock.version>2.35.2</wiremock.version>
         <packageurl.version>1.5.0</packageurl.version>
-        <junit-pioneer.version>2.2.0</junit-pioneer.version>
+        <junit-pioneer.version>2.3.0</junit-pioneer.version>
 
         <surefire.version>3.3.1</surefire.version>
 
