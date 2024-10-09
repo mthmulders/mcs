@@ -75,7 +75,7 @@ jobs:
 
       - name: Cache Maven packages
         id: restore-maven-package-cache
-        uses: actions/cache/restore@v4.0.2
+        uses: actions/cache/restore@v4.1.1
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -105,7 +105,7 @@ jobs:
             target/distributions/*.tar.gz
 
       - name: Save downloaded Maven packages
-        uses: actions/cache/save@v4.0.2
+        uses: actions/cache/save@v4.1.1
         with:
           path: ~/.m2
           key: ${{ steps.restore-maven-package-cache.outputs.cache-primary-key }}
@@ -141,7 +141,7 @@ jobs:
           find /tmp/artifacts/ -name "mcs*" -exec mv -v {} artifacts/ \;
 
       - name: Cache Maven packages
-        uses: actions/cache@v4.0.2
+        uses: actions/cache@v4.1.1
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
