@@ -107,8 +107,6 @@ jobs:
         with:
           distribution: 'graalvm'
           java-version: 21
-          components: 'native-image'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get musl toolchain and compile libz against it
         id: prepare-musl
