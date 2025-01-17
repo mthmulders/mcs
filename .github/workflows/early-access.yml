@@ -124,7 +124,7 @@ jobs:
           TOOLCHAIN_DIR: ${{ steps.prepare-musl.outputs.TOOLCHAIN_DIR }}
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-24.04-arm'
 
-      - name: Build static native image for Windows / macOS
+      - name: Build static native image for Windows and macOS
         run: |
           mvn -B -Pnative package
         if: matrix.os != 'ubuntu-latest' && matrix.os != 'ubuntu-24.04-arm'
