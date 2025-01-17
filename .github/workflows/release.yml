@@ -15,7 +15,7 @@ on:
 
 jobs:
   version:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out repository
@@ -70,10 +70,10 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ ubuntu-latest, ubuntu-24.04-arm, macos-13, macos-14, windows-latest ]
+        os: [ ubuntu-24.04, ubuntu-24.04-arm, macos-13, macos-14, windows-latest ]
         gu-binary: [ gu, gu.cmd ]
         exclude:
-          - os: ubuntu-latest
+          - os: ubuntu-24.04
             gu-binary: gu.cmd
           - os: ubuntu-24.04-arm
             gu-binary: gu.cmd
@@ -124,7 +124,7 @@ jobs:
           TMP_DIR=$(mktemp -d)
           pushd $TMP_DIR
           case $MATRIX_OS in
-            ubuntu-latest)
+            ubuntu-24.04)
               curl -LOJ https://musl.cc/x86_64-linux-musl-native.tgz
               tar -xvf x86_64-linux-musl-native.tgz
               TOOLCHAIN_DIR=$TMP_DIR/x86_64-linux-musl-native
@@ -157,7 +157,7 @@ jobs:
           make install
           
           echo "TOOLCHAIN_DIR=$TOOLCHAIN_DIR" >> $GITHUB_OUTPUT
-        if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-24.04-arm'
+        if: matrix.os == 'ubuntu-24.04' || matrix.os == 'ubuntu-24.04-arm'
         env:
           MATRIX_OS: ${{ matrix.os }}
           MUSL_TOOLCHAIN_LOCATION: ${{ secrets.MUSL_TOOLCHAIN_LOCATION }}
@@ -183,12 +183,12 @@ jobs:
           PATH=${TOOLCHAIN_DIR}/bin:$PATH; mvn -B -Pnative package
         env:
           TOOLCHAIN_DIR: ${{ steps.prepare-musl.outputs.TOOLCHAIN_DIR }}
-        if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-24.04-arm'
+        if: matrix.os == 'ubuntu-24.04' || matrix.os == 'ubuntu-24.04-arm'
 
       - name: Build static native image for Windows / macOS
         run: |
           mvn -B -Pnative package
-        if: matrix.os != 'ubuntu-latest' && matrix.os != 'ubuntu-24.04-arm'
+        if: matrix.os != 'ubuntu-24.04' && matrix.os != 'ubuntu-24.04-arm'
 
       - name: Create distribution
         run: mvn -B -Pdist package -DskipTests
@@ -204,7 +204,7 @@ jobs:
   # Collect all executables and release
   release:
     needs: [ build ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions: write-all
 
     steps:
@@ -247,7 +247,7 @@ jobs:
 
       - name: Move build artifacts to correct folder
         run: |
-          targets=("ubuntu-latest" "ubuntu-24.04-arm" "macos-13" "macos-14" "windows-latest")
+          targets=("ubuntu-24.04" "ubuntu-24.04-arm" "macos-13" "macos-14" "windows-latest")
           
           mkdir -p artifacts
           
