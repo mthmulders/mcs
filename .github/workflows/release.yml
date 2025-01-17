@@ -102,8 +102,8 @@ jobs:
       - name: Add Developer Command Prompt for Microsoft Visual C++
         uses: ilammy/msvc-dev-cmd@v1.13.0
 
-      - name: Setup GraalVM
-        uses: graalvm/setup-graalvm@v1.2.2
+      - name: Set up JDK
+        uses: actions/setup-java@v4.5.0
         with:
           distribution: 'graalvm'
           java-version: 21
