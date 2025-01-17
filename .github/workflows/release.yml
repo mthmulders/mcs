@@ -24,7 +24,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v4.5.0
         with:
-          java-version: 23
+          java-version: 21
           distribution: 'adopt'
 
       - name: Cache Maven packages
@@ -106,7 +106,7 @@ jobs:
         uses: graalvm/setup-graalvm@v1.2.2
         with:
           distribution: 'graalvm'
-          java-version: 23
+          java-version: 21
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -217,7 +217,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v4.5.0
         with:
-          java-version: 23
+          java-version: 21
           distribution: 'adopt'
 
       - name: Cache Maven packages
