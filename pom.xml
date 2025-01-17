@@ -184,7 +184,6 @@
                         <outputFormats>
                             <format>stryker-dashboard</format>
                         </outputFormats>
-                        <verbose>true</verbose>
                     </configuration>
                     <dependencies>
                         <dependency>
