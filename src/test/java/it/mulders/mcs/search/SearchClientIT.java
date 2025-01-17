@@ -5,9 +5,10 @@ import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.ok;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
-import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
-import com.github.tomakehurst.wiremock.junit5.WireMockTest;
+import com.github.tomakehurst.wiremock.core.Options;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import it.mulders.mcs.common.Result;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,10 +21,19 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@WireMockTest
 class SearchClientIT implements WithAssertions {
+    @RegisterExtension
+    static WireMockExtension wiremock = WireMockExtension.newInstance()
+            .options(wireMockConfig()
+                    .bindAddress("localhost")
+                    .dynamicPort()
+                    .useChunkedTransferEncoding(Options.ChunkedEncodingPolicy.NEVER))
+            .configureStaticDsl(true)
+            .build();
+
     String getResourceAsString(final String resourceName) {
         try (final InputStream input = getClass().getResourceAsStream(resourceName)) {
             byte[] bytes = input != null ? input.readAllBytes() : new byte[] {};
@@ -37,8 +47,9 @@ class SearchClientIT implements WithAssertions {
     @DisplayName("Wildcard search")
     class WildcardSearchTest {
         @Test
-        void should_parse_response(final WireMockRuntimeInfo wmRuntimeInfo) {
+        void should_parse_response() {
             // Arrange
+            var wmRuntimeInfo = wiremock.getRuntimeInfo();
             stubFor(get(urlPathMatching("/solrsearch/select*"))
                     .willReturn(ok(getResourceAsString("/wildcard-search-response.json"))));
 
@@ -62,8 +73,9 @@ class SearchClientIT implements WithAssertions {
     @Nested
     class SingularSearchTest {
         @Test
-        void should_parse_response_groupId_artifactId(final WireMockRuntimeInfo wmRuntimeInfo) {
+        void should_parse_response_groupId_artifactId() {
             // Arrange
+            var wmRuntimeInfo = wiremock.getRuntimeInfo();
             stubFor(get(urlPathMatching("/solrsearch/select*"))
                     .willReturn(ok(getResourceAsString("/group-artifact-search.json"))));
 
@@ -83,8 +95,9 @@ class SearchClientIT implements WithAssertions {
         }
 
         @Test
-        void should_parse_response_groupId_artifactId_version(final WireMockRuntimeInfo wmRuntimeInfo) {
+        void should_parse_response_groupId_artifactId_version() {
             // Arrange
+            var wmRuntimeInfo = wiremock.getRuntimeInfo();
             stubFor(get(urlPathMatching("/solrsearch/select*"))
                     .willReturn(ok(getResourceAsString("/group-artifact-version-search.json"))));
 
@@ -108,9 +121,10 @@ class SearchClientIT implements WithAssertions {
     @Nested
     class ErrorHandlingTest {
         @Test
-        void should_gracefully_handle_4xx_response(final WireMockRuntimeInfo wmRuntimeInfo) {
+        void should_gracefully_handle_4xx_response() {
             // Arrange
-            stubFor(get(urlPathMatching("/solrsearch/select*"))
+            var wmRuntimeInfo = wiremock.getRuntimeInfo();
+            wiremock.stubFor(get(urlPathMatching("/solrsearch/select*"))
                     .willReturn(badRequest().withBody("Solr returned 400, msg: ")));
 
             // Act
