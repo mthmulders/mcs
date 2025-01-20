@@ -29,7 +29,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
 
-        <assert-j.version>3.26.3</assert-j.version>
+        <assert-j.version>3.27.3</assert-j.version>
         <jackson-jr.version>2.18.2</jackson-jr.version>
         <junit-jupiter.version>5.11.4</junit-jupiter.version>
         <picocli.version>4.7.6</picocli.version>
