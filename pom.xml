@@ -352,7 +352,7 @@
                     <pom>
                         <sortPom>
                             <expandEmptyElements>true</expandEmptyElements>
-                            <indentSchemaLocation>true</indentSchemaLocation>
+                            <indentAttribute>schemaLocation</indentAttribute>
                             <keepBlankLines>true</keepBlankLines>
                             <nrOfIndentSpace>4</nrOfIndentSpace>
                             <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
