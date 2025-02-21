@@ -41,7 +41,6 @@
 
         <artifactsDir>target/distributions</artifactsDir>
         <executable-suffix></executable-suffix>
-        <native-image-arguments></native-image-arguments>
     </properties>
 
     <dependencyManagement>
@@ -383,7 +382,6 @@
                         <configuration>
                             <agentResourceDirectory>${project.basedir}/src/main/graalvm-native</agentResourceDirectory>
                             <imageName>${project.artifactId}-${project.version}</imageName>
-                            <buildArgs>${native-image-arguments}</buildArgs>
                         </configuration>
                         <executions>
                             <execution>
@@ -425,9 +423,21 @@
                     <family>linux</family>
                 </os>
             </activation>
-            <properties>
-                <native-image-arguments>--static -march=compatibility --libc=musl</native-image-arguments>
-            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <configuration combine.self="append">
+                            <buildArgs>
+                                <buildArg>--static</buildArg>
+                                <buildArg>-march=compatibility</buildArg>
+                                <buildArg>--libc=musl</buildArg>
+                            </buildArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>dist-windows</id>
@@ -437,6 +447,7 @@
                 </os>
             </activation>
             <properties>
+                <!-- not used in POM, but used in assembly descriptors -->
                 <executable-suffix>.exe</executable-suffix>
             </properties>
         </profile>
