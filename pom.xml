@@ -426,7 +426,7 @@
                 </os>
             </activation>
             <properties>
-                <native-image-arguments>--static --libc=musl -march=compatibility</native-image-arguments>
+                <native-image-arguments>--static -march=compatibility --libc=musl</native-image-arguments>
             </properties>
         </profile>
         <profile>
