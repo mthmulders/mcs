@@ -1,9 +1,7 @@
 package it.mulders.mcs;
 
-import it.mulders.mcs.cli.Cli;
-import it.mulders.mcs.cli.CommandClassFactory;
-import it.mulders.mcs.cli.SystemPropertyLoader;
-import it.mulders.mcs.common.McsExecutionExceptionHandler;
+import it.mulders.mcs.dagger.Application;
+import it.mulders.mcs.dagger.DaggerApplication;
 import java.net.URI;
 import java.net.URISyntaxException;
 import picocli.CommandLine;
@@ -15,20 +13,19 @@ public class App {
 
     // Visible for testing
     static int doMain(final String... originalArgs) {
-        return doMain(new Cli(), new SystemPropertyLoader(), originalArgs);
-    }
+        final Application components = DaggerApplication.create();
 
-    static int doMain(final Cli cli, final SystemPropertyLoader systemPropertyLoader, final String... originalArgs) {
+        var systemPropertyLoader = components.systemPropertyLoader();
         System.setProperties(systemPropertyLoader.getProperties());
         setUpProxy();
-        var program = new CommandLine(cli, new CommandClassFactory(cli))
-                .setExecutionExceptionHandler(new McsExecutionExceptionHandler());
 
-        var args = isInvocationWithoutSearchCommand(program, originalArgs)
+        var commandLine = components.commandLine();
+
+        var args = isInvocationWithoutSearchCommand(commandLine, originalArgs)
                 ? prependSearchCommandToArgs(originalArgs)
                 : originalArgs;
 
-        return program.execute(args);
+        return commandLine.execute(args);
     }
 
     private static void setUpProxy() {
