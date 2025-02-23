@@ -3,6 +3,11 @@ package it.mulders.mcs.search;
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport;
 
 public record SearchResponse(Object responseHeader, Response response) {
+    public SearchResponse(Response response) {
+        // Convenience for testing
+        this(null, response);
+    }
+
     public record Response(int numFound, int start, Doc[] docs) {
         public record Doc(
                 String id,

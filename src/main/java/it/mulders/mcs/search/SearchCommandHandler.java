@@ -5,47 +5,40 @@ import static it.mulders.mcs.search.Constants.MAX_LIMIT;
 import it.mulders.mcs.common.McsRuntimeException;
 import it.mulders.mcs.common.Result;
 import it.mulders.mcs.search.printer.DelegatingOutputPrinter;
-import it.mulders.mcs.search.printer.OutputPrinter;
+import it.mulders.mcs.search.printer.OutputFactory;
 import it.mulders.mcs.search.vulnerability.ComponentReportClient;
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport;
+import jakarta.inject.Inject;
 import java.util.stream.Stream;
 
 public class SearchCommandHandler {
+    private final OutputFactory outputFactory;
     private final SearchClient searchClient;
     private final ComponentReportClient reportClient;
-    private final OutputPrinter outputPrinter;
-    private final boolean showVulnerabilities;
 
-    public SearchCommandHandler() {
-        this(Constants.DEFAULT_PRINTER, false);
-    }
-
-    public SearchCommandHandler(final OutputPrinter coordinateOutput, final boolean showVulnerabilities) {
-        this(
-                new DelegatingOutputPrinter(coordinateOutput, showVulnerabilities),
-                showVulnerabilities,
-                new SearchClient(),
-                new ComponentReportClient());
-    }
-
-    // Visible for testing
-    SearchCommandHandler(
-            final OutputPrinter outputPrinter,
-            final boolean showVulnerabilities,
-            final SearchClient searchClient,
-            final ComponentReportClient reportClient) {
-        this.searchClient = searchClient;
-        this.outputPrinter = outputPrinter;
+    @Inject
+    public SearchCommandHandler(
+            final ComponentReportClient reportClient,
+            final OutputFactory outputFactory,
+            final SearchClient searchClient) {
+        this.outputFactory = outputFactory;
         this.reportClient = reportClient;
-        this.showVulnerabilities = showVulnerabilities;
+        this.searchClient = searchClient;
     }
 
-    public void search(final SearchQuery query) {
+    public void search(final SearchQuery query, final String outputFormat, final boolean reportVulnerabilities) {
         performSearch(query)
                 .map(response -> performAdditionalSearch(query, response))
-                .ifPresentOrElse(response -> processResponse(query, response), failure -> {
-                    throw new McsRuntimeException(failure);
-                });
+                .ifPresentOrElse(
+                        response -> {
+                            if (reportVulnerabilities) {
+                                processResponse(query, response);
+                            }
+                            printResponse(query, response, outputFormat, reportVulnerabilities);
+                        },
+                        failure -> {
+                            throw new McsRuntimeException(failure);
+                        });
     }
 
     private SearchResponse.Response performAdditionalSearch(
@@ -82,26 +75,28 @@ public class SearchCommandHandler {
     }
 
     private void processResponse(final SearchQuery query, final SearchResponse.Response searchResponse) {
-        if (showVulnerabilities) {
-            reportClient
-                    .search(searchResponse.docs())
-                    .ifPresentOrElse(
-                            componentResponse -> processComponentReports(
-                                    componentResponse.componentReports(), searchResponse.docs()),
-                            failure -> {
-                                throw new McsRuntimeException(failure);
-                            });
-        }
-        printResponse(query, searchResponse);
+        reportClient
+                .search(searchResponse.docs())
+                .ifPresentOrElse(
+                        componentResponse ->
+                                assignComponentReports(componentResponse.componentReports(), searchResponse.docs()),
+                        failure -> {
+                            throw new McsRuntimeException(failure);
+                        });
     }
 
-    private void processComponentReports(
+    private void assignComponentReports(
             final ComponentReport[] componentReports, final SearchResponse.Response.Doc[] docs) {
         Stream.of(componentReports)
                 .forEach(componentReport -> reportClient.assignComponentReport(componentReport, docs));
     }
 
-    private void printResponse(final SearchQuery query, final SearchResponse.Response response) {
-        outputPrinter.print(query, response, System.out);
+    private void printResponse(
+            final SearchQuery query,
+            final SearchResponse.Response response,
+            final String outputFormat,
+            final boolean showVulnerabilities) {
+        var printer = new DelegatingOutputPrinter(outputFactory.findOutputPrinter(outputFormat), showVulnerabilities);
+        printer.print(query, response, System.out);
     }
 }
