@@ -2,6 +2,7 @@ package it.mulders.mcs.search;
 
 import it.mulders.mcs.common.Result;
 import it.mulders.mcs.common.SearchResponseBodyHandler;
+import jakarta.inject.Inject;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.URI;
@@ -10,14 +11,16 @@ import java.net.http.HttpRequest;
 
 public class SearchClient {
     private final String hostname;
-    private final HttpClient client = HttpClient.newHttpClient();
+    private final HttpClient client;
 
-    public SearchClient() {
-        this("https://search.maven.org");
+    @Inject
+    public SearchClient(final HttpClient client) {
+        this(client, "https://search.maven.org");
     }
 
     // Visible for testing
-    SearchClient(final String hostname) {
+    SearchClient(final HttpClient client, final String hostname) {
+        this.client = client;
         this.hostname = hostname;
     }
 

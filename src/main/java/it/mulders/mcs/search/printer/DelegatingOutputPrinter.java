@@ -12,10 +12,6 @@ public class DelegatingOutputPrinter implements OutputPrinter {
     private final OutputPrinter coordinateOutput;
     private final OutputPrinter tabularSearchOutput;
 
-    public DelegatingOutputPrinter(final OutputPrinter coordinateOutput) {
-        this(coordinateOutput, false);
-    }
-
     public DelegatingOutputPrinter(final OutputPrinter coordinateOutput, final boolean showVulnerabilities) {
         this(new NoOutputPrinter(), coordinateOutput, new TabularOutputPrinter(showVulnerabilities));
     }

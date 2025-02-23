@@ -55,6 +55,12 @@ class SearchQueryTest implements WithAssertions {
             });
         }
 
+        @Test
+        void should_reject_invalid_input() {
+            assertThatThrownBy(() -> SearchQuery.search("foo:bar:baz:qux").build())
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
         @ParameterizedTest
         @CsvSource(
                 textBlock =

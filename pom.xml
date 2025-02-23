@@ -30,6 +30,7 @@
         <maven.compiler.release>17</maven.compiler.release>
 
         <assert-j.version>3.27.3</assert-j.version>
+        <dagger.version>2.55</dagger.version>
         <jackson-jr.version>2.18.2</jackson-jr.version>
         <junit-jupiter.version>5.11.4</junit-jupiter.version>
         <picocli.version>4.7.6</picocli.version>
@@ -70,6 +71,11 @@
             <groupId>com.github.package-url</groupId>
             <artifactId>packageurl-java</artifactId>
             <version>${packageurl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.dagger</groupId>
+            <artifactId>dagger</artifactId>
+            <version>${dagger.version}</version>
         </dependency>
 
         <dependency>
@@ -237,6 +243,11 @@
                             <groupId>info.picocli</groupId>
                             <artifactId>picocli-codegen</artifactId>
                             <version>${picocli.version}</version>
+                        </path>
+                        <path>
+                            <groupId>com.google.dagger</groupId>
+                            <artifactId>dagger-compiler</artifactId>
+                            <version>${dagger.version}</version>
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
