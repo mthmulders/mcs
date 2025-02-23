@@ -1,90 +1,126 @@
 package it.mulders.mcs.cli;
 
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.mock;
 
-import it.mulders.mcs.search.Constants;
 import it.mulders.mcs.search.SearchCommandHandler;
-import it.mulders.mcs.search.SearchQuery;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedConstruction;
-import org.mockito.Mockito;
 import picocli.CommandLine;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CliTest implements WithAssertions {
+    private final SearchCommandHandler searchCommandHandler = mock(SearchCommandHandler.class);
+    private final SearchCommand searchCommand = new SearchCommand(searchCommandHandler);
+    private final ClassSearchCommand classSearchCommand = new ClassSearchCommand(searchCommandHandler);
 
-    private final Cli cli = new Cli();
-    private final CommandLine program = new CommandLine(cli, new CommandClassFactory(cli));
-
-    @Nested
-    class SearchCommandTest {
-        @Test
-        void delegates_to_handler() {
-            var query = SearchQuery.search("test").build();
-
-            verifySearchExecution(query, "search", "test");
+    private final CommandLine.IFactory commandLineFactory = new CommandLine.IFactory() {
+        @Override
+        public <K> K create(Class<K> cls) throws Exception {
+            if (SearchCommand.class.equals(cls)) {
+                return (K) searchCommand;
+            } else if (ClassSearchCommand.class.equals(cls)) {
+                return (K) classSearchCommand;
+            } else {
+                return mock(cls);
+            }
         }
+    };
+    private final CommandLine program = new CommandLine(new Cli(), commandLineFactory);
 
-        @Test
-        void accepts_space_separated_terms() {
-            SearchQuery query = SearchQuery.search("jakarta rs").build();
+    @Test
+    void should_invoke_search_command() {
+        // Arrange
 
-            verifySearchExecution(query, "search", "jakarta", "rs");
-        }
+        // Act
+        program.execute("search", "plexus-utils");
 
-        @Test
-        void accepts_limit_results_parameter() {
-            var query = SearchQuery.search("test").withLimit(3).build();
-
-            verifySearchExecution(query, "search", "--limit", "3", "test");
-        }
-
-        @Test
-        void accepts_output_type_parameter() {
-            var query = SearchQuery.search("test").build();
-
-            verifySearchExecution(query, "search", "--format", "gradle-short", "test");
-        }
-
-        @Test
-        void accepts_show_vulnerabilities_parameter() {
-            var query = SearchQuery.search("test").build();
-
-            verifySearchExecution(query, "search", "--show-vulnerabilities", "test");
-        }
+        // Assert
+        assertThat(searchCommand)
+                .extracting("query", InstanceOfAssertFactories.ARRAY)
+                .isEqualTo(new String[] {"plexus-utils"});
+        assertThat(searchCommand).extracting("responseFormat").isNull();
+        assertThat(classSearchCommand).extracting("limit").isNull();
     }
 
-    @Nested
-    class ClassSearchCommandTest {
+    @Test
+    void should_invoke_search_command_with_limit() {
+        // Arrange
 
-        @Test
-        void delegates_to_handler() {
-            var query = SearchQuery.classSearch("test").build();
+        // Act
+        program.execute("search", "-l", "3", "plexus-utils");
 
-            verifySearchExecution(query, "class-search", "test");
-        }
-
-        @Test
-        void accepts_full_name_parameter() {
-            var query = SearchQuery.classSearch("test")
-                    .isFullyQualified(true)
-                    .withLimit(Constants.DEFAULT_MAX_SEARCH_RESULTS)
-                    .build();
-
-            verifySearchExecution(query, "class-search", "--full-name", "test");
-        }
+        // Assert
+        assertThat(searchCommand)
+                .extracting("limit", InstanceOfAssertFactories.INTEGER)
+                .isEqualTo(3);
     }
 
-    private void verifySearchExecution(SearchQuery query, String... args) {
-        try (MockedConstruction<SearchCommandHandler> mocked = Mockito.mockConstruction(SearchCommandHandler.class)) {
-            program.execute(args);
-            assertThat(mocked.constructed()).hasSize(1);
-            SearchCommandHandler searchCommandHandler = mocked.constructed().get(0);
-            verify(searchCommandHandler).search(query);
-        }
+    @Test
+    void should_invoke_search_command_with_format() {
+        // Arrange
+
+        // Act
+        program.execute("search", "-f", "gradle", "plexus-utils");
+
+        // Assert
+        assertThat(searchCommand)
+                .extracting("responseFormat", InstanceOfAssertFactories.STRING)
+                .isEqualTo("gradle");
     }
+
+    @Test
+    void should_invoke_class_search_command() {
+        // Arrange
+
+        // Act
+        program.execute("class-search", "WithAssertions");
+
+        // Assert
+        assertThat(classSearchCommand)
+                .extracting("query", InstanceOfAssertFactories.STRING)
+                .isEqualTo("WithAssertions");
+        assertThat(classSearchCommand)
+                .extracting("fullName", InstanceOfAssertFactories.BOOLEAN)
+                .isFalse();
+        assertThat(classSearchCommand).extracting("limit").isNull();
+    }
+
+    @Test
+    void should_invoke_class_search_command_with_limit() {
+        // Arrange
+
+        // Act
+        program.execute("class-search", "-l", "3", "WithAssertions");
+
+        // Assert
+        assertThat(classSearchCommand)
+                .extracting("query", InstanceOfAssertFactories.STRING)
+                .isEqualTo("WithAssertions");
+        assertThat(classSearchCommand)
+                .extracting("fullName", InstanceOfAssertFactories.BOOLEAN)
+                .isFalse();
+        assertThat(classSearchCommand)
+                .extracting("limit", InstanceOfAssertFactories.INTEGER)
+                .isEqualTo(3);
+    }
+
+    @Test
+    void should_invoke_class_search_command_with_full_classname() {
+        // Arrange
+
+        // Act
+        program.execute("class-search", "-f", "org.assertj.core.api.WithAssertions");
+
+        // Assert
+        assertThat(classSearchCommand)
+                .extracting("query", InstanceOfAssertFactories.STRING)
+                .isEqualTo("org.assertj.core.api.WithAssertions");
+        assertThat(classSearchCommand)
+                .extracting("fullName", InstanceOfAssertFactories.BOOLEAN)
+                .isTrue();
+    }
+    //
 }

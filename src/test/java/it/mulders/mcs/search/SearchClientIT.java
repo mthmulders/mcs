@@ -13,6 +13,7 @@ import it.mulders.mcs.common.Result;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ConnectException;
+import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import org.assertj.core.api.WithAssertions;
@@ -25,6 +26,8 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SearchClientIT implements WithAssertions {
+    private final HttpClient httpClient = HttpClient.newHttpClient();
+
     @RegisterExtension
     static WireMockExtension wiremock = WireMockExtension.newInstance()
             .options(wireMockConfig()
@@ -54,7 +57,7 @@ class SearchClientIT implements WithAssertions {
                     .willReturn(ok(getResourceAsString("/wildcard-search-response.json"))));
 
             // Act
-            var result = new SearchClient(wmRuntimeInfo.getHttpBaseUrl())
+            var result = new SearchClient(httpClient, wmRuntimeInfo.getHttpBaseUrl())
                     .search(new WildcardSearchQuery(
                             "plexus-utils", Constants.DEFAULT_MAX_SEARCH_RESULTS, Constants.DEFAULT_START));
 
@@ -80,7 +83,7 @@ class SearchClientIT implements WithAssertions {
                     .willReturn(ok(getResourceAsString("/group-artifact-search.json"))));
 
             // Act
-            var result = new SearchClient(wmRuntimeInfo.getHttpBaseUrl())
+            var result = new SearchClient(httpClient, wmRuntimeInfo.getHttpBaseUrl())
                     .search(SearchQuery.search("org.codehaus.plexus:plexus-utils")
                             .build());
 
@@ -102,7 +105,7 @@ class SearchClientIT implements WithAssertions {
                     .willReturn(ok(getResourceAsString("/group-artifact-version-search.json"))));
 
             // Act
-            var result = new SearchClient(wmRuntimeInfo.getHttpBaseUrl())
+            var result = new SearchClient(httpClient, wmRuntimeInfo.getHttpBaseUrl())
                     .search(SearchQuery.search("org.codehaus.plexus:plexus-utils:3.4.1")
                             .build());
 
@@ -128,7 +131,7 @@ class SearchClientIT implements WithAssertions {
                     .willReturn(badRequest().withBody("Solr returned 400, msg: ")));
 
             // Act
-            var result = new SearchClient(wmRuntimeInfo.getHttpBaseUrl())
+            var result = new SearchClient(httpClient, wmRuntimeInfo.getHttpBaseUrl())
                     .search(SearchQuery.search("org.codehaus.plexus:plexus-utils")
                             .build());
 
@@ -141,7 +144,7 @@ class SearchClientIT implements WithAssertions {
         @Test
         void should_gracefully_handle_connection_failure() {
             // Very unlikely there's an HTTP server running there...
-            var result = new SearchClient("http://localhost:21")
+            var result = new SearchClient(httpClient, "http://localhost:21")
                     .search(new WildcardSearchQuery(
                             "plexus-utils", Constants.DEFAULT_MAX_SEARCH_RESULTS, Constants.DEFAULT_START));
 

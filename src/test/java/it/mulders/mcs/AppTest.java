@@ -1,7 +1,7 @@
 package it.mulders.mcs;
 
 import it.mulders.mcs.cli.Cli;
-import it.mulders.mcs.cli.CommandClassFactory;
+import it.mulders.mcs.cli.MockitoFactory;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -25,7 +25,7 @@ class AppTest implements WithAssertions {
     @Nested
     class IsInvocationWithoutSearchCommand {
         private final Cli cli = new Cli();
-        private final CommandLine program = new CommandLine(cli, new CommandClassFactory(cli));
+        private final CommandLine program = new CommandLine(cli, MockitoFactory.INSTANCE);
 
         @Test
         void should_detect_when_search_command_is_not_present() {
