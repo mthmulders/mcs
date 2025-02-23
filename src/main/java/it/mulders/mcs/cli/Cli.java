@@ -22,6 +22,7 @@ public class Cli {
             scope = CommandLine.ScopeType.INHERIT,
             usageHelp = true)
     private boolean usageHelpRequested;
+
     @Inject
     public Cli() {}
 }

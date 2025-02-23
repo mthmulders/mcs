@@ -113,7 +113,8 @@ class AppIT implements WithAssertions {
 
             assertThat(output).anySatisfy(line -> assertThat(line).matches("Found (\\d*) results \\(showing 20\\)"));
             assertThat(output)
-                    .anySatisfy(line -> assertThat(line).contains("org.jreleaser:jreleaser-maven-plugin:1.16.0"));}
+                    .anySatisfy(line -> assertThat(line).contains("org.jreleaser:jreleaser-maven-plugin:1.16.0"));
+        }
 
         @StdIo
         @Test
