@@ -1,5 +1,6 @@
 package it.mulders.mcs.cli;
 
+import jakarta.inject.Inject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,8 +18,8 @@ public class SystemPropertyLoader {
     private static final Path MCS_PROPERTIES_FILE = Paths.get(System.getProperty("user.home"), ".mcs", "mcs.config");
 
     private final Properties properties = new Properties();
-    ;
 
+    @Inject
     public SystemPropertyLoader() {
         this(MCS_PROPERTIES_FILE);
     }

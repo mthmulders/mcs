@@ -1,8 +1,12 @@
 package it.mulders.mcs.common;
 
+import jakarta.inject.Inject;
 import picocli.CommandLine;
 
 public class McsExecutionExceptionHandler implements CommandLine.IExecutionExceptionHandler {
+    @Inject
+    public McsExecutionExceptionHandler() {}
+
     @Override
     public int handleExecutionException(Exception ex, CommandLine commandLine, CommandLine.ParseResult parseResult) {
         var message =
