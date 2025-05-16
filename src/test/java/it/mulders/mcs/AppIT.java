@@ -40,7 +40,10 @@ class AppIT implements WithAssertions {
 
         @Test
         void runs_without_search_command_specified() {
-            assertThat(App.doMain("info.picocli:picocli")).isEqualTo(0);
+            // On Github Actions, MCS sometimes fails to read the whole response and fail with
+            // "chunked transfer encoding, state: READING_LENGTH".
+            // Make sure the output is as small as possible by searching only one versioned artifact.
+            assertThat(App.doMain("info.picocli:picocli:4.7.7")).isEqualTo(0);
         }
 
         @Test
