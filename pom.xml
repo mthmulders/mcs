@@ -30,7 +30,7 @@
         <maven.compiler.release>17</maven.compiler.release>
 
         <assert-j.version>3.27.3</assert-j.version>
-        <dagger.version>2.55</dagger.version>
+        <dagger.version>2.56.2</dagger.version>
         <jackson-jr.version>2.19.0</jackson-jr.version>
         <junit-jupiter.version>5.12.2</junit-jupiter.version>
         <picocli.version>4.7.6</picocli.version>
