@@ -38,7 +38,7 @@
         <packageurl.version>1.5.0</packageurl.version>
         <junit-pioneer.version>2.3.0</junit-pioneer.version>
 
-        <surefire.version>3.5.2</surefire.version>
+        <surefire.version>3.5.3</surefire.version>
 
         <artifactsDir>target/distributions</artifactsDir>
         <executable-suffix></executable-suffix>
