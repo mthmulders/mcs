@@ -49,9 +49,20 @@ jobs:
           distribution: 'graalvm'
           java-version: 21
 
+      - name: Cache musl toolchain
+        id: musl-toolchain-cache
+        uses: actions/cache/restore@v4.2.3
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          path: ~/.musl-toolchain
+          key: mcs-musl-toolchain
+
       - name: Get musl toolchain and compile libz against it
         id: prepare-musl
         run: |
+          mkdir -p ~/.musl-toolchain
+          pushd ~/.musl-toolchain
+          if [ ! -f x86_64-linux-musl-native.tgz ]; then
           TMP_DIR=$(mktemp -d)
           pushd $TMP_DIR
           curl -LOJ https://github.com/mthmulders/mcs/releases/download/untagged-f7e4bad961bb6eb07796/x86_64-linux-musl-native.tgz
