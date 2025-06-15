@@ -63,10 +63,13 @@ jobs:
           mkdir -p ~/.musl-toolchain
           pushd ~/.musl-toolchain
           if [ ! -f x86_64-linux-musl-native.tgz ]; then
+            curl -u ${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS} -kLOJ ${MUSL_TOOLCHAIN_LOCATION}/10/x86_64-linux-musl/x86_64-linux-musl-native.tgz
+          fi
+          popd
+          
           TMP_DIR=$(mktemp -d)
           pushd $TMP_DIR
-          curl -LOJ https://github.com/mthmulders/mcs/releases/download/untagged-f7e4bad961bb6eb07796/x86_64-linux-musl-native.tgz
-          tar -xvf x86_64-linux-musl-native.tgz
+          tar -xvf ~/.musl-toolchain/x86_64-linux-musl-native.tgz
           
           curl -LOJ https://zlib.net/fossils/zlib-1.3.tar.gz
           tar -xzf zlib-1.3.tar.gz
@@ -81,6 +84,10 @@ jobs:
           
           echo "TOOLCHAIN_DIR=$TOOLCHAIN_DIR" >> $GITHUB_OUTPUT
         if: matrix.os == 'ubuntu-latest'
+        env:
+          MUSL_TOOLCHAIN_LOCATION: ${{ secrets.MUSL_TOOLCHAIN_LOCATION }}
+          MUSL_TOOLCHAIN_USER: ${{ secrets.MUSL_TOOLCHAIN_USER }}
+          MUSL_TOOLCHAIN_PASS: ${{ secrets.MUSL_TOOLCHAIN_PASS }}
 
       - name: Cache Maven packages
         id: restore-maven-package-cache
