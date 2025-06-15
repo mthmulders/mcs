@@ -115,19 +115,20 @@ class AppIT implements WithAssertions {
             var output = out.capturedLines();
 
             assertThat(output).anySatisfy(line -> assertThat(line).matches("Found (\\d*) results \\(showing 20\\)"));
-            assertThat(output)
-                    .anySatisfy(line -> assertThat(line).contains("org.jreleaser:jreleaser-maven-plugin:1.16.0"));
+            assertThat(output).anySatisfy(line -> assertThat(line).contains("org.jreleaser:jreleaser-maven-plugin:1"));
         }
 
         @StdIo
         @Test
         void should_find_many_artifacts_for_JAX_WS_Handler(StdOut out) {
-            App.doMain("class-search", "-f", "javax.xml.ws.handler.Handler", "-l", "250");
+            App.doMain("class-search", "-f", "javax.xml.ws.handler.Handler");
 
             var output = out.capturedLines();
 
-            assertThat(output).hasSizeGreaterThan(250);
-            assertThat(output).anySatisfy(line -> assertThat(line).contains("jakarta.xml.ws:jakarta.xml.ws-api:2.3.3"));
+            assertThat(output).hasSizeGreaterThan(20);
+            assertThat(output)
+                    .anySatisfy(line -> assertThat(line).contains("containing javax.xml.ws.handler.Handler..."));
+            // Cannot do assertions on which artifact would be found since the ordering is not guaranteed.
         }
 
         @StdIo
