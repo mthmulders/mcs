@@ -114,7 +114,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         with:
           path: ~/.musl-toolchain
-          key: mcs-musl-toolchain
+          key: mcs-musl-toolchain-10
 
       - name: Get musl toolchain and compile libz against it
         id: prepare-musl
@@ -147,6 +147,12 @@ jobs:
           MUSL_TOOLCHAIN_LOCATION: ${{ secrets.MUSL_TOOLCHAIN_LOCATION }}
           MUSL_TOOLCHAIN_USER: ${{ secrets.MUSL_TOOLCHAIN_USER }}
           MUSL_TOOLCHAIN_PASS: ${{ secrets.MUSL_TOOLCHAIN_PASS }}
+
+      - name: Save musl toolchain
+        uses: actions/cache/save@v4.2.3
+        with:
+          path: ~/.musl-toolchain
+          key: mcs-musl-toolchain-10
 
       - name: Cache Maven packages
         uses: actions/cache@v4.2.3
