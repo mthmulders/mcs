@@ -108,7 +108,7 @@ jobs:
           distribution: 'graalvm'
           java-version: 21
 
-      - name: Cache musl toolchain
+      - name: Retrieve musl toolchain from cache
         id: musl-toolchain-cache
         uses: actions/cache/restore@v4.2.3
         if: matrix.os == 'ubuntu-latest'
@@ -148,8 +148,9 @@ jobs:
           MUSL_TOOLCHAIN_USER: ${{ secrets.MUSL_TOOLCHAIN_USER }}
           MUSL_TOOLCHAIN_PASS: ${{ secrets.MUSL_TOOLCHAIN_PASS }}
 
-      - name: Save musl toolchain
+      - name: Save musl toolchain to cache
         uses: actions/cache/save@v4.2.3
+        if: matrix.os == 'ubuntu-latest'
         with:
           path: ~/.musl-toolchain
           key: mcs-musl-toolchain-10
