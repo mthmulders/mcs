@@ -203,6 +203,15 @@
       "contributions": [
         "tool"
       ]
+    },
+    {
+      "login": "adamretter",
+      "name": "Adam Retter",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1264057?v=4",
+      "profile": "http://www.adamretter.org.uk",
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
