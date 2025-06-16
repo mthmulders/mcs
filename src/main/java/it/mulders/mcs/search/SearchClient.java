@@ -15,7 +15,7 @@ public class SearchClient {
 
     @Inject
     public SearchClient(final HttpClient client) {
-        this(client, "https://search.maven.org");
+        this(client, "https://central.sonatype.com");
     }
 
     // Visible for testing
