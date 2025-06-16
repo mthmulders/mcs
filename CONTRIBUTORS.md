@@ -38,7 +38,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://jreleaser.org"><img src="https://avatars.githubusercontent.com/u/81020166?v=4?s=100" width="100px;" alt="JReleaser"/><br /><sub><b>JReleaser</b></sub></a><br /><a href="#tool-jreleaser" title="Tools">🔧</a></td>
     </tr>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="http://www.adamretter.org.uk"><img src="https://avatars.githubusercontent.com/u/1264057?v=4?s=100" width="100px;" alt="Adam Retter"/><br /><sub><b>Adam Retter</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/issues?q=author%3Aadamretter" title="Bug reports">🐛</a> <a href="#promotion-adamretter" title="Promotion">📣</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.adamretter.org.uk"><img src="https://avatars.githubusercontent.com/u/1264057?v=4?s=100" width="100px;" alt="Adam Retter"/><br /><sub><b>Adam Retter</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/issues?q=author%3Aadamretter" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
