@@ -15,7 +15,7 @@ on:
 
 jobs:
   version:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out repository
@@ -70,10 +70,12 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ ubuntu-latest, macos-13, macos-14, windows-latest ]
+        os: [ ubuntu-24.04, ubuntu-24.04-arm, macos-13, macos-14, windows-latest ]
         gu-binary: [ gu, gu.cmd ]
         exclude:
-          - os: ubuntu-latest
+          - os: ubuntu-24.04
+            gu-binary: gu.cmd
+          - os: ubuntu-24.04-arm
             gu-binary: gu.cmd
           - os: macos-13
             gu-binary: gu.cmd
@@ -119,22 +121,35 @@ jobs:
       - name: Get musl toolchain and compile libz against it
         id: prepare-musl
         run: |
-          mkdir -p ~/.musl-toolchain
-          pushd ~/.musl-toolchain
-          if [ ! -f x86_64-linux-musl-native.tgz ]; then
-            curl -u ${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS} -kLOJ ${MUSL_TOOLCHAIN_LOCATION}/10/x86_64-linux-musl/x86_64-linux-musl-native.tgz
-          fi
-          popd
-          
           TMP_DIR=$(mktemp -d)
           pushd $TMP_DIR
-          tar -xvf ~/.musl-toolchain/x86_64-linux-musl-native.tgz
+          case $MATRIX_OS in
+            ubuntu-24.04)
+              curl -u ${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS} -kLOJ ${MUSL_TOOLCHAIN_LOCATION}/10/x86_64-linux-musl/x86_64-linux-musl-native.tgz
+              tar -xvf x86_64-linux-musl-native.tgz
+              TOOLCHAIN_DIR=$TMP_DIR/x86_64-linux-musl-native
+              ;;
+            ubuntu-24.04-arm)
+              curl -u ${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS} -kLOJ ${MUSL_TOOLCHAIN_LOCATION}/10/aarch64-linux-musl/aarch64-linux-musl-native.tgz
+              tar -xvf aarch64-linux-musl-native.tgz
+              TOOLCHAIN_DIR=$TMP_DIR/aarch64-linux-musl-native
+              # Symlink x86_64-linux-musl-gcc to aarch64-linux-musl-gcc as native-image expects the former to be present
+              # See https://www.graalvm.org/dev/reference-manual/native-image/guides/build-static-executables/
+              ln -s $TOOLCHAIN_DIR/bin/aarch64-linux-musl-gcc $TOOLCHAIN_DIR/bin/x86_64-linux-musl-gcc
+              ;;
+            *)
+              echo 'Unexpected CPU architecture!'
+              exit 1
+              ;;
+          esac
+          
+          fi
+          popd
           
           curl -LOJ https://zlib.net/fossils/zlib-1.3.tar.gz
           tar -xzf zlib-1.3.tar.gz
           cd zlib-1.3
           
-          TOOLCHAIN_DIR=$TMP_DIR/x86_64-linux-musl-native
           CC=$TOOLCHAIN_DIR/bin/gcc
           
           ./configure --prefix=$TOOLCHAIN_DIR --static
@@ -142,8 +157,9 @@ jobs:
           make install
           
           echo "TOOLCHAIN_DIR=$TOOLCHAIN_DIR" >> $GITHUB_OUTPUT
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-24.04' || matrix.os == 'ubuntu-24.04-arm'
         env:
+          MATRIX_OS: ${{ matrix.os }}
           MUSL_TOOLCHAIN_LOCATION: ${{ secrets.MUSL_TOOLCHAIN_LOCATION }}
           MUSL_TOOLCHAIN_USER: ${{ secrets.MUSL_TOOLCHAIN_USER }}
           MUSL_TOOLCHAIN_PASS: ${{ secrets.MUSL_TOOLCHAIN_PASS }}
@@ -167,12 +183,12 @@ jobs:
           PATH=${TOOLCHAIN_DIR}/bin:$PATH; mvn -B -Pnative package
         env:
           TOOLCHAIN_DIR: ${{ steps.prepare-musl.outputs.TOOLCHAIN_DIR }}
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-24.04' || matrix.os == 'ubuntu-24.04-arm'
 
       - name: Build static native image for Windows / macOS
         run: |
           mvn -B -Pnative package
-        if: matrix.os != 'ubuntu-latest'
+        if: matrix.os != 'ubuntu-24.04' && matrix.os != 'ubuntu-24.04-arm'
 
       - name: Create distribution
         run: mvn -B -Pdist package -DskipTests
@@ -188,7 +204,7 @@ jobs:
   # Collect all executables and release
   release:
     needs: [ build ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions: write-all
 
     steps:
@@ -231,7 +247,7 @@ jobs:
 
       - name: Move build artifacts to correct folder
         run: |
-          targets=("ubuntu-latest" "macos-13" "macos-14" "windows-latest")
+          targets=("ubuntu-24.04" "ubuntu-24.04-arm" "macos-13" "macos-14" "windows-latest")
           
           mkdir -p artifacts
           
