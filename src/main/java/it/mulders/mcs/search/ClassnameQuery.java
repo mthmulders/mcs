@@ -10,13 +10,11 @@ public record ClassnameQuery(String query, boolean fullyQualified, int searchLim
     @Override
     public String toSolrQuery() {
         if (fullyQualified) {
-            return String.format(
-                    "q=fc:%s&start=%d&rows=%d",
-                    URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit());
+            return "q=fc:%s&start=%d&rows=%d"
+                    .formatted(URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit());
         } else {
-            return String.format(
-                    "q=c:%s&start=%d&rows=%d",
-                    URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit());
+            return "q=c:%s&start=%d&rows=%d"
+                    .formatted(URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit());
         }
     }
 

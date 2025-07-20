@@ -18,9 +18,8 @@ public record CoordinateQuery(String groupId, String artifactId, String version,
         if (!version.isBlank()) parts.add("v:%s".formatted(version));
         var query = String.join(" AND ", parts);
 
-        return String.format(
-                "q=%s&core=gav&start=%d&rows=%d",
-                URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit());
+        return "q=%s&core=gav&start=%d&rows=%d"
+                .formatted(URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit());
     }
 
     @Override

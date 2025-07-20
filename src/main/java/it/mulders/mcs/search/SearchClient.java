@@ -25,7 +25,7 @@ public class SearchClient {
     }
 
     public Result<SearchResponse> search(final SearchQuery query) {
-        var uri = String.format("%s/solrsearch/select?%s", hostname, query.toSolrQuery());
+        var uri = "%s/solrsearch/select?%s".formatted(hostname, query.toSolrQuery());
 
         var request = HttpRequest.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)

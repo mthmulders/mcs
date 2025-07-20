@@ -4,7 +4,6 @@ import jakarta.inject.Inject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
@@ -15,7 +14,7 @@ import java.util.Properties;
  * This class does not modify the System properties itself.
  */
 public class SystemPropertyLoader {
-    private static final Path MCS_PROPERTIES_FILE = Paths.get(System.getProperty("user.home"), ".mcs", "mcs.config");
+    private static final Path MCS_PROPERTIES_FILE = Path.of(System.getProperty("user.home"), ".mcs", "mcs.config");
 
     private final Properties properties = new Properties();
 

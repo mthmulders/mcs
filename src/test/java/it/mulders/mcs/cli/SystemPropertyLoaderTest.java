@@ -1,7 +1,6 @@
 package it.mulders.mcs.cli;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -9,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SystemPropertyLoaderTest implements WithAssertions {
-    private static final Path SAMPLE = Paths.get("src", "test", "resources", "sample-mcs.config");
+    private static final Path SAMPLE = Path.of("src", "test", "resources", "sample-mcs.config");
 
     @Test
     void should_load_if_file_exists() {
@@ -20,7 +19,7 @@ class SystemPropertyLoaderTest implements WithAssertions {
 
     @Test
     void should_not_fail_if_file_does_not_exist() {
-        var loader = new SystemPropertyLoader(Paths.get("src", "test", "resources", "non-existing-mcs.config"));
+        var loader = new SystemPropertyLoader(Path.of("src", "test", "resources", "non-existing-mcs.config"));
 
         assertThat(loader.getProperties().isEmpty()).isFalse();
     }

@@ -9,8 +9,8 @@ import java.nio.charset.StandardCharsets;
 public record WildcardSearchQuery(String term, int searchLimit, int start) implements SearchQuery {
     @Override
     public String toSolrQuery() {
-        return String.format(
-                "q=%s&start=%d&rows=%d", URLEncoder.encode(term, StandardCharsets.UTF_8), start(), searchLimit());
+        return "q=%s&start=%d&rows=%d"
+                .formatted(URLEncoder.encode(term, StandardCharsets.UTF_8), start(), searchLimit());
     }
 
     @Override

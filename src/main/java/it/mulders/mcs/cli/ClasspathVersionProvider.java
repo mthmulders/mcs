@@ -13,7 +13,7 @@ public class ClasspathVersionProvider implements CommandLine.IVersionProvider {
         var properties = new Properties();
         try (var stream = getClass().getResourceAsStream("/mcs.properties")) {
             properties.load(stream);
-            var version = String.format("mcs v%s", properties.getProperty("mcs.version"));
+            var version = "mcs v%s".formatted(properties.getProperty("mcs.version"));
             return new String[] {version};
         }
     }
