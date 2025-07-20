@@ -66,12 +66,12 @@ jobs:
           pushd $TMP_DIR
           case $MATRIX_OS in
             ubuntu-24.04)
-              curl -LOJ https://musl.cc/x86_64-linux-musl-native.tgz
+              curl -u ${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS} -kLOJ ${MUSL_TOOLCHAIN_LOCATION}/10/x86_64-linux-musl/x86_64-linux-musl-native.tgz
               tar -xvf x86_64-linux-musl-native.tgz
               TOOLCHAIN_DIR=$TMP_DIR/x86_64-linux-musl-native
               ;;
             ubuntu-24.04-arm)
-              curl -LOJ https://musl.cc/aarch64-linux-musl-native.tgz
+              curl -u ${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS} -kLOJ ${MUSL_TOOLCHAIN_LOCATION}/10/aarch64-linux-musl/aarch64-linux-musl-native.tgz
               tar -xvf aarch64-linux-musl-native.tgz
               TOOLCHAIN_DIR=$TMP_DIR/aarch64-linux-musl-native
               # Symlink x86_64-linux-musl-gcc to aarch64-linux-musl-gcc as native-image expects the former to be present
