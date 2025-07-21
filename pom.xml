@@ -31,7 +31,7 @@
 
         <assert-j.version>3.27.3</assert-j.version>
         <dagger.version>2.57</dagger.version>
-        <jackson-jr.version>2.19.1</jackson-jr.version>
+        <jackson-jr.version>2.19.2</jackson-jr.version>
         <junit-jupiter.version>5.13.3</junit-jupiter.version>
         <picocli.version>4.7.7</picocli.version>
         <wiremock.version>2.35.2</wiremock.version>
