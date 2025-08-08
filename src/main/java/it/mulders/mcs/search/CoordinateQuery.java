@@ -8,7 +8,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 
-public record CoordinateQuery(String groupId, String artifactId, String version, int searchLimit, int start)
+public record CoordinateQuery(
+        String groupId, String artifactId, String version, int searchLimit, int start, SortType sorting)
         implements SearchQuery {
     @Override
     public String toSolrQuery() {
@@ -17,9 +18,12 @@ public record CoordinateQuery(String groupId, String artifactId, String version,
         if (!artifactId.isBlank()) parts.add("a:%s".formatted(artifactId));
         if (!version.isBlank()) parts.add("v:%s".formatted(version));
         var query = String.join(" AND ", parts);
-
-        return "q=%s&core=gav&start=%d&rows=%d"
-                .formatted(URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit());
+        StringBuilder solrQuery = new StringBuilder("q=%s&core=gav&start=%d&rows=%d"
+                .formatted(URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit()));
+        if (sorting != null) {
+            solrQuery.append("&sort=%s".formatted(sorting.getSorting()));
+        }
+        return solrQuery.toString();
     }
 
     @Override
@@ -35,6 +39,7 @@ public record CoordinateQuery(String groupId, String artifactId, String version,
         private final String version;
         private Integer limit = DEFAULT_MAX_SEARCH_RESULTS;
         private Integer start = DEFAULT_START;
+        private final SortType sorting = SortType.VERSION_DESCENDING;
 
         public Builder(String groupId, String artifactId) {
             this(groupId, artifactId, null);
@@ -68,7 +73,7 @@ public record CoordinateQuery(String groupId, String artifactId, String version,
 
         @Override
         public SearchQuery build() {
-            return new CoordinateQuery(groupId, artifactId, version, limit, start);
+            return new CoordinateQuery(groupId, artifactId, version, limit, start, sorting);
         }
     }
 }
