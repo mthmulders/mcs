@@ -40,7 +40,7 @@ class CoordinateQueryTest implements WithAssertions {
         }
 
         private CoordinateQuery createQuery(Integer maxSearchResults, Integer start) {
-            return new CoordinateQuery("foo", "bar", "1.0", maxSearchResults, start);
+            return new CoordinateQuery("foo", "bar", "1.0", maxSearchResults, start, SortType.VERSION_DESCENDING);
         }
     }
 }

@@ -8,7 +8,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 
-public record CoordinateQuery(String groupId, String artifactId, String version, int searchLimit, int start, SortType sorting)
+public record CoordinateQuery(
+        String groupId, String artifactId, String version, int searchLimit, int start, SortType sorting)
         implements SearchQuery {
     @Override
     public String toSolrQuery() {
@@ -17,8 +18,7 @@ public record CoordinateQuery(String groupId, String artifactId, String version,
         if (!artifactId.isBlank()) parts.add("a:%s".formatted(artifactId));
         if (!version.isBlank()) parts.add("v:%s".formatted(version));
         var query = String.join(" AND ", parts);
-        StringBuilder solrQuery = new StringBuilder(
-            "q=%s&core=gav&start=%d&rows=%d"
+        StringBuilder solrQuery = new StringBuilder("q=%s&core=gav&start=%d&rows=%d"
                 .formatted(URLEncoder.encode(query, StandardCharsets.UTF_8), start(), searchLimit()));
         if (sorting != null) {
             solrQuery.append("&sort=%s".formatted(sorting.getSorting()));
