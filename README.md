@@ -62,7 +62,7 @@ You can install mcs using the package manager of your choice:
 |-----------------|----------|-------------------------------------|---------|
 | **Homebrew**    | 🍎 🐧    | `brew install mthmulders/tap/mcs`   | ⚠️ 1,2  |
 | **Snap**        | 🐧       | `snap install maven-central-search` | ⚠️ 1    |
-| **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                   | ⚠️ 2    |
+| **SDKMAN!**     | 🍎 🐧    | `sdk install mcs`                   | ⚠️ 1,2  |
 | **Chocolatey**  | 🪟       | `choco install mcs`                 |         |
 | **Scoop**       | 🪟       | `scoop install mthmulders/mcs`      |         |
 
