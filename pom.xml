@@ -323,7 +323,7 @@
                 <configuration>
                     <attach>false</attach>
                     <appendAssemblyId>false</appendAssemblyId>
-                    <finalName>${project.artifactId}-${project.version}-${os.detected.classifier}</finalName>
+                    <finalName>${project.artifactId}-${project.version}-${nisse.os.classifier}</finalName>
                     <outputDirectory>${project.build.directory}/distributions</outputDirectory>
                     <workDirectory>${project.build.directory}/assembly/work</workDirectory>
                     <skipAssembly>true</skipAssembly>
@@ -372,14 +372,6 @@
                 </configuration>
             </plugin>
         </plugins>
-
-        <extensions>
-            <extension>
-                <groupId>kr.motd.maven</groupId>
-                <artifactId>os-maven-plugin</artifactId>
-                <version>1.7.1</version>
-            </extension>
-        </extensions>
     </build>
 
     <profiles>
@@ -417,7 +409,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
-                        <configuration combine.self="append">
+                        <configuration combine.self="merge">
                             <skipAssembly>false</skipAssembly>
                             <descriptors>
                                 <descriptor>src/main/assembly/assembly.xml</descriptor>
@@ -439,7 +431,7 @@
                     <plugin>
                         <groupId>org.graalvm.buildtools</groupId>
                         <artifactId>native-maven-plugin</artifactId>
-                        <configuration combine.self="append">
+                        <configuration combine.self="merge">
                             <buildArgs>
                                 <buildArg>--static</buildArg>
                                 <buildArg>-march=compatibility</buildArg>
