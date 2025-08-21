@@ -35,7 +35,7 @@ jobs:
         uses: actions/download-artifact@v5.0.0
 
       - name: Check out repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
         with:
           ref: ${{ steps.head.outputs.content }}
 
@@ -143,7 +143,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
         with:
           fetch-depth: 0
 
