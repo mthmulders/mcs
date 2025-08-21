@@ -28,7 +28,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Cache Maven packages
-        uses: actions/cache/restore@v4.2.3
+        uses: actions/cache/restore@v4.2.4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -110,7 +110,7 @@ jobs:
 
       - name: Retrieve musl toolchain from cache
         id: musl-toolchain-cache
-        uses: actions/cache/restore@v4.2.3
+        uses: actions/cache/restore@v4.2.4
         if: matrix.os == 'ubuntu-latest'
         with:
           path: ~/.musl-toolchain
@@ -149,14 +149,14 @@ jobs:
           MUSL_TOOLCHAIN_PASS: ${{ secrets.MUSL_TOOLCHAIN_PASS }}
 
       - name: Save musl toolchain to cache
-        uses: actions/cache/save@v4.2.3
+        uses: actions/cache/save@v4.2.4
         if: matrix.os == 'ubuntu-latest'
         with:
           path: ~/.musl-toolchain
           key: mcs-musl-toolchain-10
 
       - name: Cache Maven packages
-        uses: actions/cache@v4.2.3
+        uses: actions/cache@v4.2.4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -244,7 +244,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Cache Maven packages
-        uses: actions/cache@v4.2.3
+        uses: actions/cache@v4.2.4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
