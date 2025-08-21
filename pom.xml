@@ -29,7 +29,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>24</maven.compiler.release>
 
-        <assert-j.version>3.27.3</assert-j.version>
+        <assert-j.version>3.27.4</assert-j.version>
         <dagger.version>2.57</dagger.version>
         <jackson-jr.version>2.19.2</jackson-jr.version>
         <junit-jupiter.version>5.13.4</junit-jupiter.version>
