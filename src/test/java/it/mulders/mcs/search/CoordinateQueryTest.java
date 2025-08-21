@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -39,8 +40,21 @@ class CoordinateQueryTest implements WithAssertions {
             assertThat(solrQuery).contains(parameter);
         }
 
+        @Test
+        void query_should_include_sorting() {
+            var query = createQuery(5, 3, SortType.VERSION_ASCENDING);
+
+            var solrQuery = query.toSolrQuery();
+
+            assertThat(solrQuery).contains("v+asc");
+        }
+
         private CoordinateQuery createQuery(Integer maxSearchResults, Integer start) {
-            return new CoordinateQuery("foo", "bar", "1.0", maxSearchResults, start, SortType.VERSION_DESCENDING);
+            return createQuery(maxSearchResults, start, SortType.VERSION_DESCENDING);
+        }
+
+        private CoordinateQuery createQuery(Integer maxSearchResults, Integer start, SortType sortType) {
+            return new CoordinateQuery("foo", "bar", "1.0", maxSearchResults, start, sortType);
         }
     }
 }
