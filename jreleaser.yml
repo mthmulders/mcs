@@ -57,6 +57,7 @@ distributions:
       mainClass: it.mulders.mcs.App
     jbang:
       active: ALWAYS
+      alias: mcs
     artifacts:
       - path: ./target/mcs-{{projectVersion}}.jar
   mcs:
