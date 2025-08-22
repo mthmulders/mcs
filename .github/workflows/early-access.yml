@@ -170,6 +170,9 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Build single JAR
+        run: mvn -B package -DskipTests
+
       - name: Release with JReleaser
         run: mvn -B -Prelease -DartifactsDir=artifacts jreleaser:full-release
         env:
