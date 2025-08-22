@@ -139,7 +139,8 @@ jobs:
     needs: [ build ]
     runs-on: ubuntu-latest
     permissions: write-all
-    if: github.event_name != 'pull_request'
+    # Temporarily allow pull requests to be published - to troubleshoot JBang distribution
+    # if: github.event_name != 'pull_request'
 
     steps:
       - name: Check out repository
@@ -169,6 +170,9 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+
+      - name: Build single JAR
+        run: mvn -B package -DskipTests
 
       - name: Release with JReleaser
         run: mvn -B -Prelease -DartifactsDir=artifacts jreleaser:full-release
