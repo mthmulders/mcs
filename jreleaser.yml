@@ -50,15 +50,6 @@ announce:
     status: 🚀 {{projectName}} {{projectVersion}} has just been released! Check {{releaseNotesUrl}} for the details.
 
 distributions:
-  mcs-jar:
-    stereotype: CLI
-    type: SINGLE_JAR
-    java:
-      mainClass: it.mulders.mcs.App
-    jbang:
-      active: ALWAYS
-    artifacts:
-      - path: ./target/mcs-{{projectVersion}}.jar
   mcs:
     stereotype: CLI
     type: BINARY
@@ -74,6 +65,8 @@ distributions:
       remoteBuild: true
       iconUrl: https://maarten.mulders.it/img/mcs-icon.png
       title: Maven Central Search
+    jbang:
+      active: RELEASE
     sdkman:
       active: RELEASE
     snap:
@@ -114,3 +107,4 @@ distributions:
         platform: osx-aarch_64
         extraProperties:
           graalVMNativeImage: true
+      - path: ./target/{{distributionName}}-{{projectVersion}}.jar
