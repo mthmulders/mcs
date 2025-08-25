@@ -22,12 +22,9 @@ public class DaggerFactory implements CommandLine.IFactory {
     @Override
     public <K> K create(Class<K> cls) throws Exception {
         return switch (cls.getName()) {
-            case "it.mulders.mcs.cli.SearchCommand":
-                yield (K) this.searchCommandProvider.get();
-            case "it.mulders.mcs.cli.ClassSearchCommand":
-                yield (K) this.classSearchCommandProvider.get();
-            default:
-                yield defaultFactory.create(cls);
+            case "it.mulders.mcs.cli.SearchCommand" -> (K) this.searchCommandProvider.get();
+            case "it.mulders.mcs.cli.ClassSearchCommand" -> (K) this.classSearchCommandProvider.get();
+            default -> defaultFactory.create(cls);
         };
     }
 }
