@@ -352,6 +352,7 @@
                     <markdown>
                         <excludes>
                             <exclude>CONTRIBUTORS.md</exclude>
+                            <exclude>target/**/*.md</exclude>
                         </excludes>
                         <includes>
                             <include>**/*.md</include>
