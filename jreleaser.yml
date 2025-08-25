@@ -65,8 +65,6 @@ distributions:
       remoteBuild: true
       iconUrl: https://maarten.mulders.it/img/mcs-icon.png
       title: Maven Central Search
-    jbang:
-      active: RELEASE
     sdkman:
       active: RELEASE
     snap:
@@ -107,4 +105,3 @@ distributions:
         platform: osx-aarch_64
         extraProperties:
           graalVMNativeImage: true
-      - path: ./target/{{distributionName}}-{{projectVersion}}.jar
