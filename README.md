@@ -69,6 +69,8 @@ You can install mcs using the package manager of your choice:
 1. The Linux binary only works on an x86_64 CPU.
 2. There are Apple binaries for both x86_64 and Apple Silicon, so you don't need Rosetta.
 
+Technically not a package manager, but mention JBang here, too.
+
 ### Usage with custom trust store
 
 In certain situations, such as when you work behind a TLS-intercepting (corporate) firewall, MCS may fail with
