@@ -52,9 +52,11 @@ public sealed interface CoordinatePrinter extends OutputPrinter
             } else {
                 stream.println("Vulnerabilities:");
                 Arrays.stream(componentReport.vulnerabilitiesSortedByCvssScore())
-                        .forEachOrdered(vul -> stream.println(
-                                vul.id() + " (" + ComponentReportVulnerabilitySeverity.getText(vul.cvssScore()) + ")"
-                                        + " - " + vul.reference()));
+                        .forEachOrdered(vul -> stream.println("%s (%s) - %s"
+                                .formatted(
+                                        vul.id(),
+                                        ComponentReportVulnerabilitySeverity.getText(vul.cvssScore()),
+                                        vul.reference())));
             }
         }
     }
