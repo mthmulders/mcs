@@ -16,6 +16,11 @@ import java.net.ConnectException;
 import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+
+import it.mulders.mcs.search.artifact.SearchClient;
+import it.mulders.mcs.search.artifact.SearchQuery;
+import it.mulders.mcs.search.artifact.SearchResponse;
+import it.mulders.mcs.search.artifact.WildcardSearchQuery;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;

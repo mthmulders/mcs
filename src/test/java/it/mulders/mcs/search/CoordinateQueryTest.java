@@ -5,6 +5,8 @@ import static it.mulders.mcs.search.Constants.DEFAULT_START;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+
+import it.mulders.mcs.search.artifact.CoordinateQuery;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;

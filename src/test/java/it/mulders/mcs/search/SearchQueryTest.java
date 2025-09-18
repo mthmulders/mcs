@@ -2,6 +2,9 @@ package it.mulders.mcs.search;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+
+import it.mulders.mcs.search.artifact.CoordinateQuery;
+import it.mulders.mcs.search.artifact.SearchQuery;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

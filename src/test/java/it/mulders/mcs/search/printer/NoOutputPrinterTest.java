@@ -1,6 +1,6 @@
 package it.mulders.mcs.search.printer;
 
-import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.artifact.SearchResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;

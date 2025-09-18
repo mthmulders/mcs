@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import it.mulders.mcs.common.Result;
+import it.mulders.mcs.search.artifact.*;
 import it.mulders.mcs.search.printer.OutputFactory;
 import it.mulders.mcs.search.printer.OutputPrinter;
 import it.mulders.mcs.search.vulnerability.ComponentReportClient;

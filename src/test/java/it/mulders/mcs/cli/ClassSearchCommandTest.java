@@ -6,7 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import it.mulders.mcs.search.Constants;
 import it.mulders.mcs.search.SearchCommandHandler;
-import it.mulders.mcs.search.SearchQuery;
+import it.mulders.mcs.search.artifact.SearchQuery;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

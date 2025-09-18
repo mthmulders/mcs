@@ -6,8 +6,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-import it.mulders.mcs.search.SearchQuery;
-import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.artifact.SearchQuery;
+import it.mulders.mcs.search.artifact.SearchResponse;
 import java.io.PrintStream;
 import org.apache.commons.io.output.NullOutputStream;
 import org.assertj.core.api.WithAssertions;

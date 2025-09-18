@@ -1,4 +1,4 @@
-package it.mulders.mcs.search;
+package it.mulders.mcs.search.artifact;
 
 public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, WildcardSearchQuery {
     int searchLimit();

@@ -1,4 +1,4 @@
-package it.mulders.mcs.search;
+package it.mulders.mcs.search.artifact;
 
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport;
 

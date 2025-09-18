@@ -1,4 +1,6 @@
-package it.mulders.mcs.search;
+package it.mulders.mcs.search.artifact;
+
+import it.mulders.mcs.search.SortType;
 
 import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
 import static it.mulders.mcs.search.Constants.DEFAULT_START;
