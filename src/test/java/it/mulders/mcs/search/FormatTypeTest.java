@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import it.mulders.mcs.Constants;
+import it.mulders.mcs.printer.BuildrOutput;
 import it.mulders.mcs.printer.CoordinatePrinter;
 import it.mulders.mcs.printer.FormatType;
-import it.mulders.mcs.printer.BuildrOutput;
 import it.mulders.mcs.printer.GradleGroovyOutput;
 import it.mulders.mcs.printer.GradleGroovyShortOutput;
 import it.mulders.mcs.printer.GradleKotlinOutput;
@@ -16,7 +16,6 @@ import it.mulders.mcs.printer.LeiningenOutput;
 import it.mulders.mcs.printer.PomXmlOutput;
 import it.mulders.mcs.printer.SbtOutput;
 import it.mulders.mcs.printer.UnsupportedFormatException;
-
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

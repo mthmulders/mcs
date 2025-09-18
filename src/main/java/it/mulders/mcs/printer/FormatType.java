@@ -1,7 +1,6 @@
 package it.mulders.mcs.printer;
 
 import it.mulders.mcs.Constants;
-
 import java.util.Arrays;
 import java.util.stream.Collectors;
 

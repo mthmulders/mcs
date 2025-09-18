@@ -3,10 +3,9 @@ package it.mulders.mcs.search;
 import static it.mulders.mcs.Constants.DEFAULT_MAX_SEARCH_RESULTS;
 import static it.mulders.mcs.Constants.DEFAULT_START;
 
+import it.mulders.mcs.search.artifact.CoordinateQuery;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-
-import it.mulders.mcs.search.artifact.CoordinateQuery;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;

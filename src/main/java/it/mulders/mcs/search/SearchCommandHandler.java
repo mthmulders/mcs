@@ -4,11 +4,11 @@ import static it.mulders.mcs.Constants.MAX_LIMIT;
 
 import it.mulders.mcs.common.McsRuntimeException;
 import it.mulders.mcs.common.Result;
+import it.mulders.mcs.printer.DelegatingOutputPrinter;
+import it.mulders.mcs.printer.OutputFactory;
 import it.mulders.mcs.search.artifact.SearchClient;
 import it.mulders.mcs.search.artifact.SearchQuery;
 import it.mulders.mcs.search.artifact.SearchResponse;
-import it.mulders.mcs.printer.DelegatingOutputPrinter;
-import it.mulders.mcs.printer.OutputFactory;
 import it.mulders.mcs.search.vulnerability.ComponentReportClient;
 import it.mulders.mcs.search.vulnerability.ComponentReportResponse.ComponentReport;
 import jakarta.inject.Inject;

@@ -17,7 +17,6 @@ import java.net.ConnectException;
 import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
