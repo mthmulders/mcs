@@ -1,12 +1,12 @@
-package it.mulders.mcs.search.printer;
+package it.mulders.mcs.printer;
 
-public final class SbtOutput implements CoordinatePrinter {
+public final class IvyXmlOutput implements CoordinatePrinter {
 
     @Override
     public String provideCoordinates(
             final String group, final String artifact, final String version, String packaging) {
         return """
-                libraryDependencies += "%s" %% "%s" %% "%s"
+                <dependency org="%s" name="%s" rev="%s"/>
                 """
                 .formatted(group, artifact, version);
     }

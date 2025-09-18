@@ -1,4 +1,4 @@
-package it.mulders.mcs.search;
+package it.mulders.mcs.search.artifact;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.badRequest;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -17,10 +17,6 @@ import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import it.mulders.mcs.search.artifact.SearchClient;
-import it.mulders.mcs.search.artifact.SearchQuery;
-import it.mulders.mcs.search.artifact.SearchResponse;
-import it.mulders.mcs.search.artifact.WildcardSearchQuery;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;

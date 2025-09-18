@@ -1,4 +1,4 @@
-package it.mulders.mcs.search.printer;
+package it.mulders.mcs.printer;
 
 public final class GrapeOutput implements CoordinatePrinter {
 

@@ -1,4 +1,4 @@
-package it.mulders.mcs.search.printer;
+package it.mulders.mcs.printer;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;

@@ -1,4 +1,4 @@
-package it.mulders.mcs.search.printer;
+package it.mulders.mcs.printer;
 
 import it.mulders.mcs.search.artifact.SearchQuery;
 import it.mulders.mcs.search.artifact.SearchResponse;

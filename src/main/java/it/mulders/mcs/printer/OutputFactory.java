@@ -1,6 +1,5 @@
-package it.mulders.mcs.search.printer;
+package it.mulders.mcs.printer;
 
-import it.mulders.mcs.search.FormatType;
 import jakarta.inject.Inject;
 
 public class OutputFactory {

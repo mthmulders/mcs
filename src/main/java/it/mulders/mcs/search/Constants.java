@@ -1,7 +1,7 @@
 package it.mulders.mcs.search;
 
-import it.mulders.mcs.search.printer.CoordinatePrinter;
-import it.mulders.mcs.search.printer.PomXmlOutput;
+import it.mulders.mcs.printer.CoordinatePrinter;
+import it.mulders.mcs.printer.PomXmlOutput;
 
 public class Constants {
     public static final Integer DEFAULT_MAX_SEARCH_RESULTS = 20;
