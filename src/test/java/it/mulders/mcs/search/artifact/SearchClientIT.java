@@ -9,6 +9,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 
 import com.github.tomakehurst.wiremock.core.Options;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
+import it.mulders.mcs.Constants;
 import it.mulders.mcs.common.Result;
 import java.io.IOException;
 import java.io.InputStream;

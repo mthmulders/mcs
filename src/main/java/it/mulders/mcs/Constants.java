@@ -1,4 +1,4 @@
-package it.mulders.mcs.search;
+package it.mulders.mcs;
 
 import it.mulders.mcs.printer.CoordinatePrinter;
 import it.mulders.mcs.printer.PomXmlOutput;

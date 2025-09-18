@@ -2,8 +2,8 @@ package it.mulders.mcs.search.artifact;
 
 import it.mulders.mcs.search.SortType;
 
-import static it.mulders.mcs.search.Constants.DEFAULT_MAX_SEARCH_RESULTS;
-import static it.mulders.mcs.search.Constants.DEFAULT_START;
+import static it.mulders.mcs.Constants.DEFAULT_MAX_SEARCH_RESULTS;
+import static it.mulders.mcs.Constants.DEFAULT_START;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

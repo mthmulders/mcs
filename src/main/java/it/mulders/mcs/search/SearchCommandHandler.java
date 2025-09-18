@@ -1,6 +1,6 @@
 package it.mulders.mcs.search;
 
-import static it.mulders.mcs.search.Constants.MAX_LIMIT;
+import static it.mulders.mcs.Constants.MAX_LIMIT;
 
 import it.mulders.mcs.common.McsRuntimeException;
 import it.mulders.mcs.common.Result;

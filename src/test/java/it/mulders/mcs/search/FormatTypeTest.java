@@ -3,6 +3,7 @@ package it.mulders.mcs.search;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import it.mulders.mcs.Constants;
 import it.mulders.mcs.printer.CoordinatePrinter;
 import it.mulders.mcs.printer.FormatType;
 import it.mulders.mcs.printer.BuildrOutput;

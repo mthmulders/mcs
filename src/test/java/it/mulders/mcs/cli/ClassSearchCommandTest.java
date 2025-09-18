@@ -4,7 +4,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import it.mulders.mcs.search.Constants;
+import it.mulders.mcs.Constants;
 import it.mulders.mcs.search.SearchCommandHandler;
 import it.mulders.mcs.search.artifact.SearchQuery;
 import org.assertj.core.api.WithAssertions;
