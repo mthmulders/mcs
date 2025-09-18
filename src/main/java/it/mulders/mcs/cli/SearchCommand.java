@@ -1,7 +1,7 @@
 package it.mulders.mcs.cli;
 
 import it.mulders.mcs.search.SearchCommandHandler;
-import it.mulders.mcs.search.SearchQuery;
+import it.mulders.mcs.search.artifact.SearchQuery;
 import jakarta.inject.Inject;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;

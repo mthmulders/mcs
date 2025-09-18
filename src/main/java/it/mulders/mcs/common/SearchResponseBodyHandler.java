@@ -3,7 +3,7 @@ package it.mulders.mcs.common;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.jr.ob.JSON;
 import com.fasterxml.jackson.jr.ob.JSONObjectException;
-import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.artifact.SearchResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.http.HttpResponse;

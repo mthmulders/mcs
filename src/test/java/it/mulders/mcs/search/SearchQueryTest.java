@@ -1,5 +1,7 @@
 package it.mulders.mcs.search;
 
+import it.mulders.mcs.search.artifact.CoordinateQuery;
+import it.mulders.mcs.search.artifact.SearchQuery;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import org.assertj.core.api.WithAssertions;

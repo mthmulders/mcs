@@ -1,5 +1,7 @@
 package it.mulders.mcs.search;
 
+import it.mulders.mcs.Constants;
+import it.mulders.mcs.search.artifact.WildcardSearchQuery;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

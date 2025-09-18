@@ -2,6 +2,8 @@ package it.mulders.mcs.search;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import it.mulders.mcs.search.artifact.ClassnameQuery;
+import it.mulders.mcs.search.artifact.SearchQuery;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

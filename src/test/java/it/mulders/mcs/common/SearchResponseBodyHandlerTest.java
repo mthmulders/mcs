@@ -1,6 +1,6 @@
 package it.mulders.mcs.common;
 
-import it.mulders.mcs.search.SearchResponse;
+import it.mulders.mcs.search.artifact.SearchResponse;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
