@@ -199,7 +199,7 @@
                         <dependency>
                             <groupId>it.mulders.stryker</groupId>
                             <artifactId>pit-dashboard-reporter</artifactId>
-                            <version>0.3.7</version>
+                            <version>0.3.8</version>
                         </dependency>
                     </dependencies>
                 </plugin>
