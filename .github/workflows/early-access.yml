@@ -29,6 +29,7 @@ jobs:
           - os: windows-latest
             gu-binary: gu
     runs-on: ${{ matrix.os }}
+    environment: native-build
 
     steps:
       - name: Download all build artifacts
