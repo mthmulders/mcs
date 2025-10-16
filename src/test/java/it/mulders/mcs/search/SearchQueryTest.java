@@ -64,9 +64,7 @@ class SearchQueryTest implements WithAssertions {
         }
 
         @ParameterizedTest
-        @CsvSource(
-                textBlock =
-                        """
+        @CsvSource(textBlock = """
                 org.codehaus.plexus:plexus-utils,g:org.codehaus.plexus AND a:plexus-utils
                 org.codehaus.plexus:plexus-utils:3.4.1,g:org.codehaus.plexus AND a:plexus-utils AND v:3.4.1
                 org.codehaus.plexus:,g:org.codehaus.plexus

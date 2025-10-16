@@ -7,7 +7,6 @@ public final class IvyXmlOutput implements CoordinatePrinter {
             final String group, final String artifact, final String version, String packaging) {
         return """
                 <dependency org="%s" name="%s" rev="%s"/>
-                """
-                .formatted(group, artifact, version);
+                """.formatted(group, artifact, version);
     }
 }

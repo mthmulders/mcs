@@ -353,7 +353,7 @@
                 <configuration>
                     <java>
                         <palantirJavaFormat>
-                            <version>2.44.0</version>
+                            <version>2.80.0</version>
                         </palantirJavaFormat>
                         <toggleOffOn></toggleOffOn>
                     </java>

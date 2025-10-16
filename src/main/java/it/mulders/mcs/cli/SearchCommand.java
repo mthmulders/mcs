@@ -28,8 +28,7 @@ public class SearchCommand implements Callable<Integer> {
 
     @CommandLine.Option(
             names = {"-f", "--format"},
-            description =
-                    """
+            description = """
                     Show result in <type> format
                     Supported types are:
                       maven, gradle, gradle-short, gradle-kotlin, sbt, ivy, grape, leiningen, buildr, jbang, gav

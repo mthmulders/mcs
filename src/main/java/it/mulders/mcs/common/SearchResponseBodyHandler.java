@@ -27,9 +27,7 @@ public class SearchResponseBodyHandler implements HttpResponse.BodyHandler<Resul
             var map = JSON.std.mapFrom(input);
             return new Result.Success<>(constructSearchResponse(map));
         } catch (final JsonParseException | JSONObjectException joe) {
-            return new Result.Failure<>(
-                    new IllegalStateException(
-                            """
+            return new Result.Failure<>(new IllegalStateException("""
                             Error parsing the search result. This may be a temporary failure from search.maven.org.
                             It can also be caused by requesting a large number of results. If that is the case, try lowering the -l/--limit parameter.
                             If the problem persists, please open a conversation at

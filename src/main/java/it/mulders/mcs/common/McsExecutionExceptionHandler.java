@@ -11,14 +11,12 @@ public class McsExecutionExceptionHandler implements CommandLine.IExecutionExcep
     public int handleExecutionException(Exception ex, CommandLine commandLine, CommandLine.ParseResult parseResult) {
         var message =
                 ex instanceof McsRuntimeException ? ex.getCause().getLocalizedMessage() : ex.getLocalizedMessage();
-        System.err.print(
-                """
+        System.err.print("""
                 MCS ran into an error: %s
 
                 If the error persists, please consider reporting the issue at https://github.com/mthmulders/mcs/issues/new
 
-                """
-                        .formatted(message));
+                """.formatted(message));
         return -1;
     }
 }

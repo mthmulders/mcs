@@ -18,8 +18,7 @@ public sealed interface SearchQuery permits CoordinateQuery, ClassnameQuery, Wil
                 case 2 -> new CoordinateQuery.Builder(parts[0], parts[1]);
                 case 3 -> new CoordinateQuery.Builder(parts[0], parts[1], parts[2]);
                 default -> {
-                    var msg =
-                            """
+                    var msg = """
                             Searching a particular artifact requires at least groupId:artifactId and optionally :version
                             """;
                     throw new IllegalArgumentException(msg);

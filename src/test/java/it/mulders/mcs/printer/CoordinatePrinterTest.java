@@ -41,16 +41,14 @@ class CoordinatePrinterTest implements WithAssertions {
                         "jar",
                         1630022910000L)
             });
-    private static final String POM_XML_DEPENDENCY_OUTPUT =
-            """
+    private static final String POM_XML_DEPENDENCY_OUTPUT = """
             <dependency>
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-utils</artifactId>
                 <version>3.4.1</version>
             </dependency>
             """;
-    private static final String POM_XML_PLUGIN_OUTPUT =
-            """
+    private static final String POM_XML_PLUGIN_OUTPUT = """
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -61,16 +59,13 @@ class CoordinatePrinterTest implements WithAssertions {
             "implementation group: 'org.codehaus.plexus', name: 'plexus-utils', version: '3.4.1'";
     private static final String GRADLE_GROOVY_SHORT_OUTPUT = "implementation 'org.codehaus.plexus:plexus-utils:3.4.1'";
     private static final String GRADLE_KOTLIN_OUTPUT = "implementation(\"org.codehaus.plexus:plexus-utils:3.4.1\")";
-    private static final String SBT_OUTPUT =
-            """
+    private static final String SBT_OUTPUT = """
             libraryDependencies += "org.codehaus.plexus" % "plexus-utils" % "3.4.1"
             """;
-    private static final String IVY_XML_OUTPUT =
-            """
+    private static final String IVY_XML_OUTPUT = """
             <dependency org="org.codehaus.plexus" name="plexus-utils" rev="3.4.1"/>
             """;
-    private static final String GRAPE_OUTPUT =
-            """
+    private static final String GRAPE_OUTPUT = """
             @Grapes(
                 @Grab(group='org.codehaus.plexus', module='plexus-utils', version='3.4.1')
             )
@@ -138,8 +133,7 @@ class CoordinatePrinterTest implements WithAssertions {
                                                 "https://ossindex.sonatype.org/vulnerability/CVE-2022-40664?component-type=maven&component-name=org.apache.shiro%2Fshiro-web")
                                     }))
                 });
-        private static final String POM_XML_DEPENDENCY_OUTPUT_WITH_VULNERABILITIES =
-                """
+        private static final String POM_XML_DEPENDENCY_OUTPUT_WITH_VULNERABILITIES = """
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-web</artifactId>
