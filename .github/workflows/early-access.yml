@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ ubuntu-24.04, macos-13, macos-14, windows-2025 ]
+        os: [ ubuntu-24.04, macos-14-large, macos-14, windows-2025 ]
     runs-on: ${{ matrix.os }}
     environment: native-build
 
@@ -144,7 +144,7 @@ jobs:
 
       - name: Move build artifacts to correct folder
         run: |
-          targets=("ubuntu-24.04" "macos-13" "macos-14" "windows-2025")
+          targets=("ubuntu-24.04" "macos-14-large" "macos-14" "windows-2025")
           
           mkdir -p artifacts
           
