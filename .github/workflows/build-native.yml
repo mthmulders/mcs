@@ -63,7 +63,7 @@ jobs:
           echo "Downloading musl toolchain and compiling zlib against it..."
           mkdir -p ~/.musl-toolchain
           pushd ~/.musl-toolchain
-#          if [ ! -f x86_64-linux-musl-native.tgz ]; then
+          if [ ! -f x86_64-linux-musl-native.tgz ]; then
             curl \
                 --silent \
                 --insecure \
@@ -73,7 +73,7 @@ jobs:
                 --remote-name \
                 --remote-header-name \
                 --url "${MUSL_TOOLCHAIN_LOCATION}/11/x86_64-linux-musl-native.tgz"
-#          fi
+          fi
           popd
           
           TMP_DIR=$(mktemp -d)
