@@ -27,6 +27,9 @@ jobs:
           - target: windows-x64
             os: windows-2025
             arch: x64
+          - target: linux-x64
+            os: ubuntu-24.04
+            arch: x64
     runs-on: ${{ matrix.os }}
     environment: native-build
 
