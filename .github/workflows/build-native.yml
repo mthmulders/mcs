@@ -18,7 +18,8 @@ jobs:
       fail-fast: true
       matrix:
         include:
-          - target: macos-15-intel
+          - target: macos-x64
+            os: macos-15-intel
             arch: x64
           - target: macos-aarch64
             os: macos-15
