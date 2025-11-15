@@ -19,21 +19,16 @@ jobs:
       matrix:
         include:
           - target: macos-15-intel
-            os: macos-15
             arch: x64
-            label: macos-x64
           - target: macos-aarch64
             os: macos-15
             arch: aarch64
-            label: macos-aarch64
           - target: windows-x64
             os: windows-2025
             arch: x64
-            label: windows-x64
           - target: linux-x64
             os: ubuntu-24.04
             arch: x64
-            label: linux-x64
     runs-on: ${{ matrix.os }}
     environment: native-build
 
@@ -144,7 +139,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v5.0.0
         with:
-          name: artifacts-${{ matrix.label }}
+          name: artifacts-${{ matrix.target }}
           path: |
             target/distributions/*.zip
             target/distributions/*.tar.gz
