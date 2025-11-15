@@ -127,14 +127,14 @@ jobs:
         run: |
           PATH="${TOOLCHAIN_DIR}/bin:${PATH}"
           export PATH
-          mvn -B -Pnative,dist verify
+          mvn -B -Pnative -Pdist verify
         env:
           TOOLCHAIN_DIR: ${{ steps.prepare-musl.outputs.TOOLCHAIN_DIR }}
         if: ${{ contains(matrix.os, 'ubuntu') }}
 
       - name: Build static native image for Windows / macOS
         run: |
-          mvn -B -Pnative,dist package
+          mvn -B -Pnative -Pdist package
         if: ${{ ! contains(matrix.os, 'ubuntu') }}
 
       - name: Upload build artifacts
