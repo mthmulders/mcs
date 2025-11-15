@@ -60,7 +60,7 @@ distributions:
       alias: mcs
       downloadUrl: https://repo1.maven.org/maven2/it/mulders/mcs/{{projectVersion}}/
     artifacts:
-      - path: ./target/mcs-{{projectVersion}}.jar
+      - path: ./{{artifactsDir}}/{{distributionName}}-{{projectVersion}}.jar
   mcs:
     stereotype: CLI
     type: BINARY

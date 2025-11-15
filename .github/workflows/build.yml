@@ -38,6 +38,12 @@ jobs:
         path: ~/.m2
         key: ${{ steps.restore-maven-package-cache.outputs.cache-primary-key }}
       if: github.event_name != 'pull_request'
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v5.0.0
+      with:
+        name: artifacts-generic
+        path: |
+          target/mcs-*.jar
 
   native-build:
     uses: ./.github/workflows/build-native.yml
