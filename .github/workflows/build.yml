@@ -39,7 +39,7 @@ jobs:
         key: ${{ steps.restore-maven-package-cache.outputs.cache-primary-key }}
       if: github.event_name != 'pull_request'
 
-  trigger-native-build:
+  native-build:
     uses: ./.github/workflows/build-native.yml
     with:
       head_sha: ${{ github.sha }}
