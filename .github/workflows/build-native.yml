@@ -125,7 +125,7 @@ jobs:
         run: |
           PATH="${TOOLCHAIN_DIR}/bin:${PATH}"
           export PATH
-          mvn -B -Pnative verify
+          mvn -B -Pnative,dist verify
         env:
           TOOLCHAIN_DIR: ${{ steps.prepare-musl.outputs.TOOLCHAIN_DIR }}
         if: ${{ contains(matrix.os, 'ubuntu') }}
