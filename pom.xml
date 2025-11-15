@@ -413,7 +413,7 @@
                                 <goals>
                                     <goal>compile-no-fork</goal>
                                 </goals>
-                                <phase>package</phase>
+                                <phase>prepare-package</phase>
                             </execution>
                         </executions>
                     </plugin>
