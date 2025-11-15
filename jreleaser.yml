@@ -50,6 +50,17 @@ announce:
     status: 🚀 {{projectName}} {{projectVersion}} has just been released! Check {{releaseNotesUrl}} for the details.
 
 distributions:
+  mcs-jar:
+    stereotype: CLI
+    type: SINGLE_JAR
+    java:
+      mainClass: it.mulders.mcs.App
+    jbang:
+      active: ALWAYS
+      alias: mcs
+      downloadUrl: https://repo1.maven.org/maven2/it/mulders/mcs/{{projectVersion}}/
+    artifacts:
+      - path: ./target/mcs-{{projectVersion}}.jar
   mcs:
     stereotype: CLI
     type: BINARY
