@@ -34,7 +34,7 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: 'graalvm'
-          java-version: 24
+          java-version: 25
 
       - name: Retrieve musl toolchain from cache
         id: musl-toolchain-cache

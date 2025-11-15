@@ -24,7 +24,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v5.0.0
         with:
-          java-version: 24
+          java-version: 25
           distribution: 'adopt'
 
       - name: Cache Maven packages
@@ -95,7 +95,7 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: 'graalvm'
-          java-version: 24
+          java-version: 25
 
       - name: Retrieve musl toolchain from cache
         id: musl-toolchain-cache
@@ -229,7 +229,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v5.0.0
         with:
-          java-version: 24
+          java-version: 25
           distribution: 'adopt'
 
       - name: Cache Maven packages

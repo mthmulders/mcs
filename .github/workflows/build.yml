@@ -20,7 +20,7 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v5.0.0
       with:
-        java-version: 24
+        java-version: 25
         distribution: 'adopt'
         cache: maven
     - name: Cache Maven packages
