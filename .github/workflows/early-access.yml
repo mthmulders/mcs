@@ -2,131 +2,24 @@
 # https://github.com/jreleaser/jreleaser/blob/main/.github/workflows/trigger-early-access.yml
 
 name: Publish Early Access builds
+permissions:
+  contents: read
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
+  # Triggered after the Build workflow completes successfully
+  workflow_run:
+    workflows: ["Build"]
+    types:
+      - completed
     branches: [ main ]
 
 jobs:
-  # Build native executable per runner
-  build:
-    if: contains(github.event.head_commit.message, 'Releasing version') != true && contains(github.event.head_commit.message, 'Prepare next version') != true
-    name: build-${{ matrix.os }}
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ ubuntu-24.04, macos-15-intel, macos-15, windows-2025 ]
-    runs-on: ${{ matrix.os }}
-    environment: native-build
-
-    steps:
-      - name: Download all build artifacts
-        uses: actions/download-artifact@v6.0.0
-
-      - name: Check out repository
-        uses: actions/checkout@v5.0.0
-        with:
-          ref: ${{ steps.head.outputs.content }}
-
-      - name: Set up JDK
-        uses: actions/setup-java@v5.0.0
-        with:
-          distribution: 'graalvm'
-          java-version: 25
-
-      - name: Retrieve musl toolchain from cache
-        id: musl-toolchain-cache
-        uses: actions/cache/restore@v4.3.0
-        if: ${{ contains(matrix.os, 'ubuntu') }}
-        with:
-          path: ~/.musl-toolchain
-          key: mcs-musl-toolchain-10
-
-      - name: Get musl toolchain and compile libz against it
-        id: prepare-musl
-        run: |
-          mkdir -p ~/.musl-toolchain
-          pushd ~/.musl-toolchain
-          if [ ! -f x86_64-linux-musl-native.tgz ]; then
-            curl -u ${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS} -kLOJ ${MUSL_TOOLCHAIN_LOCATION}/10/x86_64-linux-musl/x86_64-linux-musl-native.tgz
-          fi
-          popd
-          
-          TMP_DIR=$(mktemp -d)
-          pushd $TMP_DIR
-          tar -xvf ~/.musl-toolchain/x86_64-linux-musl-native.tgz
-          
-          curl -LOJ https://zlib.net/fossils/zlib-1.3.tar.gz
-          tar -xzf zlib-1.3.tar.gz
-          cd zlib-1.3
-          
-          TOOLCHAIN_DIR=$TMP_DIR/x86_64-linux-musl-native
-          CC=$TOOLCHAIN_DIR/bin/gcc
-          
-          ./configure --prefix=$TOOLCHAIN_DIR --static
-          make
-          make install
-          
-          echo "TOOLCHAIN_DIR=$TOOLCHAIN_DIR" >> $GITHUB_OUTPUT
-        if: ${{ contains(matrix.os, 'ubuntu') }}
-        env:
-          MUSL_TOOLCHAIN_LOCATION: ${{ secrets.MUSL_TOOLCHAIN_LOCATION }}
-          MUSL_TOOLCHAIN_USER: ${{ secrets.MUSL_TOOLCHAIN_USER }}
-          MUSL_TOOLCHAIN_PASS: ${{ secrets.MUSL_TOOLCHAIN_PASS }}
-
-      - name: Save musl toolchain to cache
-        uses: actions/cache/save@v4.3.0
-        if: ${{ contains(matrix.os, 'ubuntu') }}
-        with:
-          path: ~/.musl-toolchain
-          key: mcs-musl-toolchain-10
-
-      - name: Cache Maven packages
-        id: restore-maven-package-cache
-        uses: actions/cache/restore@v4.3.0
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-
-      - name: Build static native image for Linux
-        run: |
-          PATH=${TOOLCHAIN_DIR}/bin:$PATH; mvn -B -Pnative package
-        env:
-          TOOLCHAIN_DIR: ${{ steps.prepare-musl.outputs.TOOLCHAIN_DIR }}
-        if: ${{ contains(matrix.os, 'ubuntu') }}
-
-      - name: Build static native image for Windows / macOS
-        run: |
-          mvn -B -Pnative package
-        if: ${{ ! contains(matrix.os, 'ubuntu') }}
-
-      - name: Create distribution
-        run: mvn -B -Pdist package -DskipTests
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v5.0.0
-        with:
-          name: artifacts-${{ matrix.os }}
-          path: |
-            target/distributions/*.zip
-            target/distributions/*.tar.gz
-
-      - name: Save downloaded Maven packages
-        uses: actions/cache/save@v4.3.0
-        with:
-          path: ~/.m2
-          key: ${{ steps.restore-maven-package-cache.outputs.cache-primary-key }}
-        if: github.event_name != 'pull_request'
-
   # Collect all executables and release
   release:
-    needs: [ build ]
     runs-on: ubuntu-24.04
     permissions: write-all
-    if: github.event_name != 'pull_request'
+    # Only run if the Build workflow succeeded
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Check out repository
@@ -134,21 +27,29 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check out correct Git ref
-        run: git checkout ${{ steps.head.outputs.content }}
-
-      - name: Download all build artifacts
-        uses: actions/download-artifact@v6.0.0
+      - name: Set up JDK
+        uses: actions/setup-java@v5.0.0
         with:
+          java-version: 25
+          distribution: 'temurin'
+          cache: maven
+
+      # Using third-party action because actions/download-artifact@v5 cannot download from different workflow runs (workflow_run context).
+      - name: Download native binary artifacts from Build workflow
+        uses: dawidd6/action-download-artifact@v11
+        with:
+          run_id: ${{ github.event.workflow_run.id }}
           path: /tmp/artifacts
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Move build artifacts to correct folder
+        shell: bash
         run: |
-          targets=("ubuntu-24.04" "macos-15-intel" "macos-15" "windows-2025")
-          
           mkdir -p artifacts
           
-          find /tmp/artifacts/ -name "mcs*" -exec mv -v {} artifacts/ \;
+          # Move MCS distribution artifacts to artifacts/ directory for JReleaser.
+          # Names use platform classifiers from os-detector-maven-plugin.
+          find /tmp/artifacts/ -type f \( -name "*.zip" -o -name "*.tar.gz" \) -exec mv -v {} artifacts/ \;
 
       - name: Cache Maven packages
         uses: actions/cache@v4.3.0
@@ -158,7 +59,15 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Release with JReleaser
-        run: mvn -B -Prelease -DartifactsDir=artifacts jreleaser:full-release
+        shell: bash
+        run: |
+          mvn \
+            --batch-mode \
+            --strict-checksum \
+            --errors \
+            -Prelease \
+            -DartifactsDir=artifacts \
+            jreleaser:full-release
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 

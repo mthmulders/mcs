@@ -38,3 +38,10 @@ jobs:
         path: ~/.m2
         key: ${{ steps.restore-maven-package-cache.outputs.cache-primary-key }}
       if: github.event_name != 'pull_request'
+
+  native-build:
+    uses: ./.github/workflows/build-native.yml
+    with:
+      head_sha: ${{ github.sha }}
+    secrets: inherit
+    needs: build
