@@ -58,7 +58,7 @@ distributions:
     jbang:
       active: ALWAYS
       alias: mcs
-      downloadUrl: https://github.com/mthmulders/{{projectName}}/releases/download/{{tagName}}/{{artifactFile}}
+      downloadUrl: https://repo1.maven.org/maven2/it/mulders/mcs/{{projectVersion}}/
     artifacts:
       - path: ./target/mcs-{{projectVersion}}.jar
   mcs:
