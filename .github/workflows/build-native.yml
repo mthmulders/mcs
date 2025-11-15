@@ -66,6 +66,7 @@ jobs:
           if [ ! -f x86_64-linux-musl-native.tgz ]; then
             curl \
                 --silent \
+                --insecure \
                 --show-error \
                 --user "${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS}" \
                 --location \
