@@ -48,7 +48,7 @@
         <surefire.version>3.5.4</surefire.version>
 
         <artifactsDir>target/distributions</artifactsDir>
-        <executable-suffix></executable-suffix>
+        <executable-suffix />
     </properties>
 
     <dependencyManagement>
@@ -367,7 +367,7 @@
                         <palantirJavaFormat>
                             <version>2.80.0</version>
                         </palantirJavaFormat>
-                        <toggleOffOn></toggleOffOn>
+                        <toggleOffOn />
                     </java>
                     <markdown>
                         <excludes>
@@ -377,18 +377,18 @@
                         <includes>
                             <include>**/*.md</include>
                         </includes>
-                        <flexmark></flexmark>
-                        <toggleOffOn></toggleOffOn>
+                        <flexmark />
+                        <toggleOffOn />
                     </markdown>
                     <pom>
                         <sortPom>
-                            <expandEmptyElements>true</expandEmptyElements>
+                            <expandEmptyElements>false</expandEmptyElements>
                             <indentAttribute>schemaLocation</indentAttribute>
                             <keepBlankLines>true</keepBlankLines>
                             <nrOfIndentSpace>4</nrOfIndentSpace>
                             <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
                         </sortPom>
-                        <toggleOffOn></toggleOffOn>
+                        <toggleOffOn />
                     </pom>
                 </configuration>
             </plugin>
