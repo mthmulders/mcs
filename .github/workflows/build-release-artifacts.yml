@@ -1,0 +1,53 @@
+name: Build Release Artifacts
+permissions:
+  contents: read
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-native:
+    uses: ./.github/workflows/build-native.yml
+    with:
+      head_sha: ${{ github.sha }}
+    secrets: inherit
+
+  collect-artifacts:
+    needs: build-native
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v5.0.0
+        with:
+          path: /tmp/artifacts
+
+      - name: Organise artifacts for upload
+        run: |
+          mkdir -p release-artifacts
+          FOUND=$(find /tmp/artifacts/ -type f \( -name "mcs-*.zip" -o -name "mcs-*.tar.gz" \))
+          if [ -z "$FOUND" ]; then
+            echo "ERROR: No build artifacts found in /tmp/artifacts/"
+            exit 1
+          fi
+          echo "$FOUND" | xargs -I{} cp -v {} release-artifacts/
+          ls -lh release-artifacts/
+
+      - name: Upload consolidated artifacts
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: release-artifacts-${{ github.ref_name }}
+          retention-days: 90
+          path: release-artifacts/
+
+      - name: Show download instructions
+        run: |
+          echo "::notice::Artifacts uploaded successfully for tag ${{ github.ref_name }}"
+          echo "::notice::To download artifacts locally, run:"
+          echo "::notice::  gh run download ${{ github.run_id }} -n release-artifacts-${{ github.ref_name }} -D artifacts/"
+          echo "::notice::Then run JReleaser locally:"
+          echo "::notice::  mvn -N -Prelease -DartifactsDir=artifacts jreleaser:full-release"
