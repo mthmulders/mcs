@@ -57,8 +57,8 @@ distributions:
       mainClass: it.mulders.mcs.App
     jbang:
       active: SNAPSHOT
-      alias: mcs
-      downloadUrl: https://github.com/mthmulders/{{projectName}}/releases/download/{{tagName}}/{{artifactFile}}
+      alias: mcs-snapshot
+      downloadUrl: https://github.com/mthmulders/{{projectName}}/releases/download/{{tagName}}/mcs-{{projectVersion}}.jar
       extraProperties:
         jbangDistributionGA: "it.mulders:mcs"
     artifacts:
