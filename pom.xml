@@ -27,7 +27,7 @@
     <scm>
         <connection>scm:git:https://github.com/mthmulders/mcs.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/mthmulders/mcs.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>improvement/continue-jbang-work</tag>
         <url>https://github.com/mthmulders/mcs</url>
     </scm>
 
