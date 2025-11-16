@@ -58,9 +58,12 @@ distributions:
     jbang:
       active: ALWAYS
       alias: mcs
-      downloadUrl: https://repo1.maven.org/maven2/it/mulders/mcs/{{projectVersion}}/
+      downloadUrl: https://github.com/mthmulders/{{projectName}}/releases/download/{{tagName}}/{{artifactFile}}
     artifacts:
       - path: ./{{artifactsDir}}/mcs-{{projectVersion}}.jar
+    extraProperties:
+      jbangDistributionGA: "it.mulders.mcs"
+      repoBranch: ""
   mcs:
     stereotype: CLI
     type: BINARY
