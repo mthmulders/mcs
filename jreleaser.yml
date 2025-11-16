@@ -75,7 +75,7 @@ distributions:
         jbangDistributionGA: "it.mulders:mcs"
     artifacts:
       - path: ./target/mcs-{{projectVersion}}.jar
-  mcs-executable:
+  mcs:
     stereotype: CLI
     type: BINARY
     brew:
