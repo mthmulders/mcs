@@ -71,7 +71,6 @@ distributions:
     jbang:
       active: RELEASE
       alias: mcs
-      downloadUrl: https://github.com/mthmulders/{{projectName}}/releases/download/{{tagName}}/{{artifactFile}}
       extraProperties:
         jbangDistributionGA: "it.mulders:mcs"
     artifacts:
