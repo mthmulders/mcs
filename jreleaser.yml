@@ -93,6 +93,7 @@ distributions:
       title: Maven Central Search
     sdkman:
       active: RELEASE
+      candidate: mcs
     snap:
       active: RELEASE
       base: core
