@@ -60,7 +60,9 @@ distributions:
       alias: mcs
       downloadUrl: https://github.com/mthmulders/{{projectName}}/releases/download/{{tagName}}/{{artifactFile}}
     artifacts:
-      - path: ./{{artifactsDir}}/mcs-{{projectVersion}}.jar
+      - path: ./target/mcs-{{projectVersion}}.jar
+    extraProperties:
+      jbangDistributionGA: "it.mulders:mcs"
   mcs-jar:
     stereotype: CLI
     type: SINGLE_JAR
@@ -71,10 +73,10 @@ distributions:
       alias: mcs
       downloadUrl: https://github.com/mthmulders/{{projectName}}/releases/download/{{tagName}}/{{artifactFile}}
     artifacts:
-      - path: ./{{artifactsDir}}/mcs-{{projectVersion}}.jar
+      - path: ./target/mcs-{{projectVersion}}.jar
     extraProperties:
       jbangDistributionGA: "it.mulders:mcs"
-  mcs:
+  mcs-executable:
     stereotype: CLI
     type: BINARY
     brew:
@@ -111,21 +113,21 @@ distributions:
         active: RELEASE
         name: scoop-mcs
     artifacts:
-      - path: ./{{artifactsDir}}/mcs-{{projectVersion}}-linux-x86_64.zip
+      - path: ./{{artifactsDir}}/{{projectName}}-{{projectVersion}}-linux-x86_64.zip
         platform: linux-x86_64
         extraProperties:
           graalVMNativeImage: true
-      - path: ./{{artifactsDir}}/mcs-{{projectVersion}}-linux-x86_64.tar.gz
+      - path: ./{{artifactsDir}}/{{projectName}}-{{projectVersion}}-linux-x86_64.tar.gz
         platform: linux-x86_64
         extraProperties:
           graalVMNativeImage: true
-      - path: ./{{artifactsDir}}/mcs-{{projectVersion}}-windows-x86_64.zip
+      - path: ./{{artifactsDir}}/{{projectName}}-{{projectVersion}}-windows-x86_64.zip
         platform: windows-x86_64
-      - path: ./{{artifactsDir}}/mcs-{{projectVersion}}-osx-x86_64.zip
+      - path: ./{{artifactsDir}}/{{projectName}}-{{projectVersion}}-osx-x86_64.zip
         platform: osx-x86_64
         extraProperties:
           graalVMNativeImage: true
-      - path: ./{{artifactsDir}}/mcs-{{projectVersion}}-osx-aarch_64.zip
+      - path: ./{{artifactsDir}}/{{projectName}}-{{projectVersion}}-osx-aarch_64.zip
         platform: osx-aarch_64
         extraProperties:
           graalVMNativeImage: true
