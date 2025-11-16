@@ -59,10 +59,10 @@ distributions:
       active: SNAPSHOT
       alias: mcs
       downloadUrl: https://github.com/mthmulders/{{projectName}}/releases/download/{{tagName}}/{{artifactFile}}
+      extraProperties:
+        jbangDistributionGA: "it.mulders:mcs"
     artifacts:
       - path: ./target/mcs-{{projectVersion}}.jar
-    extraProperties:
-      jbangDistributionGA: "it.mulders:mcs"
   mcs-jar:
     stereotype: CLI
     type: SINGLE_JAR
@@ -72,10 +72,10 @@ distributions:
       active: RELEASE
       alias: mcs
       downloadUrl: https://github.com/mthmulders/{{projectName}}/releases/download/{{tagName}}/{{artifactFile}}
+      extraProperties:
+        jbangDistributionGA: "it.mulders:mcs"
     artifacts:
       - path: ./target/mcs-{{projectVersion}}.jar
-    extraProperties:
-      jbangDistributionGA: "it.mulders:mcs"
   mcs-executable:
     stereotype: CLI
     type: BINARY
