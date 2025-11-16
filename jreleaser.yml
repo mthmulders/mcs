@@ -60,7 +60,7 @@ distributions:
       alias: mcs
       downloadUrl: https://github.com/mthmulders/{{projectName}}/releases/download/{{tagName}}/{{artifactFile}}
     artifacts:
-      - path: ./{{artifactsDir}}/mcs-{{projectVersion}}.jar
+      - path: ./target/mcs-{{projectVersion}}.jar
   mcs-jar:
     stereotype: CLI
     type: SINGLE_JAR
@@ -71,7 +71,7 @@ distributions:
       alias: mcs
       downloadUrl: https://github.com/mthmulders/{{projectName}}/releases/download/{{tagName}}/{{artifactFile}}
     artifacts:
-      - path: ./{{artifactsDir}}/mcs-{{projectVersion}}.jar
+      - path: ./target/mcs-{{projectVersion}}.jar
     extraProperties:
       jbangDistributionGA: "it.mulders:mcs"
   mcs-executable:
