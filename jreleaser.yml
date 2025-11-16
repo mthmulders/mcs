@@ -80,11 +80,13 @@ distributions:
     type: BINARY
     brew:
       active: RELEASE
+      formulaName: mcs
       multiPlatform: true
       repository:
         active: RELEASE
     chocolatey:
       active: RELEASE
+      packageName: mcs
       repository:
         active: RELEASE
       remoteBuild: true
@@ -109,6 +111,7 @@ distributions:
       remoteBuild: true
     scoop:
       active: RELEASE
+      packageName: mcs
       repository:
         active: RELEASE
         name: scoop-mcs
