@@ -62,7 +62,7 @@ distributions:
     artifacts:
       - path: ./{{artifactsDir}}/mcs-{{projectVersion}}.jar
     extraProperties:
-      jbangDistributionGA: "it.mulders.mcs"
+      jbangDistributionGA: "it.mulders:mcs"
       repoBranch: ""
   mcs:
     stereotype: CLI
