@@ -423,10 +423,6 @@
                 <configuration>
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                     <releaseProfiles>release</releaseProfiles>
-                    <goals>install</goals>
-                    <preparationGoals>clean verify</preparationGoals>
-                    <pushChanges>true</pushChanges>
-                    <localCheckout>true</localCheckout>
                 </configuration>
             </plugin>
 
