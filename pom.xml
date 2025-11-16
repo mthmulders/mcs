@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>it.mulders</groupId>
     <artifactId>mcs</artifactId>
-    <version>0.9.2-rc-3-SNAPSHOT</version>
+    <version>0.9.2-rc-3</version>
     <name>Maven Central Search</name>
 
     <description>Search Maven Central from your command line!</description>
@@ -27,7 +27,7 @@
     <scm>
         <connection>scm:git:https://github.com/mthmulders/mcs.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/mthmulders/mcs.git</developerConnection>
-        <tag>improvement/continue-jbang-work</tag>
+        <tag>v0.9.2-rc-3</tag>
         <url>https://github.com/mthmulders/mcs</url>
     </scm>
 
