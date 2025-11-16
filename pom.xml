@@ -477,6 +477,10 @@
         </profile>
         <profile>
             <id>release</id>
+            <properties>
+                <jreleaser.commit.author.email>mthmulders@noreply.github.com</jreleaser.commit.author.email>
+                <jreleaser.commit.author.name>JReleaser (bot)</jreleaser.commit.author.name>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
