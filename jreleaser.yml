@@ -50,19 +50,6 @@ announce:
     status: 🚀 {{projectName}} {{projectVersion}} has just been released! Check {{releaseNotesUrl}} for the details.
 
 distributions:
-  mcs-snapshot-jar:
-    stereotype: CLI
-    type: SINGLE_JAR
-    java:
-      mainClass: it.mulders.mcs.App
-    jbang:
-      active: SNAPSHOT
-      alias: mcs-snapshot
-      downloadUrl: https://github.com/mthmulders/{{projectName}}/releases/download/{{tagName}}/mcs-{{projectVersion}}.jar
-      extraProperties:
-        jbangDistributionGA: "it.mulders:mcs"
-    artifacts:
-      - path: ./target/mcs-{{projectVersion}}.jar
   mcs-jar:
     stereotype: CLI
     type: SINGLE_JAR
