@@ -46,6 +46,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p artifacts
+          mkdir -p target
           
           # Move MCS distribution artifacts to artifacts/ directory for JReleaser.
           # Names use platform classifiers from os-detector-maven-plugin.
