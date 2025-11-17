@@ -3,7 +3,8 @@
 [![Build status](https://github.com/mthmulders/mcs/actions/workflows/build.yml/badge.svg)](https://github.com/mthmulders/mcs/actions/workflows/build.yml)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fmthmulders%2Fmcs%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/mthmulders/mcs/main)
 [![Snapcraft.io status](https://snapcraft.io/maven-central-search/badge.svg)](https://snapcraft.io/maven-central-search)
-[![Jitpack release](https://jitpack.io/v/mthmulders/mcs.svg)](https://jitpack.io/#mthmulders/mcs)
+![Maven Central Version](https://img.shields.io/maven-central/v/it.mulders/mcs)
+[![Jitpack Snapshot](https://jitpack.io/v/mthmulders/mcs.svg)](https://jitpack.io/#mthmulders/mcs)
 
 > Use [Maven Central Repository Search](https://search.maven.org/) from your command line!
 
