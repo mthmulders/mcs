@@ -88,7 +88,7 @@ jobs:
             --location \
             --remote-name \
             --remote-header-name \
-            --url "https://zlib.net/zlib-1.3.1.tar.gz
+            --url "https://zlib.net/zlib-1.3.1.tar.gz"
           tar -xzf zlib-1.3.1.tar.gz
           cd zlib-1.3.1
           
