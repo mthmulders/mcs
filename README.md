@@ -52,7 +52,8 @@ This tool supports the following modes of searching:
 * In **Wildcard sarch** and **Coordinate search**, you can pass along the `-s` (or `--show-vulnerabilities`) flag.
   It will cause MCS to show a summary of reported security vulnerabilities against each result.
   If there is only one search result, it will display the CVE numbers reported against that result.
-  **Note** that this feature will probably soon hit the API limits for the Sonatype OSS Index. See [their documentation](https://ossindex.sonatype.org) for details on how this may impact your usage.
+  **Note** that this feature will probably soon hit the API limits for the Sonatype OSS Index.
+  See [their documentation](https://ossindex.sonatype.org) for details on how this may impact your usage.
   You can specify your credentials using the system properties `ossindex.username` and `ossindex.password`.
   See under "Configuring MCS" on how to do this in the most convenient way.
 
@@ -60,7 +61,7 @@ This tool supports the following modes of searching:
 
 You can install mcs using the package manager of your choice:
 
-| Package manager | Platform |            Installation             | Remarks |
+| Package manager | Platform | Installation                        | Remarks |
 |-----------------|----------|-------------------------------------|---------|
 | **Homebrew**    | 🍎 🐧    | `brew install mthmulders/tap/mcs`   | ⚠️ 1,2  |
 | **Snap**        | 🐧       | `snap install maven-central-search` | ⚠️ 1    |
