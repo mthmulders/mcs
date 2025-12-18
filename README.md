@@ -61,7 +61,7 @@ This tool supports the following modes of searching:
 
 You can install mcs using the package manager of your choice:
 
-| Package manager | Platform | Installation                        | Remarks |
+| Package manager | Platform |            Installation             | Remarks |
 |-----------------|----------|-------------------------------------|---------|
 | **Homebrew**    | 🍎 🐧    | `brew install mthmulders/tap/mcs`   | ⚠️ 1,2  |
 | **Snap**        | 🐧       | `snap install maven-central-search` | ⚠️ 1    |
@@ -73,7 +73,6 @@ You can install mcs using the package manager of your choice:
 1. The Linux binary only works on an x86_64 CPU.
 2. There are Apple binaries for both x86_64 and Apple Silicon, so you don't need Rosetta.
 3. You can try snapshots by running `jbang mcs-snapshot@mthmulders`.
-
 
 ### Usage with custom trust store
 
