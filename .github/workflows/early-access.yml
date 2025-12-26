@@ -36,7 +36,7 @@ jobs:
 
       # Using third-party action because actions/download-artifact@v5 cannot download from different workflow runs (workflow_run context).
       - name: Download native binary artifacts from Build workflow
-        uses: dawidd6/action-download-artifact@v11
+        uses: dawidd6/action-download-artifact@v12
         with:
           run_id: ${{ github.event.workflow_run.id }}
           path: /tmp/artifacts
