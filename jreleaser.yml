@@ -84,7 +84,7 @@ distributions:
       candidate: mcs
     snap:
       active: RELEASE
-      base: core
+      base: core20
       localPlugs:
         - network
       architectures:
