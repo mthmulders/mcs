@@ -74,7 +74,7 @@ jobs:
 
       - name: Capture JReleaser output
         if: always()
-        uses: actions/upload-artifact@v6.0.0
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: jreleaser-release-output
           retention-days: 7

@@ -38,7 +38,7 @@ jobs:
           ls -lh release-artifacts/
 
       - name: Upload consolidated artifacts
-        uses: actions/upload-artifact@v6.0.0
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: release-artifacts-${{ github.ref_name }}
           retention-days: 90
