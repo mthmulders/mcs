@@ -75,7 +75,7 @@ jobs:
               MUSL_TOOLCHAIN_ARCH=aarch64
               ;;
             *)
-              echo 'Unexpected CPU architecture!'
+              echo "Unexpected CPU architecture '$MATRIX_OS'!"
               exit 1
               ;;
           esac
