@@ -81,13 +81,6 @@ jobs:
           esac
           
           MUSL_TOOLCHAIN_FILE=${MUSL_TOOLCHAIN_ARCH}-linux-musl-native.tgz
-          TOOLCHAIN_DIR=$TMP_DIR/${MUSL_TOOLCHAIN_ARCH}-linux-musl-native
-          
-          if [ "$MATRIX_OS" = "ubuntu-24.04-arm" ]; then
-            # Symlink x86_64-linux-musl-gcc to aarch64-linux-musl-gcc as native-image expects the former to be present
-            # See https://www.graalvm.org/dev/reference-manual/native-image/guides/build-static-executables/
-            ln -s $TOOLCHAIN_DIR/bin/aarch64-linux-musl-gcc $TOOLCHAIN_DIR/bin/x86_64-linux-musl-gcc
-          fi
 
           if [ ! -f ${MUSL_TOOLCHAIN_FILE} ]; then
             curl \
@@ -118,6 +111,11 @@ jobs:
           cd zlib-1.3.2
           
           TOOLCHAIN_DIR=$TMP_DIR/${MUSL_TOOLCHAIN_ARCH}-linux-musl-native
+          if [ "$MATRIX_OS" = "ubuntu-24.04-arm" ]; then
+            # Symlink x86_64-linux-musl-gcc to aarch64-linux-musl-gcc as native-image expects the former to be present
+            # See https://www.graalvm.org/dev/reference-manual/native-image/guides/build-static-executables/
+            ln -s $TOOLCHAIN_DIR/bin/aarch64-linux-musl-gcc $TOOLCHAIN_DIR/bin/x86_64-linux-musl-gcc
+          fi
           CC=$TOOLCHAIN_DIR/bin/gcc
           
           echo "Configuring and installing zlib..."
