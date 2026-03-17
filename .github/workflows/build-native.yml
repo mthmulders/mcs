@@ -57,7 +57,7 @@ jobs:
         if: ${{ contains(matrix.os, 'ubuntu') }}
         with:
           path: ~/.musl-toolchain
-          key: mcs-musl-toolchain-11
+          key: mcs-musl-toolchain-11-${{ matrix.os }}
 
       - name: Get musl toolchain and compile libz against it
         shell: bash
@@ -137,7 +137,7 @@ jobs:
         if: ${{ contains(matrix.os, 'ubuntu') }}
         with:
           path: ~/.musl-toolchain
-          key: mcs-musl-toolchain-11
+          key: mcs-musl-toolchain-11-${{ matrix.os }}
 
       - name: Cache Maven packages
         id: restore-maven-package-cache
