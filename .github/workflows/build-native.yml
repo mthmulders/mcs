@@ -27,6 +27,9 @@ jobs:
           - target: windows-x64
             os: windows-2025
             arch: x64
+          - target: linux-aarch64
+            os: ubuntu-24.04-arm
+            arch: aarch64
           - target: linux-x64
             os: ubuntu-24.04
             arch: x64
@@ -54,7 +57,7 @@ jobs:
         if: ${{ contains(matrix.os, 'ubuntu') }}
         with:
           path: ~/.musl-toolchain
-          key: mcs-musl-toolchain-11
+          key: mcs-musl-toolchain-11-${{ matrix.os }}
 
       - name: Get musl toolchain and compile libz against it
         shell: bash
@@ -64,7 +67,22 @@ jobs:
           mkdir -p ~/.musl-toolchain
           pushd ~/.musl-toolchain
           
-          if [ ! -f x86_64-linux-musl-native.tgz ]; then
+          case $MATRIX_OS in
+            ubuntu-24.04)
+              MUSL_TOOLCHAIN_ARCH=x86_64
+              ;;
+            ubuntu-24.04-arm)
+              MUSL_TOOLCHAIN_ARCH=aarch64
+              ;;
+            *)
+              echo "Unexpected CPU architecture '$MATRIX_OS'!"
+              exit 1
+              ;;
+          esac
+          
+          MUSL_TOOLCHAIN_FILE=${MUSL_TOOLCHAIN_ARCH}-linux-musl-native.tgz
+
+          if [ ! -f ${MUSL_TOOLCHAIN_FILE} ]; then
             curl \
                 --silent \
                 --insecure \
@@ -73,13 +91,13 @@ jobs:
                 --location \
                 --remote-name \
                 --remote-header-name \
-                --url "${MUSL_TOOLCHAIN_LOCATION}/11/x86_64-linux-musl/x86_64-linux-musl-native.tgz"
+                --url "${MUSL_TOOLCHAIN_LOCATION}/11/${MUSL_TOOLCHAIN_ARCH}-linux-musl/${MUSL_TOOLCHAIN_FILE}"
           fi
           popd
           
           TMP_DIR=$(mktemp -d)
           pushd $TMP_DIR
-          tar -xvf ~/.musl-toolchain/x86_64-linux-musl-native.tgz
+          tar -xvf ~/.musl-toolchain/${MUSL_TOOLCHAIN_FILE}
           
           echo "Downloading and compiling zlib 1.3..."
           curl \
@@ -92,7 +110,12 @@ jobs:
           tar -xzf zlib-1.3.2.tar.gz
           cd zlib-1.3.2
           
-          TOOLCHAIN_DIR=$TMP_DIR/x86_64-linux-musl-native
+          TOOLCHAIN_DIR=$TMP_DIR/${MUSL_TOOLCHAIN_ARCH}-linux-musl-native
+          if [ "$MATRIX_OS" = "ubuntu-24.04-arm" ]; then
+            # Symlink x86_64-linux-musl-gcc to aarch64-linux-musl-gcc as native-image expects the former to be present
+            # See https://www.graalvm.org/dev/reference-manual/native-image/guides/build-static-executables/
+            ln -s $TOOLCHAIN_DIR/bin/aarch64-linux-musl-gcc $TOOLCHAIN_DIR/bin/x86_64-linux-musl-gcc
+          fi
           CC=$TOOLCHAIN_DIR/bin/gcc
           
           echo "Configuring and installing zlib..."
@@ -107,13 +130,14 @@ jobs:
           MUSL_TOOLCHAIN_LOCATION: ${{ secrets.MUSL_TOOLCHAIN_LOCATION }}
           MUSL_TOOLCHAIN_USER: ${{ secrets.MUSL_TOOLCHAIN_USER }}
           MUSL_TOOLCHAIN_PASS: ${{ secrets.MUSL_TOOLCHAIN_PASS }}
+          MATRIX_OS: ${{ matrix.os }}
 
       - name: Save musl toolchain to cache
         uses: actions/cache/save@v5.0.3
         if: ${{ contains(matrix.os, 'ubuntu') }}
         with:
           path: ~/.musl-toolchain
-          key: mcs-musl-toolchain-11
+          key: mcs-musl-toolchain-11-${{ matrix.os }}
 
       - name: Cache Maven packages
         id: restore-maven-package-cache
