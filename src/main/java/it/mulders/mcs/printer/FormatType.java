@@ -15,7 +15,8 @@ public enum FormatType {
     LEININGEN("leiningen", new LeiningenOutput()),
     BUILDR("buildr", new BuildrOutput()),
     JBANG("jbang", new JBangOutput()),
-    GAV("gav", new GavOutput());
+    GAV("gav", new GavOutput()),
+    URL("url", new UrlOutput());
 
     private final String label;
     private final CoordinatePrinter printer;

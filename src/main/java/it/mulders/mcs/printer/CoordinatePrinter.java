@@ -18,7 +18,8 @@ public sealed interface CoordinatePrinter extends OutputPrinter
                 PomXmlOutput,
                 SbtOutput,
                 JBangOutput,
-                GavOutput {
+                GavOutput,
+                UrlOutput {
 
     String provideCoordinates(final String group, final String artifact, final String version, final String packaging);
 

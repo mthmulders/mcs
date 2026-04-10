@@ -31,7 +31,7 @@ public class SearchCommand implements Callable<Integer> {
             description = """
                     Show result in <type> format
                     Supported types are:
-                      maven, gradle, gradle-short, gradle-kotlin, sbt, ivy, grape, leiningen, buildr, jbang, gav
+                      maven, gradle, gradle-short, gradle-kotlin, sbt, ivy, grape, leiningen, buildr, jbang, gav, url
                     """,
             paramLabel = "<type>")
     private String responseFormat;
