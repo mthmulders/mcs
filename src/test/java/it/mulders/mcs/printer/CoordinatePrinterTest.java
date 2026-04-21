@@ -19,6 +19,19 @@ class CoordinatePrinterTest implements WithAssertions {
 
     private static final SearchQuery QUERY =
             SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
+
+    private static final SearchResponse.Response BUNDLE_RESPONSE =
+            new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[] {
+                new SearchResponse.Response.Doc(
+                        "org.apache.felix:org.apache.felix.framework:4.0.2",
+                        "org.apache.felix",
+                        "org.apache.felix.framework",
+                        "4.0.2",
+                        null,
+                        "bundle",
+                        1630022910000L)
+            });
+
     private static final SearchResponse.Response PLUGIN_RESPONSE =
             new SearchResponse.Response(1, 0, new SearchResponse.Response.Doc[] {
                 new SearchResponse.Response.Doc(
@@ -74,6 +87,12 @@ class CoordinatePrinterTest implements WithAssertions {
     private static final String BUILDR_OUTPUT = "'org.codehaus.plexus:plexus-utils:jar:3.4.1'";
     private static final String JBANG_OUTPUT = "//DEPS org.codehaus.plexus:plexus-utils:3.4.1";
     private static final String GAV_OUTPUT = "org.codehaus.plexus:plexus-utils:3.4.1";
+    private static final String URL_DEPENDENCY_OUTPUT =
+            "https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.4.1/plexus-utils-3.4.1.jar";
+    private static final String URL_PLUGIN_OUTPUT =
+            "https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-jar-plugin/3.3.0/maven-jar-plugin-3.3.0.jar";
+    private static final String URL_BUNDLE_OUTPUT =
+            "https://repo.maven.apache.org/maven2/org/apache/felix/org.apache.felix.framework/4.0.2/org.apache.felix.framework-4.0.2.jar";
 
     private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
@@ -90,7 +109,10 @@ class CoordinatePrinterTest implements WithAssertions {
                 Arguments.of(new LeiningenOutput(), LEININGEN_OUTPUT, RESPONSE),
                 Arguments.of(new BuildrOutput(), BUILDR_OUTPUT, RESPONSE),
                 Arguments.of(new JBangOutput(), JBANG_OUTPUT, RESPONSE),
-                Arguments.of(new GavOutput(), GAV_OUTPUT, RESPONSE));
+                Arguments.of(new GavOutput(), GAV_OUTPUT, RESPONSE),
+                Arguments.of(new UrlOutput(), URL_DEPENDENCY_OUTPUT, RESPONSE),
+                Arguments.of(new UrlOutput(), URL_PLUGIN_OUTPUT, PLUGIN_RESPONSE),
+                Arguments.of(new UrlOutput(), URL_BUNDLE_OUTPUT, BUNDLE_RESPONSE));
     }
 
     @ParameterizedTest
