@@ -276,6 +276,21 @@
                         <publishingServerId>sonatype-central-portal</publishingServerId>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.6.2</version>
+                    <configuration>
+                        <fail>true</fail>
+                        <rules>
+                            <!-- enforces the Maven version -->
+                            <requireMavenVersion>
+                                <version>[3.6.3,3.99.99)</version>
+                            </requireMavenVersion>
+                        </rules>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
 
