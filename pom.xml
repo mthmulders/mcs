@@ -455,6 +455,9 @@
                         <configuration>
                             <agentResourceDirectory>${project.basedir}/src/main/graalvm-native</agentResourceDirectory>
                             <imageName>${project.artifactId}-${project.version}</imageName>
+                            <metadataRepository>
+                                <version>0.3.35</version>
+                            </metadataRepository>
                         </configuration>
                         <executions>
                             <execution>
