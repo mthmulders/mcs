@@ -570,6 +570,7 @@
                         <artifactId>jreleaser-maven-plugin</artifactId>
                         <configuration>
                             <configFile>jreleaser.yml</configFile>
+                            <reproducible>true</reproducible>
                         </configuration>
                     </plugin>
                 </plugins>
