@@ -12,6 +12,6 @@ public final class PomXmlOutput implements CoordinatePrinter {
                         <artifactId>%s</artifactId>
                         <version>%s</version>
                     </%4$s>
-                """.formatted(group, artifact, version, element);
+                """.stripTrailing().formatted(group, artifact, version, element);
     }
 }

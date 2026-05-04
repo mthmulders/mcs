@@ -4,8 +4,10 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+import it.mulders.mcs.clipboard.Clipboard;
 import it.mulders.mcs.common.Result;
 import it.mulders.mcs.printer.OutputFactory;
 import it.mulders.mcs.printer.OutputPrinter;
@@ -25,6 +27,7 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SearchCommandHandlerTest implements WithAssertions {
+    private final Clipboard clipboard = mock(Clipboard.class);
     private final ComponentReportClient componentReportClient = mock(ComponentReportClient.class);
     private final OutputPrinter outputPrinter = mock(OutputPrinter.class);
     private final OutputFactory outputFactory = new OutputFactory() {
@@ -90,7 +93,7 @@ class SearchCommandHandlerTest implements WithAssertions {
     ;
 
     private final SearchCommandHandler handler =
-            new SearchCommandHandler(componentReportClient, outputFactory, searchClient);
+            new SearchCommandHandler(clipboard, componentReportClient, outputFactory, searchClient);
 
     @Nested
     @DisplayName("Wildcard search")
@@ -102,7 +105,7 @@ class SearchCommandHandlerTest implements WithAssertions {
                     .thenReturn(new Result.Success<>(new SearchResponse(singleArtifactResponse)));
 
             // Act
-            handler.search(SearchQuery.search("plexus-utils").build(), "maven", false);
+            handler.search(SearchQuery.search("plexus-utils").build(), "maven", false, false);
 
             // Assert
             verify(outputPrinter).print(any(WildcardSearchQuery.class), eq(singleArtifactResponse), any());
@@ -117,7 +120,7 @@ class SearchCommandHandlerTest implements WithAssertions {
             when(searchClient.search(any())).thenReturn(result);
 
             assertThatThrownBy(
-                            () -> handler.search(SearchQuery.search("tls-error").build(), "maven", false))
+                            () -> handler.search(SearchQuery.search("tls-error").build(), "maven", false, false))
                     .isInstanceOf(RuntimeException.class);
         }
     }
@@ -130,11 +133,11 @@ class SearchCommandHandlerTest implements WithAssertions {
             // Arrange
             when(searchClient.search(any()))
                     .thenReturn(new Result.Success<>(new SearchResponse(singleArtifactResponse)));
-            var handler = new SearchCommandHandler(componentReportClient, outputFactory, searchClient);
+            var handler = new SearchCommandHandler(clipboard, componentReportClient, outputFactory, searchClient);
             var query = SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
 
             // Act
-            handler.search(query, "maven", false);
+            handler.search(query, "maven", false, false);
 
             // Assert
             verify(outputPrinter).print(eq(query), eq(singleArtifactResponse), any());
@@ -145,11 +148,11 @@ class SearchCommandHandlerTest implements WithAssertions {
             // Arrange
             when(searchClient.search(any()))
                     .thenReturn(new Result.Success<>(new SearchResponse(singleArtifactResponse)));
-            var handler = new SearchCommandHandler(componentReportClient, outputFactory, searchClient);
+            var handler = new SearchCommandHandler(clipboard, componentReportClient, outputFactory, searchClient);
 
             // Act
             handler.search(
-                    SearchQuery.search("org.codehaus.plexus:plexus-utils").build(), "maven", false);
+                    SearchQuery.search("org.codehaus.plexus:plexus-utils").build(), "maven", false, false);
 
             // Assert
             verify(outputPrinter).print(any(CoordinateQuery.class), eq(singleArtifactResponse), any());
@@ -161,8 +164,41 @@ class SearchCommandHandlerTest implements WithAssertions {
                             SearchQuery.search("org.codehaus.plexus:tls-error:3.4.1")
                                     .build(),
                             "maven",
+                            false,
                             false))
                     .isInstanceOf(RuntimeException.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("Clipboard Copy")
+    class ClipboardCopyTest {
+        @Test
+        void should_not_invoke_clipboard_when_flag_disabled() {
+            // Arrange
+            when(searchClient.search(any()))
+                    .thenReturn(new Result.Success<>(new SearchResponse(singleArtifactResponse)));
+            var query = SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
+
+            // Act
+            handler.search(query, "gav", false, false);
+
+            // Assert
+            verifyNoInteractions(clipboard);
+        }
+
+        @Test
+        void should_not_invoke_clipboard_when_multiple_artifact_response() {
+            // Arrange
+            when(searchClient.search(any()))
+                    .thenReturn(new Result.Success<>(new SearchResponse(multipleArtifactResponse)));
+            var query = SearchQuery.search("org.codehaus.plexus:plexus-utils").build();
+
+            // Act
+            handler.search(query, "gav", false, true);
+
+            // Assert
+            verifyNoInteractions(clipboard);
         }
     }
 }

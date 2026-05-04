@@ -50,7 +50,10 @@ This tool supports the following modes of searching:
 ## Flags
 
 * All modes recognise the `-l <number>` switch, which lets you specify how many results you want to see _at most_.
-* In **Wildcard sarch** and **Coordinate search**, you can pass along the `-s` (or `--show-vulnerabilities`) flag.
+* In **Wildcard search** and **Coordinate search**, you can pass the `-c` (or `--copy`) flag.
+  When the search returns exactly one result, MCS will copy the coordinates to your clipboard.
+  On 🍎, this uses `pbcopy`. On 🪟, it uses `clip`. On 🐧, it tries `wl-copy`, `xclip` and `xsel`.
+* In **Wildcard search** and **Coordinate search**, you can also pass the `-s` (or `--show-vulnerabilities`) flag.
   It will cause MCS to show a summary of reported security vulnerabilities against each result.
   If there is only one search result, it will display the CVE numbers reported against that result.
   **Note** that this feature will probably soon hit the API limits for the Sonatype OSS Index.

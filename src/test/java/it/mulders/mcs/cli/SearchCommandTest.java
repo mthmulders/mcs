@@ -19,71 +19,87 @@ class SearchCommandTest implements WithAssertions {
     @Test
     void delegates_to_handler() {
         // Arrange
-        var command = new SearchCommand(searchCommandHandler, new String[] {"test"}, null, "maven", false);
+        var command = new SearchCommand(searchCommandHandler, new String[] {"test"}, null, "maven", false, false);
 
         // Act
         command.call();
 
         // Assert
         var query = SearchQuery.search("test").build();
-        verifyHandlerInvocation("maven", false, query);
+        verifyHandlerInvocation("maven", false, false, query);
     }
 
     @Test
     void accepts_space_separated_terms() {
         // Arrange
-        var command = new SearchCommand(searchCommandHandler, new String[] {"jakarta", "rs"}, null, "maven", false);
+        var command =
+                new SearchCommand(searchCommandHandler, new String[] {"jakarta", "rs"}, null, "maven", false, false);
 
         // Act
         command.call();
 
         // Assert
         var query = SearchQuery.search("jakarta rs").build();
-        verifyHandlerInvocation("maven", false, query);
+        verifyHandlerInvocation("maven", false, false, query);
     }
 
     @Test
     void accepts_limit_results_parameter() {
         // Arrange
-        var command = new SearchCommand(searchCommandHandler, new String[] {"test"}, 3, "maven", false);
+        var command = new SearchCommand(searchCommandHandler, new String[] {"test"}, 3, "maven", false, false);
 
         // Act
         command.call();
 
         // Assert
         var query = SearchQuery.search("test").withLimit(3).build();
-        verifyHandlerInvocation("maven", false, query);
+        verifyHandlerInvocation("maven", false, false, query);
     }
 
     @Test
     void accepts_output_type_parameter() {
         // Arrange
-        var command = new SearchCommand(searchCommandHandler, new String[] {"test"}, null, "gradle-short", false);
+        var command =
+                new SearchCommand(searchCommandHandler, new String[] {"test"}, null, "gradle-short", false, false);
 
         // Act
         command.call();
 
         // Assert
         var query = SearchQuery.search("test").build();
-        verifyHandlerInvocation("gradle-short", false, query);
+        verifyHandlerInvocation("gradle-short", false, false, query);
     }
 
     @Test
     void accepts_show_vulnerabilities_parameter() {
         // Arrange
-        var command = new SearchCommand(searchCommandHandler, new String[] {"test"}, null, "maven", true);
+        var command = new SearchCommand(searchCommandHandler, new String[] {"test"}, null, "maven", true, false);
 
         // Act
         command.call();
 
         // Assert
         var query = SearchQuery.search("test").build();
-        verifyHandlerInvocation("maven", true, query);
+        verifyHandlerInvocation("maven", true, false, query);
     }
 
-    private void verifyHandlerInvocation(String outputFormat, boolean reportVulnerabilities, SearchQuery query) {
+    @Test
+    void accepts_copy_parameter() {
+        // Arrange
+        var command = new SearchCommand(searchCommandHandler, new String[] {"test"}, null, "maven", false, true);
+
+        // Act
+        command.call();
+
+        // Assert
+        var query = SearchQuery.search("test").build();
+        verifyHandlerInvocation("maven", false, true, query);
+    }
+
+    private void verifyHandlerInvocation(
+            String outputFormat, boolean reportVulnerabilities, boolean copy, SearchQuery query) {
         var captor = ArgumentCaptor.forClass(SearchQuery.class);
-        verify(searchCommandHandler).search(captor.capture(), eq(outputFormat), eq(reportVulnerabilities));
+        verify(searchCommandHandler).search(captor.capture(), eq(outputFormat), eq(reportVulnerabilities), eq(copy));
         assertThat(captor.getValue()).isEqualTo(query);
     }
 }

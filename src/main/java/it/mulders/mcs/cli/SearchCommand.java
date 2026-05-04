@@ -42,6 +42,11 @@ public class SearchCommand implements Callable<Integer> {
             paramLabel = "<vulnerabilities>")
     private boolean showVulnerabilities;
 
+    @CommandLine.Option(
+            names = {"-c", "--copy"},
+            description = "Copy the coordinates to the clipboard when the search returns exactly one result")
+    private boolean copy;
+
     private final SearchCommandHandler searchCommandHandler;
 
     @Inject
@@ -55,12 +60,14 @@ public class SearchCommand implements Callable<Integer> {
             String[] query,
             Integer limit,
             String responseFormat,
-            boolean showVulnerabilities) {
+            boolean showVulnerabilities,
+            boolean copy) {
         this(searchCommandHandler);
         this.limit = limit;
         this.query = query;
         this.responseFormat = responseFormat;
         this.showVulnerabilities = showVulnerabilities;
+        this.copy = copy;
     }
 
     @Override
@@ -70,7 +77,7 @@ public class SearchCommand implements Callable<Integer> {
         var searchQuery =
                 SearchQuery.search(combinedQuery).withLimit(this.limit).build();
 
-        searchCommandHandler.search(searchQuery, responseFormat, showVulnerabilities);
+        searchCommandHandler.search(searchQuery, responseFormat, showVulnerabilities, copy);
         return 0;
     }
 }

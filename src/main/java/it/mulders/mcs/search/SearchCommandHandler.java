@@ -2,8 +2,10 @@ package it.mulders.mcs.search;
 
 import static it.mulders.mcs.Constants.MAX_LIMIT;
 
+import it.mulders.mcs.clipboard.Clipboard;
 import it.mulders.mcs.common.McsRuntimeException;
 import it.mulders.mcs.common.Result;
+import it.mulders.mcs.printer.ClipboardOutputPrinter;
 import it.mulders.mcs.printer.DelegatingOutputPrinter;
 import it.mulders.mcs.printer.OutputFactory;
 import it.mulders.mcs.search.artifact.SearchClient;
@@ -15,21 +17,28 @@ import jakarta.inject.Inject;
 import java.util.stream.Stream;
 
 public class SearchCommandHandler {
+    private final Clipboard clipboard;
     private final OutputFactory outputFactory;
     private final SearchClient searchClient;
     private final ComponentReportClient reportClient;
 
     @Inject
     public SearchCommandHandler(
+            final Clipboard clipboard,
             final ComponentReportClient reportClient,
             final OutputFactory outputFactory,
             final SearchClient searchClient) {
+        this.clipboard = clipboard;
         this.outputFactory = outputFactory;
         this.reportClient = reportClient;
         this.searchClient = searchClient;
     }
 
-    public void search(final SearchQuery query, final String outputFormat, final boolean reportVulnerabilities) {
+    public void search(
+            final SearchQuery query,
+            final String outputFormat,
+            final boolean reportVulnerabilities,
+            final boolean copy) {
         performSearch(query)
                 .map(response -> performAdditionalSearch(query, response))
                 .ifPresentOrElse(
@@ -37,7 +46,7 @@ public class SearchCommandHandler {
                             if (reportVulnerabilities) {
                                 processResponse(query, response);
                             }
-                            printResponse(query, response, outputFormat, reportVulnerabilities);
+                            printResponse(query, response, outputFormat, reportVulnerabilities, copy);
                         },
                         failure -> {
                             throw new McsRuntimeException(failure);
@@ -98,8 +107,11 @@ public class SearchCommandHandler {
             final SearchQuery query,
             final SearchResponse.Response response,
             final String outputFormat,
-            final boolean showVulnerabilities) {
-        var printer = new DelegatingOutputPrinter(outputFactory.findOutputPrinter(outputFormat), showVulnerabilities);
+            final boolean showVulnerabilities,
+            final boolean copy) {
+        var outputPrinter = outputFactory.findOutputPrinter(outputFormat);
+        var coordinateOutput = new ClipboardOutputPrinter(outputPrinter, clipboard, copy);
+        var printer = new DelegatingOutputPrinter(coordinateOutput, showVulnerabilities);
         printer.print(query, response, System.out);
     }
 }
