@@ -5,7 +5,7 @@ import it.mulders.mcs.cli.SearchCommand;
 import it.mulders.mcs.cli.SystemPropertyLoader;
 import picocli.CommandLine;
 
-@Component(modules = {CommandLineModule.class, OutputModule.class, SearchModule.class})
+@Component(modules = {ClipboardModule.class, CommandLineModule.class, OutputModule.class, SearchModule.class})
 public interface Application {
     CommandLine commandLine();
 

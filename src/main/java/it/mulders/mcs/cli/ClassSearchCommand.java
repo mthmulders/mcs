@@ -31,6 +31,11 @@ public class ClassSearchCommand implements Callable<Integer> {
             paramLabel = "<count>")
     private Integer limit;
 
+    @CommandLine.Option(
+            names = {"-c", "--copy"},
+            description = "Copy the coordinates to the clipboard when the search returns exactly one result")
+    private boolean copy;
+
     private final SearchCommandHandler searchCommandHandler;
 
     @Inject
@@ -39,11 +44,17 @@ public class ClassSearchCommand implements Callable<Integer> {
     }
 
     // Visible for testing
-    ClassSearchCommand(final SearchCommandHandler searchCommandHandler, String query, Integer limit, boolean fullName) {
+    ClassSearchCommand(
+            final SearchCommandHandler searchCommandHandler,
+            String query,
+            Integer limit,
+            boolean fullName,
+            boolean copy) {
         this(searchCommandHandler);
         this.fullName = fullName;
         this.limit = limit;
         this.query = query;
+        this.copy = copy;
     }
 
     @Override
@@ -53,7 +64,7 @@ public class ClassSearchCommand implements Callable<Integer> {
                 .isFullyQualified(this.fullName)
                 .withLimit(limit)
                 .build();
-        searchCommandHandler.search(searchQuery, "maven", false);
+        searchCommandHandler.search(searchQuery, "maven", false, copy);
         return 0;
     }
 }
