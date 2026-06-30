@@ -33,6 +33,6 @@ jobs:
           cache: maven
 
       - name: Run Pitest
-        run: mvn -B test-compile org.pitest:pitest-maven:mutationCoverage
+        run: ./mvnw -B test-compile org.pitest:pitest-maven:mutationCoverage
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
