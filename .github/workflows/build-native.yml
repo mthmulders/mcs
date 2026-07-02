@@ -119,8 +119,7 @@ jobs:
           make
           make install
           
-          echo ""
-          echo "Prepared musl toolchain at $TOOLCHAIN_DIR"
+          echo "\nPrepared musl toolchain at $TOOLCHAIN_DIR"
           echo "TOOLCHAIN_DIR=$TOOLCHAIN_DIR" >> $GITHUB_OUTPUT
 
       - name: Save musl toolchain to cache
@@ -151,7 +150,7 @@ jobs:
           export PATH
           mvn -B -Pnative -Pdist verify
         env:
-          TOOLCHAIN_DIR: ${{ steps.prepare-musl.outputs.TOOLCHAIN_DIR }}
+          TOOLCHAIN_DIR: ${{ steps.build-libz.outputs.TOOLCHAIN_DIR }}
         if: ${{ contains(matrix.os, 'ubuntu') }}
 
       - name: Build static native image for Windows / macOS
