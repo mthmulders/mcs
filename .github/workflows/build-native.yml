@@ -106,7 +106,7 @@ jobs:
         id: build-libz
         if: ${{ contains(matrix.os, 'ubuntu') }}
         run: |
-          TMP_DIR=$(mktemp -d)
+          TMP_DIR=$(mktemp -d -p `pwd`)
           pushd $TMP_DIR
           tar -xf ~/.musl-toolchain/x86_64-linux-musl-native.tgz
           TOOLCHAIN_DIR=$TMP_DIR/x86_64-linux-musl-native
@@ -119,6 +119,7 @@ jobs:
           make
           make install
           
+          echo ""
           echo "Prepared musl toolchain at $TOOLCHAIN_DIR"
           echo "TOOLCHAIN_DIR=$TOOLCHAIN_DIR" >> $GITHUB_OUTPUT
 
