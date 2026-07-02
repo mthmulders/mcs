@@ -56,6 +56,28 @@ jobs:
           path: ~/.musl-toolchain
           key: mcs-musl-toolchain-11
 
+      - name: Get musl toolchain
+        if: ${{ steps.musl-toolchain-cache.outputs.cache-hit != 'true' && contains(matrix.os, 'ubuntu') }}
+        shell: bash
+        id: get-musl-toolchain
+        run: |
+          mkdir -p ~/.musl-toolchain
+          pushd ~/.musl-toolchain
+          
+          echo "Downloading and compiling musl libc toolchain 11..."
+          curl \
+              --insecure \
+              --show-error \
+              --user "${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS}" \
+              --location \
+              --remote-name \
+              --remote-header-name \
+              --url "${MUSL_TOOLCHAIN_LOCATION}/11/x86_64-linux-musl/x86_64-linux-musl-native.tgz"
+        env:
+          MUSL_TOOLCHAIN_LOCATION: ${{ secrets.MUSL_TOOLCHAIN_LOCATION }}
+          MUSL_TOOLCHAIN_USER: ${{ secrets.MUSL_TOOLCHAIN_USER }}
+          MUSL_TOOLCHAIN_PASS: ${{ secrets.MUSL_TOOLCHAIN_PASS }}
+
       - name: Retrieve zlib from cache
         id: zlib-toolchain-cache
         uses: actions/cache/restore@v5.0.5
@@ -64,39 +86,26 @@ jobs:
           path: ~/.zlib
           key: mcs-zlib-1.3.2
 
-      - name: Get musl toolchain and compile libz against it
+      - name: Get libz
         shell: bash
-        id: prepare-musl
+        id: get-libz
+        if: ${{ steps.zlib-toolchain-cache.outputs.cache-hit != 'true' && contains(matrix.os, 'ubuntu') }}
         run: |
-          mkdir -p ~/.musl-toolchain
-          pushd ~/.musl-toolchain
-          
-          if [ ! -f x86_64-linux-musl-native.tgz ]; then
-            echo "Downloading and compiling musl libc toolchain 11..."
-            curl \
-                --insecure \
-                --show-error \
-                --user "${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS}" \
-                --location \
-                --remote-name \
-                --remote-header-name \
-                --url "${MUSL_TOOLCHAIN_LOCATION}/11/x86_64-linux-musl/x86_64-linux-musl-native.tgz"
-          fi
-          popd
-          
           mkdir -p ~/.zlib
           pushd ~/.zlib
-          if [ ! -f zlib-1.3.2.tar.gz ]; then
-              echo "Downloading and compiling zlib 1.3.2..."
-              curl \
-                --show-error \
-                --location \
-                --remote-name \
-                --remote-header-name \
-                --url "https://zlib.net/zlib-1.3.2.tar.gz"
-          fi
-          popd
-          
+          echo "Downloading and compiling zlib 1.3.2..."
+          curl \
+            --show-error \
+            --location \
+            --remote-name \
+            --remote-header-name \
+            --url "https://zlib.net/zlib-1.3.2.tar.gz"
+
+      - name: Build libz with musl toolchain
+        shell: bash
+        id: build-libz
+        if: ${{ contains(matrix.os, 'ubuntu') }}
+        run: |
           TMP_DIR=$(mktemp -d)
           pushd $TMP_DIR
           tar -xf ~/.musl-toolchain/x86_64-linux-musl-native.tgz
@@ -112,11 +121,6 @@ jobs:
           
           echo "Prepared musl toolchain at $TOOLCHAIN_DIR"
           echo "TOOLCHAIN_DIR=$TOOLCHAIN_DIR" >> $GITHUB_OUTPUT
-        if: ${{ contains(matrix.os, 'ubuntu') }}
-        env:
-          MUSL_TOOLCHAIN_LOCATION: ${{ secrets.MUSL_TOOLCHAIN_LOCATION }}
-          MUSL_TOOLCHAIN_USER: ${{ secrets.MUSL_TOOLCHAIN_USER }}
-          MUSL_TOOLCHAIN_PASS: ${{ secrets.MUSL_TOOLCHAIN_PASS }}
 
       - name: Save musl toolchain to cache
         uses: actions/cache/save@v5.0.5
