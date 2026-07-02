@@ -74,7 +74,6 @@ jobs:
           if [ ! -f x86_64-linux-musl-native.tgz ]; then
             echo "Downloading and compiling musl libc toolchain 11..."
             curl \
-                --silent \
                 --insecure \
                 --show-error \
                 --user "${MUSL_TOOLCHAIN_USER}:${MUSL_TOOLCHAIN_PASS}" \
