@@ -50,7 +50,7 @@ jobs:
 
       - name: Retrieve musl toolchain from cache
         id: musl-toolchain-cache
-        uses: actions/cache/restore@v5.0.5
+        uses: actions/cache/restore@v6.1.0
         if: ${{ contains(matrix.os, 'ubuntu') }}
         with:
           path: ~/.musl-toolchain
@@ -80,7 +80,7 @@ jobs:
 
       - name: Retrieve zlib from cache
         id: zlib-toolchain-cache
-        uses: actions/cache/restore@v5.0.5
+        uses: actions/cache/restore@v6.1.0
         if: ${{ contains(matrix.os, 'ubuntu') }}
         with:
           path: ~/.zlib
@@ -123,14 +123,14 @@ jobs:
           echo "TOOLCHAIN_DIR=$TOOLCHAIN_DIR" >> $GITHUB_OUTPUT
 
       - name: Save musl toolchain to cache
-        uses: actions/cache/save@v5.0.5
+        uses: actions/cache/save@v6.1.0
         if: ${{ contains(matrix.os, 'ubuntu') }}
         with:
           path: ~/.musl-toolchain
           key: mcs-musl-toolchain-11
 
       - name: Save zlib toolchain to cache
-        uses: actions/cache/save@v5.0.5
+        uses: actions/cache/save@v6.1.0
         if: ${{ contains(matrix.os, 'ubuntu') }}
         with:
           path: ~/.zlib
@@ -138,7 +138,7 @@ jobs:
 
       - name: Cache Maven packages
         id: restore-maven-package-cache
-        uses: actions/cache/restore@v5.0.5
+        uses: actions/cache/restore@v6.1.0
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -167,7 +167,7 @@ jobs:
             target/distributions/*.tar.gz
 
       - name: Save downloaded Maven packages
-        uses: actions/cache/save@v5.0.5
+        uses: actions/cache/save@v6.1.0
         with:
           path: ~/.m2
           key: ${{ steps.restore-maven-package-cache.outputs.cache-primary-key }}
