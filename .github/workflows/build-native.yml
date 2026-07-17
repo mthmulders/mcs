@@ -119,7 +119,8 @@ jobs:
           make
           make install
           
-          echo "\nPrepared musl toolchain at $TOOLCHAIN_DIR"
+          echo ""
+          echo "Prepared musl toolchain at $TOOLCHAIN_DIR"
           echo "TOOLCHAIN_DIR=$TOOLCHAIN_DIR" >> $GITHUB_OUTPUT
 
       - name: Save musl toolchain to cache
