@@ -21,6 +21,7 @@ public interface ClipboardModule {
         } else if (os.contains("nux") || os.contains("bsd")) {
             return new LinuxClipboard();
         } else {
+            System.err.printf("Unsupported operating system: %s%n", os);
             return new NoOpClipboard();
         }
     }

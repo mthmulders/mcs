@@ -15,6 +15,7 @@ public final class LinuxClipboard implements Clipboard {
         } else if (which("xsel")) {
             return run(List.of("xsel", "--clipboard"), text);
         } else {
+            System.err.println("Failed to find supported clipboard command. Tried wl-copy, xclip, and xsel");
             return false;
         }
     }
