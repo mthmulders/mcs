@@ -6,9 +6,9 @@ import java.time.Duration;
 import java.util.List;
 
 final class Shell {
-    private Shell() {}
+    Shell() {}
 
-    static boolean which(final String command) {
+    boolean which(final String command) {
         try {
             return new ProcessBuilder("which", command).start().waitFor() == 0;
         } catch (InterruptedException e) {
@@ -19,11 +19,11 @@ final class Shell {
         }
     }
 
-    static boolean run(final String command, final String stdin) {
+    boolean run(final String command, final String stdin) {
         return run(List.of(command), stdin);
     }
 
-    static boolean run(final List<String> command, final String stdin) {
+    boolean run(final List<String> command, final String stdin) {
         try {
             var process = new ProcessBuilder(command).start();
             try (var out = process.getOutputStream()) {
