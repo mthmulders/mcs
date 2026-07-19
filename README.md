@@ -5,6 +5,7 @@
 [![Snapcraft.io status](https://snapcraft.io/maven-central-search/badge.svg)](https://snapcraft.io/maven-central-search)
 ![Maven Central Version](https://img.shields.io/maven-central/v/it.mulders/mcs)
 [![Jitpack Snapshot](https://jitpack.io/v/mthmulders/mcs.svg)](https://jitpack.io/#mthmulders/mcs)
+[![Reproducible Builds](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/jvm-repo-rebuild/reproducible-central/master/content/it/mulders/mcs/badge.json)](https://github.com/jvm-repo-rebuild/reproducible-central/blob/master/content/it/mulders/mcs/README.md)
 
 > Use [Maven Central Repository Search](https://search.maven.org/) from your command line!
 
