@@ -23,6 +23,10 @@ public sealed interface CoordinatePrinter extends OutputPrinter
 
     String provideCoordinates(final String group, final String artifact, final String version, final String packaging);
 
+    default String provideCoordinates(final SearchResponse.Response.Doc doc) {
+        return provideCoordinates(doc.g(), doc.a(), first(doc.v(), doc.latestVersion()), doc.p());
+    }
+
     @Override
     default void print(final SearchQuery query, final SearchResponse.Response response, final PrintStream stream) {
         if (response.numFound() != 1) {
@@ -31,7 +35,7 @@ public sealed interface CoordinatePrinter extends OutputPrinter
 
         var doc = response.docs()[0];
         stream.println();
-        stream.println(provideCoordinates(doc.g(), doc.a(), first(doc.v(), doc.latestVersion()), doc.p()));
+        stream.println(provideCoordinates(doc));
         stream.println();
         printVulnerabilities(doc.componentReport(), stream);
     }

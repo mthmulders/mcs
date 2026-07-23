@@ -7,6 +7,6 @@ public final class SbtOutput implements CoordinatePrinter {
             final String group, final String artifact, final String version, String packaging) {
         return """
                 libraryDependencies += "%s" %% "%s" %% "%s"
-                """.formatted(group, artifact, version);
+                """.stripTrailing().formatted(group, artifact, version);
     }
 }

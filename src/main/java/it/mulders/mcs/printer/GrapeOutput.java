@@ -9,6 +9,6 @@ public final class GrapeOutput implements CoordinatePrinter {
                 @Grapes(
                     @Grab(group='%s', module='%s', version='%s')
                 )
-                """.formatted(group, artifact, version);
+                """.stripTrailing().formatted(group, artifact, version);
     }
 }
