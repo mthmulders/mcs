@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-22-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-23-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ## Contributors ✨
 
@@ -39,6 +39,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="http://www.adamretter.org.uk"><img src="https://avatars.githubusercontent.com/u/1264057?v=4?s=100" width="100px;" alt="Adam Retter"/><br /><sub><b>Adam Retter</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/issues?q=author%3Aadamretter" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/dmbuzink"><img src="https://avatars.githubusercontent.com/u/32389987?v=4?s=100" width="100px;" alt="Gamtheus"/><br /><sub><b>Gamtheus</b></sub></a><br /><a href="https://github.com/mthmulders/mcs/commits?author=dmbuzink" title="Tests">⚠️</a></td>
     </tr>
   </tbody>
 </table>
