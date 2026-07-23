@@ -115,15 +115,12 @@ This way, you don't have to remember passing the `-D`.
 
 ## Contributing
 
-Probably the easiest way to get a working development environment is to use Gitpod:
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/mthmulders/mcs)
-
-It will configure a workspace in your browser and show that everything works as expected by running `mvn verify`.
-This setup does not touch your computer - as soon as you close your browser tab, it's gone.
-
-Checkout the [issues](https://github.com/mthmulders/mcs/issues) if you're looking for something to work on.
+Check out the [issues](https://github.com/mthmulders/mcs/issues) if you're looking for something to work on.
 If you have a new idea, feel free to bring it up using the [discussions](https://github.com/mthmulders/mcs/discussions).
+
+The MCS source code uses Java 25 constructs and is built with [Apache Maven](https://maven.apache.org/).
+You don't need to install Maven itself, the [Maven Wrapper](https://maven.apache.org/tools/wrapper/) will automatically download the correct version for you.
+Instead of `mvn verify`, you can simply run `./mvnw verify`, and everything is arranged for.
 
 ## Acknowledgements
 
