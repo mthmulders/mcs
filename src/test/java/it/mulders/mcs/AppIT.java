@@ -7,6 +7,7 @@ import static java.util.Arrays.asList;
 import java.util.List;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.*;
+import org.junitpioneer.jupiter.StdErr;
 import org.junitpioneer.jupiter.StdIo;
 import org.junitpioneer.jupiter.StdOut;
 
@@ -85,9 +86,11 @@ class AppIT implements WithAssertions {
     class FunctionalIT {
         @StdIo
         @Test
-        void should_find_plexus_utils_341(StdOut out) {
+        void should_find_plexus_utils_341(StdOut out, StdErr err) {
             App.doMain("search", "org.codehaus.plexus:plexus-utils:3.4.1");
 
+            assertThat(err.capturedLines()).isEmpty();
+
             var output = out.capturedLines();
 
             assertThat(output).anySatisfy(line -> assertThat(line).contains("<groupId>org.codehaus.plexus</groupId>"));
@@ -97,9 +100,11 @@ class AppIT implements WithAssertions {
 
         @StdIo
         @Test
-        void should_find_plexus_utils_341_without_search(StdOut out) {
+        void should_find_plexus_utils_341_without_search(StdOut out, StdErr err) {
             App.doMain("org.codehaus.plexus:plexus-utils:3.4.1");
 
+            assertThat(err.capturedLines()).isEmpty();
+
             var output = out.capturedLines();
 
             assertThat(output).anySatisfy(line -> assertThat(line).contains("<groupId>org.codehaus.plexus</groupId>"));
@@ -109,8 +114,10 @@ class AppIT implements WithAssertions {
 
         @StdIo
         @Test
-        void should_find_multiple_jreleaser_maven_plugin(StdOut out) {
+        void should_find_multiple_jreleaser_maven_plugin(StdOut out, StdErr err) {
             App.doMain("search", "org.jreleaser:jreleaser-maven-plugin");
+
+            assertThat(err.capturedLines()).isEmpty();
 
             var output = out.capturedLines();
 
@@ -120,8 +127,10 @@ class AppIT implements WithAssertions {
 
         @StdIo
         @Test
-        void should_find_many_artifacts_for_JAX_WS_Handler(StdOut out) {
+        void should_find_many_artifacts_for_JAX_WS_Handler(StdOut out, StdErr err) {
             App.doMain("class-search", "-f", "javax.xml.ws.handler.Handler");
+
+            assertThat(err.capturedLines()).isEmpty();
 
             var output = out.capturedLines();
 
@@ -133,8 +142,10 @@ class AppIT implements WithAssertions {
 
         @StdIo
         @Test
-        void should_find_artifacts_for_Clocky_class(StdOut out) {
+        void should_find_artifacts_for_Clocky_class(StdOut out, StdErr err) {
             App.doMain("class-search", "AdvanceableTime");
+
+            assertThat(err.capturedLines()).isEmpty();
 
             var output = out.capturedLines();
 
@@ -144,8 +155,10 @@ class AppIT implements WithAssertions {
 
         @StdIo
         @Test
-        void should_find_artifacts_for_Clocky_full_class_name(StdOut out) {
+        void should_find_artifacts_for_Clocky_full_class_name(StdOut out, StdErr err) {
             App.doMain("class-search", "-f", "it.mulders.clocky.AdvanceableTime");
+
+            assertThat(err.capturedLines()).isEmpty();
 
             var output = out.capturedLines();
 
