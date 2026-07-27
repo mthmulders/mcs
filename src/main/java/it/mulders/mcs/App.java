@@ -59,6 +59,10 @@ public class App {
         } catch (CommandLine.ParameterException pe1) {
             try {
                 program.parseArgs(prependSearchCommandToArgs(args));
+                System.out.println("You are enjoying the \"shorthand\" invocation mode,");
+                System.out.println("where you don't have to type `mcs search`.");
+                System.out.println();
+                System.out.println("Starting with MCS 1.0, this mode will no longer be available.");
                 return true;
             } catch (CommandLine.ParameterException pe2) {
                 return false;
