@@ -2,6 +2,12 @@ version: 2
 updates:
   - package-ecosystem: maven
     directory: "/"
+    groups:
+      development-dependencies:
+        dependency-type: "development"
+      production-dependencies-patch-updates:
+        dependency-type: "production"
+        update-types: [ "patch" ]
     schedule:
       interval: daily
       time: "04:00"
@@ -12,4 +18,7 @@ updates:
       interval: daily
       time: "04:00"
     open-pull-requests-limit: 10
-
+    groups:
+      github-actions:
+        patterns:
+          - "*"
