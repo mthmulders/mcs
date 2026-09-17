@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up JDK
-        uses: actions/setup-java@v5.7.0
+        uses: actions/setup-java@v6.0.0
         with:
           java-version: 25
           distribution: 'temurin'
@@ -36,7 +36,7 @@ jobs:
 
       # Using third-party action because actions/download-artifact@v5 cannot download from different workflow runs (workflow_run context).
       - name: Download native binary artifacts from Build workflow
-        uses: dawidd6/action-download-artifact@v21
+        uses: dawidd6/action-download-artifact@v24
         with:
           run_id: ${{ github.event.workflow_run.id }}
           path: /tmp/artifacts
