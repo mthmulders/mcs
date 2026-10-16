@@ -87,9 +87,10 @@ distributions:
       base: core26
       localPlugs:
         - network
-      architectures:
-        - buildOn: [amd64]
-          runOn: [amd64]
+      platforms:
+        amd64:
+          buildOn: [amd64]
+          buildFor: [amd64]
       repository:
         active: RELEASE
         name: mcs-snap
