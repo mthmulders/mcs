@@ -85,8 +85,7 @@ class SearchClientIT implements WithAssertions {
 
             // Act
             var result = new SearchClient(httpClient, wmRuntimeInfo.getHttpBaseUrl())
-                    .search(SearchQuery.classSearch("AdvanceableTime")
-                            .build());
+                    .search(SearchQuery.classSearch("AdvanceableTime").build());
 
             // Assert
             assertThat(result.value()).isNotNull();
