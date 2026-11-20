@@ -73,6 +73,57 @@ class SearchClientIT implements WithAssertions {
         }
     }
 
+    @DisplayName("Class-name search")
+    @Nested
+    class ClassNameSearchTest {
+        @Test
+        void should_parse_response_class_search() {
+            // Arrange
+            var wmRuntimeInfo = wiremock.getRuntimeInfo();
+            stubFor(get(urlPathMatching("/solrsearch/select*"))
+                    .willReturn(ok(getResourceAsString("/wildcard_Clocky_class.json"))));
+
+            // Act
+            var result = new SearchClient(httpClient, wmRuntimeInfo.getHttpBaseUrl())
+                    .search(SearchQuery.classSearch("AdvanceableTime")
+                            .build());
+
+            // Assert
+            assertThat(result.value()).isNotNull();
+            assertThat(result.value().response().numFound()).isEqualTo(16);
+
+            var ids = Arrays.stream(result.value().response().docs())
+                    .map(SearchResponse.Response.Doc::id)
+                    .toArray(String[]::new);
+            assertThat(ids.length).isEqualTo(10);
+            assertThat(ids).allSatisfy(id -> assertThat(id).startsWith("it.mulders.clocky:clocky"));
+        }
+
+        @Test
+        void should_parse_response_fully_qualified_class_search() {
+            // Arrange
+            var wmRuntimeInfo = wiremock.getRuntimeInfo();
+            stubFor(get(urlPathMatching("/solrsearch/select*"))
+                    .willReturn(ok(getResourceAsString("/fully_qualified_Clocky_class.json"))));
+
+            // Act
+            var result = new SearchClient(httpClient, wmRuntimeInfo.getHttpBaseUrl())
+                    .search(SearchQuery.classSearch("it.mulders.clocky.AdvanceableTime")
+                            .isFullyQualified(true)
+                            .build());
+
+            // Assert
+            assertThat(result.value()).isNotNull();
+            assertThat(result.value().response().numFound()).isEqualTo(16);
+
+            var ids = Arrays.stream(result.value().response().docs())
+                    .map(SearchResponse.Response.Doc::id)
+                    .toArray(String[]::new);
+            assertThat(ids.length).isEqualTo(10);
+            assertThat(ids).allSatisfy(id -> assertThat(id).startsWith("it.mulders.clocky:clocky"));
+        }
+    }
+
     @DisplayName("Singular search")
     @Nested
     class SingularSearchTest {
