@@ -8,13 +8,14 @@ import picocli.CommandLine;
 
 public class App {
     public static void main(final String... args) {
-        System.exit(doMain(args));
+        var components = DaggerApplication.builder()
+                .centralHostname("https://central.sonatype.com")
+                .build();
+        System.exit(doMain(components, args));
     }
 
     // Visible for testing
-    static int doMain(final String... originalArgs) {
-        final Application components = DaggerApplication.create();
-
+    static int doMain(final Application components, final String... originalArgs) {
         var systemPropertyLoader = components.systemPropertyLoader();
         System.setProperties(systemPropertyLoader.getProperties());
         setUpProxy();

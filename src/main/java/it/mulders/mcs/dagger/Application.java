@@ -1,5 +1,6 @@
 package it.mulders.mcs.dagger;
 
+import dagger.BindsInstance;
 import dagger.Component;
 import it.mulders.mcs.cli.SearchCommand;
 import it.mulders.mcs.cli.SystemPropertyLoader;
@@ -12,4 +13,12 @@ public interface Application {
     SystemPropertyLoader systemPropertyLoader();
 
     SearchCommand searchCommand();
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        Builder centralHostname(@CentralHostname String userName);
+
+        Application build();
+    }
 }

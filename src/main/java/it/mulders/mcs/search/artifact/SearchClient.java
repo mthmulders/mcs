@@ -2,6 +2,7 @@ package it.mulders.mcs.search.artifact;
 
 import it.mulders.mcs.common.Result;
 import it.mulders.mcs.common.SearchResponseBodyHandler;
+import it.mulders.mcs.dagger.CentralHostname;
 import jakarta.inject.Inject;
 import java.io.IOException;
 import java.net.ConnectException;
@@ -14,14 +15,9 @@ public class SearchClient {
     private final HttpClient client;
 
     @Inject
-    public SearchClient(final HttpClient client) {
-        this(client, "https://central.sonatype.com");
-    }
-
-    // Visible for testing
-    SearchClient(final HttpClient client, final String hostname) {
+    public SearchClient(final HttpClient client, @CentralHostname String centralHostname) {
         this.client = client;
-        this.hostname = hostname;
+        this.hostname = centralHostname;
     }
 
     public Result<SearchResponse> search(final SearchQuery query) {

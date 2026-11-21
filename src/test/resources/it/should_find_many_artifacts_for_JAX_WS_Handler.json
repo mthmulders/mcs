@@ -1,0 +1,137 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 0,
+    "params": {
+      "q": "fc:javax.xml.ws.handler.Handler",
+      "core": "",
+      "indent": "off",
+      "spellcheck": "false",
+      "start": "",
+      "spellcheck.count": "0",
+      "sort": "",
+      "rows": "10",
+      "wt": "json",
+      "version": "None"
+    }
+  },
+  "response": {
+    "numFound": 5387,
+    "start": 0,
+    "docs": [
+      {
+        "id": "mx.com.sw.services:SW-JAVA:1.0.6.5",
+        "g": "mx.com.sw.services",
+        "a": "SW-JAVA",
+        "v": "1.0.6.5",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1652490985000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "mx.com.sw.services:SW-JAVA:1.0.6.6",
+        "g": "mx.com.sw.services",
+        "a": "SW-JAVA",
+        "v": "1.0.6.6",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1653371057000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "mx.com.sw.services:SW-JAVA:1.0.7.1",
+        "g": "mx.com.sw.services",
+        "a": "SW-JAVA",
+        "v": "1.0.7.1",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1664899931000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "mx.com.sw.services:SW-JAVA:1.0.6.7",
+        "g": "mx.com.sw.services",
+        "a": "SW-JAVA",
+        "v": "1.0.6.7",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1653683551000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "mx.com.sw.services:SW-JAVA:1.0.19.4",
+        "g": "mx.com.sw.services",
+        "a": "SW-JAVA",
+        "v": "1.0.19.4",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1716854295343,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "de.fraunhofer.iosb.ilt:SensorThingsImporter:0.17",
+        "g": "de.fraunhofer.iosb.ilt",
+        "a": "SensorThingsImporter",
+        "v": "0.17",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1614688680000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "de.fraunhofer.iosb.ilt:SensorThingsImporter:0.16",
+        "g": "de.fraunhofer.iosb.ilt",
+        "a": "SensorThingsImporter",
+        "v": "0.16",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1614682629000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "net.sourceforge.scenarlang:UT_DSL_JUNIT:1.1.9",
+        "g": "net.sourceforge.scenarlang",
+        "a": "UT_DSL_JUNIT",
+        "v": "1.1.9",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1362315463000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "org.openidentityplatform.openam.auth.modules:adaptive:14.6.4.1",
+        "g": "org.openidentityplatform.openam.auth.modules",
+        "a": "adaptive",
+        "v": "14.6.4.1",
+        "repositoryId": "central",
+        "p": "war",
+        "timestamp": 1629311125000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "org.openidentityplatform.openam.auth.modules:adaptive:14.6.2.1",
+        "g": "org.openidentityplatform.openam.auth.modules",
+        "a": "adaptive",
+        "v": "14.6.2.1",
+        "repositoryId": "central",
+        "p": "war",
+        "timestamp": 1612804978000,
+        "versionCount": 0,
+        "ec": []
+      }
+    ]
+  },
+  "spellcheck": {
+    "suggestions": []
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 0,
+    "params": {
+      "q": "g:org.jreleaser AND a:jreleaser-maven-plugin",
+      "core": "",
+      "indent": "off",
+      "spellcheck": "false",
+      "start": "",
+      "spellcheck.count": "0",
+      "sort": "",
+      "rows": "10",
+      "wt": "json",
+      "version": "None"
+    }
+  },
+  "response": {
+    "numFound": 47,
+    "start": 0,
+    "docs": [
+      {
+        "id": "org.jreleaser:jreleaser-maven-plugin:1.0.0-RC2",
+        "g": "org.jreleaser",
+        "a": "jreleaser-maven-plugin",
+        "v": "1.0.0-RC2",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1648914571000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "org.jreleaser:jreleaser-maven-plugin:0.6.0",
+        "g": "org.jreleaser",
+        "a": "jreleaser-maven-plugin",
+        "v": "0.6.0",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1627746662000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "org.jreleaser:jreleaser-maven-plugin:0.3.0",
+        "g": "org.jreleaser",
+        "a": "jreleaser-maven-plugin",
+        "v": "0.3.0",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1620462568000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "org.jreleaser:jreleaser-maven-plugin:1.8.0",
+        "g": "org.jreleaser",
+        "a": "jreleaser-maven-plugin",
+        "v": "1.8.0",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1693520286000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "org.jreleaser:jreleaser-maven-plugin:1.5.0",
+        "g": "org.jreleaser",
+        "a": "jreleaser-maven-plugin",
+        "v": "1.5.0",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1677423250000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "org.jreleaser:jreleaser-maven-plugin:1.3.1",
+        "g": "org.jreleaser",
+        "a": "jreleaser-maven-plugin",
+        "v": "1.3.1",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1667642870000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "org.jreleaser:jreleaser-maven-plugin:0.2.0",
+        "g": "org.jreleaser",
+        "a": "jreleaser-maven-plugin",
+        "v": "0.2.0",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1619253488000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "org.jreleaser:jreleaser-maven-plugin:0.10.0",
+        "g": "org.jreleaser",
+        "a": "jreleaser-maven-plugin",
+        "v": "0.10.0",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1640702905000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "org.jreleaser:jreleaser-maven-plugin:0.7.0",
+        "g": "org.jreleaser",
+        "a": "jreleaser-maven-plugin",
+        "v": "0.7.0",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1632819585000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "org.jreleaser:jreleaser-maven-plugin:1.10.0",
+        "g": "org.jreleaser",
+        "a": "jreleaser-maven-plugin",
+        "v": "1.10.0",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1704038812000,
+        "versionCount": 0,
+        "ec": []
+      }
+    ]
+  },
+  "spellcheck": {
+    "suggestions": []
+  }
+}

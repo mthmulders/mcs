@@ -1,0 +1,137 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 0,
+    "params": {
+      "q": "c:AdvanceableTime",
+      "core": "",
+      "indent": "off",
+      "spellcheck": "false",
+      "start": "",
+      "spellcheck.count": "0",
+      "sort": "",
+      "rows": "10",
+      "wt": "json",
+      "version": "None"
+    }
+  },
+  "response": {
+    "numFound": 16,
+    "start": 0,
+    "docs": [
+      {
+        "id": "it.mulders.clocky:clocky:0.4.3",
+        "g": "it.mulders.clocky",
+        "a": "clocky",
+        "v": "0.4.3",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1747747911000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "it.mulders.clocky:clocky:0.4.10",
+        "g": "it.mulders.clocky",
+        "a": "clocky",
+        "v": "0.4.10",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1765803667000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "it.mulders.clocky:clocky:0.4.12",
+        "g": "it.mulders.clocky",
+        "a": "clocky",
+        "v": "0.4.12",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1771158279000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "it.mulders.clocky:clocky:0.4.1",
+        "g": "it.mulders.clocky",
+        "a": "clocky",
+        "v": "0.4.1",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1727856316752,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "it.mulders.clocky:clocky:0.4.4",
+        "g": "it.mulders.clocky",
+        "a": "clocky",
+        "v": "0.4.4",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1750364059000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "it.mulders.clocky:clocky:0.4.15",
+        "g": "it.mulders.clocky",
+        "a": "clocky",
+        "v": "0.4.15",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1778936948000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "it.mulders.clocky:clocky:0.4.11",
+        "g": "it.mulders.clocky",
+        "a": "clocky",
+        "v": "0.4.11",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1768504462000,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "it.mulders.clocky:clocky:0.4",
+        "g": "it.mulders.clocky",
+        "a": "clocky",
+        "v": "0.4",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1698072211155,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "it.mulders.clocky:clocky:0.4.2",
+        "g": "it.mulders.clocky",
+        "a": "clocky",
+        "v": "0.4.2",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1744966960416,
+        "versionCount": 0,
+        "ec": []
+      },
+      {
+        "id": "it.mulders.clocky:clocky:0.4.5",
+        "g": "it.mulders.clocky",
+        "a": "clocky",
+        "v": "0.4.5",
+        "repositoryId": "central",
+        "p": "jar",
+        "timestamp": 1752839957000,
+        "versionCount": 0,
+        "ec": []
+      }
+    ]
+  },
+  "spellcheck": {
+    "suggestions": []
+  }
+}

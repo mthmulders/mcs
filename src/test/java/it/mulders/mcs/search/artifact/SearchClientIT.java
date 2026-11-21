@@ -6,16 +6,15 @@ import static com.github.tomakehurst.wiremock.client.WireMock.ok;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static it.mulders.mcs.TestUtils.getResourceAsString;
 
 import com.github.tomakehurst.wiremock.core.Options;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import it.mulders.mcs.Constants;
 import it.mulders.mcs.common.Result;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.http.HttpClient;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
@@ -38,20 +37,11 @@ class SearchClientIT implements WithAssertions {
             .configureStaticDsl(true)
             .build();
 
-    String getResourceAsString(final String resourceName) {
-        try (final InputStream input = getClass().getResourceAsStream(resourceName)) {
-            byte[] bytes = input != null ? input.readAllBytes() : new byte[] {};
-            return new String(bytes, StandardCharsets.UTF_8);
-        } catch (final IOException ioe) {
-            return fail("Can't load resource %s", resourceName, ioe);
-        }
-    }
-
     @Nested
     @DisplayName("Wildcard search")
     class WildcardSearchTest {
         @Test
-        void should_parse_response() {
+        void should_parse_response() throws IOException {
             // Arrange
             var wmRuntimeInfo = wiremock.getRuntimeInfo();
             stubFor(get(urlPathMatching("/solrsearch/select*"))
@@ -77,7 +67,7 @@ class SearchClientIT implements WithAssertions {
     @Nested
     class ClassNameSearchTest {
         @Test
-        void should_parse_response_class_search() {
+        void should_parse_response_class_search() throws IOException {
             // Arrange
             var wmRuntimeInfo = wiremock.getRuntimeInfo();
             stubFor(get(urlPathMatching("/solrsearch/select*"))
@@ -99,7 +89,7 @@ class SearchClientIT implements WithAssertions {
         }
 
         @Test
-        void should_parse_response_fully_qualified_class_search() {
+        void should_parse_response_fully_qualified_class_search() throws IOException {
             // Arrange
             var wmRuntimeInfo = wiremock.getRuntimeInfo();
             stubFor(get(urlPathMatching("/solrsearch/select*"))
@@ -127,7 +117,7 @@ class SearchClientIT implements WithAssertions {
     @Nested
     class SingularSearchTest {
         @Test
-        void should_parse_response_groupId_artifactId() {
+        void should_parse_response_groupId_artifactId() throws IOException {
             // Arrange
             var wmRuntimeInfo = wiremock.getRuntimeInfo();
             stubFor(get(urlPathMatching("/solrsearch/select*"))
@@ -149,7 +139,7 @@ class SearchClientIT implements WithAssertions {
         }
 
         @Test
-        void should_parse_response_groupId_artifactId_version() {
+        void should_parse_response_groupId_artifactId_version() throws IOException {
             // Arrange
             var wmRuntimeInfo = wiremock.getRuntimeInfo();
             stubFor(get(urlPathMatching("/solrsearch/select*"))
